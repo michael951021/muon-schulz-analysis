@@ -7,3 +7,5 @@ runs/
 wandb/
 *.egg-info/
 .DS_Store
+.venv/
+figures/

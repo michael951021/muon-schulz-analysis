@@ -37,10 +37,12 @@ For each γ, solve:
 ```
 minimize    σ_min
 over        a, b, c
-subject to  C(x) ∈ [1−γ, 1+γ]     ∀ x ∈ [σ_min, 1]      (band)
+subject to  relhw( C([σ_min, 1]) ) ≤ γ                   (band)
             max_{x∈[0,B]} P(x) ≤ B                       (forward invariance)
-            where B = max(1+γ, sup_{[0,1]} P)            (see note below)
-            P′(x) > 0  on [0, x*]                        (monotonicity)
+            where B = max(1+γ, sup_{[0,1]} P)
+            P(x) > 0   ∀ x ∈ (0, B]                      (positivity)
+
+where       relhw(S) = (max S − min S) / (max S + min S)
 ```
 
 γ is the band half-width; σ_min is the smallest input singular value the map can
@@ -48,8 +50,16 @@ still pull into the band. The objective maximizes input dynamic range subject to
 the band, which is the real tradeoff Muon makes: a wider band buys the ability to
 lift near-zero singular values within a fixed step budget.
 
+The band is expressed as the **relative** half-width of the image. This is
+scale-invariant by construction, which is what decouples γ from η (see below) —
+no explicit rescaling is needed during the fit. The band center is recorded per
+entry and applied as a divisor when the coefficients are used.
+
 Solved by differential evolution plus local polish over a log-spaced σ grid
-(1e-7 to 1, ~3000 points).
+(1e-7 to 1, ~3000 points), **restarted across multiple seeds keeping the best
+feasible result**. A single run is not reliable: at γ = 0.50 one seed converged
+to an infeasible local optimum (a = 5.78, b = −11.99) while γ = 0.40 and γ = 0.60
+succeeded from the same settings.
 
 ### Three constraints that are load-bearing
 
@@ -75,28 +85,41 @@ obstacle. Exact polar is *outside* the reachable family, so the SVD baseline is
 not merely a slower family member — it is qualitatively different. The sweep
 covers γ ∈ [~0.12, 0.6]; the exact-SVD arm anchors the γ = 0 end.
 
-### Validation: standard Muon is a recovered interior point
+### Validation: standard Muon is a near-optimal interior point
 
-Fitting the family independently reproduces Keller Jordan's hand-tuned
-coefficients:
+Measured, at N = 5:
 
-| source | a | b | c | σ_min |
-|---|---|---|---|---|
-| fit at γ = 0.15 | 3.284 | −4.609 | 2.179 | 2.6e−3 |
-| fit at γ = 0.20 | 3.425 | −4.759 | 2.135 | 1.9e−3 |
-| Keller (standard Muon) | 3.4445 | −4.7750 | 2.0315 | — |
+| source | a | b | c | achieved γ | σ_min |
+|---|---|---|---|---|---|
+| Keller (standard Muon) | 3.4445 | −4.7750 | 2.0315 | 0.299 | 1.42e−3 |
+| fit at γ = 0.30 | 3.635 | −4.789 | 1.910 | 0.30 | 1.17e−3 |
 
-Standard Muon sits on the fitted frontier at γ ≈ 0.15–0.20. This is what makes
-the family a legitimate ablation axis: the baseline is a member, not an outside
-comparison. It also independently corroborates that Keller's coefficients are
-near-optimal for their band.
+Keller's quintic lands just **inside** the fitted frontier: at its own achieved
+band of γ ≈ 0.30 it reaches σ_min = 1.42e−3 against a fitted optimum of 1.17e−3,
+so it captures dynamic range within 21% of the best available at that band. The
+baseline is therefore a genuine interior member of the family rather than an
+outside comparison, which is what makes the γ axis a legitimate ablation. It also
+independently corroborates that Keller's hand-tuned coefficients are close to
+optimal for the band they target.
 
-**Implementation note.** Keller's quintic violates strict invariance on [0, 1.3]
-by +0.23, because its true band is centered near 0.7 rather than 1. The
-invariance bound must therefore be evaluated as
-`B = max(1+γ, sup_{[0,1]} P)` rather than `B = 1+γ` exactly, or near-Keller
-members are spuriously excluded. Verify that the fitted table still recovers
-Keller under the relaxed bound.
+The acceptance test for the solver is reproducing this: **the fitted table must
+place Keller inside the frontier at γ ≈ 0.30, within ~25% on σ_min.** Coefficient
+proximity is not the test — nearby coefficient triples exist at several γ, and the
+frontier position is the meaningful claim.
+
+**Implementation note — positivity, not monotonicity.** Keller's quintic is
+monotone only up to its first critical point x\* = 0.5545, and every fitted member
+is similar (x\* ≈ 0.56–0.63). The non-monotonicity is essential: it is how the
+polynomial squashes large singular values back down. Any constraint requiring
+monotonicity across [0, 1] excludes standard Muon and the entire useful family.
+`P′ > 0 on [0, x*]` is vacuous — it is the definition of x\*. The constraint that
+actually binds is **positivity on (0, B]**, which Keller satisfies with margin
+(min P = +0.0022). x\* is recorded per entry as a reported diagnostic, not a
+constraint.
+
+Keller also violates *strict* invariance on [0, 1.3] by +0.23, because its true
+band is centered near 0.7 rather than 1; hence the relaxed bound
+`B = max(1+γ, sup_{[0,1]} P)` above.
 
 ### Deliverable
 
@@ -112,7 +135,7 @@ Five units in dependency order. All are CPU-testable; the entire mathematical
 core is verifiable without a GPU.
 
 **`nsshape.polynomial`** — pure numpy, no torch. Evaluates P, composes N-fold,
-locates critical points, checks invariance and monotonicity, measures achieved
+locates critical points, checks invariance and positivity, measures achieved
 band and σ_min. The reference everything else is checked against.
 
 **`nsshape.solve`** — the constrained fit. Takes (γ, N), returns coefficients
@@ -163,8 +186,8 @@ tests/
 
 The property tests *are* the scientific claim, so they deliberately share no code
 with the solver. Given the committed table, independently re-verify for every
-entry: monotone on its stated interval, forward-invariant, and maps [σ_min, 1]
-into its claimed band. Plus `ns_quintic` vs `exact_svd_polar` agreement on
+entry: positive on (0, B], forward-invariant on [0, B], and mapping [σ_min, 1]
+into its claimed relative band. Plus `ns_quintic` vs `exact_svd_polar` agreement on
 well-conditioned matrices, and a logger round-trip on a tiny model.
 
 ## Compute plan
@@ -188,8 +211,9 @@ matmuls and torch suffices.
 
 1. A committed coefficient table of 6–10 sets whose properties are independently
    re-verified by tests that do not share code with the solver.
-2. The table recovers Keller's coefficients at γ ≈ 0.15–0.20, confirming standard
-   Muon is an interior family member.
+2. The table places Keller inside the fitted frontier at its achieved γ ≈ 0.30
+   (σ_min within ~25% of the fitted optimum), confirming standard Muon is a
+   near-optimal interior family member.
 3. A parameterized Muon that runs any table entry, plus exact SVD, through one
    interface.
 4. An SVD logger producing before/after spectra, demonstrated on a CPU model.

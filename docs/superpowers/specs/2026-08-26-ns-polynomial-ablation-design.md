@@ -38,8 +38,9 @@ For each γ, solve:
 minimize    σ_min
 over        a, b, c
 subject to  relhw( C([σ_min, 1]) ) ≤ γ                   (band)
-            max_{x∈[0,B]} P(x) ≤ B                       (forward invariance)
-            where B = max(1+γ, sup_{[0,1]} P)
+            reachable_bound(P) < ∞                       (bounded iteration)
+            where B = reachable_bound(P), the fixed point
+                  of  B ← max(1, sup_{[0,B]} P)  from B = 1
             P(x) > 0   ∀ x ∈ (0, B]                      (positivity)
 
 where       relhw(S) = (max S − min S) / (max S + min S)
@@ -79,11 +80,15 @@ values to a common large value where the band ratio is trivially 1 — a degener
 optimum that satisfies any band constraint while destroying the matrix. The
 invariance constraint also guarantees the iteration cannot diverge.
 
-**γ → 0 is infeasible at N = 5.** No coefficients achieve γ = 0.05: five quintic
-steps cannot map a wide input range into a tight band. This is a result, not an
-obstacle. Exact polar is *outside* the reachable family, so the SVD baseline is
-not merely a slower family member — it is qualitatively different. The sweep
-covers γ ∈ [~0.12, 0.6]; the exact-SVD arm anchors the γ = 0 end.
+**Tight bands are feasible but cost dynamic range.** The frontier is feasible and
+strictly monotone across γ ∈ [0.01, 0.60]: γ = 0.01 reaches only σ_min = 1.8e−2
+while γ = 0.60 reaches 2.5e−4. Accuracy and reach trade off continuously; there is
+no feasibility cliff.
+
+An earlier absolute-band formulation made γ = 0.05 look infeasible, and that
+conclusion was carried across the switch to the relative band before being
+retracted. Exact SVD is therefore *not* a γ → 0 limit of this family — it is a
+separate backend, anchoring the comparison at zero band width and unbounded cost.
 
 ### Validation: standard Muon is a near-optimal interior point
 
@@ -92,18 +97,20 @@ Measured, at N = 5:
 | source | a | b | c | achieved γ | σ_min |
 |---|---|---|---|---|---|
 | Keller (standard Muon) | 3.4445 | −4.7750 | 2.0315 | 0.299 | 1.42e−3 |
-| fit at γ = 0.30 | 3.635 | −4.789 | 1.910 | 0.30 | 1.17e−3 |
+| fit at γ = 0.30 | 3.6324 | −8.0707 | 5.4314 | 0.30 | 9.04e−4 |
 
 Keller's quintic lands just **inside** the fitted frontier: at its own achieved
-band of γ ≈ 0.30 it reaches σ_min = 1.42e−3 against a fitted optimum of 1.17e−3,
-so it captures dynamic range within 21% of the best available at that band. The
+band of γ ≈ 0.30 it reaches σ_min = 1.42e−3 against a fitted optimum of 9.04e−4,
+so the fitted shape reaches roughly 57% further in dynamic range. That headroom
+is exactly the slack H1 predicts might be exploitable. The
 baseline is therefore a genuine interior member of the family rather than an
 outside comparison, which is what makes the γ axis a legitimate ablation. It also
 independently corroborates that Keller's hand-tuned coefficients are close to
 optimal for the band they target.
 
 The acceptance test for the solver is reproducing this: **the fitted table must
-place Keller inside the frontier at γ ≈ 0.30, within ~25% on σ_min.** Coefficient
+place Keller inside the frontier at γ ≈ 0.30, with σ_min between 1.2× and 2.5×
+the fitted optimum.** Coefficient
 proximity is not the test — nearby coefficient triples exist at several γ, and the
 frontier position is the meaningful claim.
 
@@ -117,15 +124,20 @@ actually binds is **positivity on (0, B]**, which Keller satisfies with margin
 (min P = +0.0022). x\* is recorded per entry as a reported diagnostic, not a
 constraint.
 
-Keller also violates *strict* invariance on [0, 1.3] by +0.23, because its true
-band is centered near 0.7 rather than 1; hence the relaxed bound
-`B = max(1+γ, sup_{[0,1]} P)` above.
+**Implementation note — boundedness is a fixed point.** The bound
+`B = max(1+γ, sup_{[0,1]} P)` also fails, and fails on Keller: it gives B = 1.3
+while P(1.3) = 1.53 > 1.3, so it self-rejects. Keller's actual reachable set from
+[0, 1] is bounded at 1.2024. The correct notion is the reachable-set fixed point
+`B ← max(1, sup_{[0,B]} P)`, which returns 1.2024 for Keller and ∞ for the
+saturating degenerate optimum. It is also γ-independent, which is right —
+boundedness is unrelated to band width.
 
 ### Deliverable
 
-6–10 coefficient sets spanning hyper-accurate → standard-Muon → deliberately
-distorted, committed as a generated artifact with a certificate per entry
-(achieved σ_min, achieved band, constraint margins).
+Nine fitted sets at γ ∈ {0.01, 0.02, 0.05, 0.10, 0.15, 0.20, 0.30, 0.45, 0.60},
+spanning hyper-accurate → standard-Muon → deliberately distorted, plus the
+`keller` baseline and the `exact_svd` sentinel. Committed as a generated artifact
+with a certificate per entry (achieved σ_min, achieved band, constraint margins).
 
 ## Stage 2: instrumented optimizer
 
@@ -189,6 +201,25 @@ with the solver. Given the committed table, independently re-verify for every
 entry: positive on (0, B], forward-invariant on [0, B], and mapping [σ_min, 1]
 into its claimed relative band. Plus `ns_quintic` vs `exact_svd_polar` agreement on
 well-conditioned matrices, and a logger round-trip on a tiny model.
+
+### Caveat for reading spectra (affects stages 3–4)
+
+Muon Frobenius-normalizes before iterating, so for an n×n matrix σ_max lands near
+1/√n and the smallest singular values fall *below* the certified σ_min. Real
+inputs therefore occupy a compressed sub-range of the certified domain [σ_min, 1],
+never the whole thing.
+
+Band *width* still holds on any subinterval — an image subset can only be
+narrower — but the band *center* equals 1 only over the full certified range. On a
+random 64×64 Gaussian the measured output band centers at 0.70, not 1.0, purely
+from this effect. Singular values below σ_min are not pulled into the band at all,
+which is exactly what σ_min certifies.
+
+Consequence for the SVD logger: when comparing logged before/after spectra across
+γ, compare band *ratios*, not absolute levels, and record the input σ range
+alongside the output so out-of-domain singular values are visible rather than
+being mistaken for a shaping failure. Probes of the backends must use controlled
+spectra, not plain Gaussians.
 
 ## Compute plan
 

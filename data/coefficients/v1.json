@@ -1,0 +1,220 @@
+{
+  "version": 1,
+  "generated": "2026-08-26",
+  "n_steps": 5,
+  "sigma_grid": "logspace(-7, 0, 3000)",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "entries": [
+    {
+      "name": "gamma_0.01",
+      "kind": "fitted",
+      "gamma": 0.01,
+      "coeffs": [
+        2.719334399479617,
+        -4.568198657249775,
+        2.842849568069699
+      ],
+      "n_steps": 5,
+      "scale": 0.7724977121276522,
+      "sigma_min": 0.017758916782557203,
+      "achieved_half_width": 0.009974174085850293,
+      "critical_point": 0.5285660108361403,
+      "invariance_bound": 1.0,
+      "invariance_margin": 0.006014689700459375,
+      "positivity_margin": 0.0013589871357178028,
+      "seed": 0
+    },
+    {
+      "name": "gamma_0.02",
+      "kind": "fitted",
+      "gamma": 0.02,
+      "coeffs": [
+        2.5484055819906617,
+        -3.1525726656001023,
+        1.599195503342509
+      ],
+      "n_steps": 5,
+      "scale": 0.9572080228113959,
+      "sigma_min": 0.013002833834886316,
+      "achieved_half_width": 0.019942517224001217,
+      "critical_point": 0.6443590323856604,
+      "invariance_bound": 1.0,
+      "invariance_margin": 0.004971580266931674,
+      "positivity_margin": 0.0012735656145103184,
+      "seed": 0
+    },
+    {
+      "name": "gamma_0.05",
+      "kind": "fitted",
+      "gamma": 0.05,
+      "coeffs": [
+        2.830318336187603,
+        -4.030777439701858,
+        2.1998485340263656
+      ],
+      "n_steps": 5,
+      "scale": 0.9520045573196068,
+      "sigma_min": 0.006570612697748331,
+      "achieved_half_width": 0.04991234447834433,
+      "critical_point": 0.5813236592545608,
+      "invariance_bound": 1.0,
+      "invariance_margin": 0.00047519724693156906,
+      "positivity_margin": 0.0014144514390306445,
+      "seed": 0
+    },
+    {
+      "name": "gamma_0.10",
+      "kind": "fitted",
+      "gamma": 0.1,
+      "coeffs": [
+        3.100305406593715,
+        -5.181157462454122,
+        3.0788595782418664
+      ],
+      "n_steps": 5,
+      "scale": 0.9099237600392479,
+      "sigma_min": 0.003447565326296462,
+      "achieved_half_width": 0.09980426268378813,
+      "critical_point": 0.5230654166455223,
+      "invariance_bound": 1.0007411735805916,
+      "invariance_margin": 9.889413310482098e-08,
+      "positivity_margin": 0.0015505257242272041,
+      "seed": 0
+    },
+    {
+      "name": "gamma_0.15",
+      "kind": "fitted",
+      "gamma": 0.15,
+      "coeffs": [
+        3.283158154356676,
+        -6.081697220517772,
+        3.7960498633199937
+      ],
+      "n_steps": 5,
+      "scale": 0.8700005504858928,
+      "sigma_min": 0.0022187857694216627,
+      "achieved_half_width": 0.1499635168877456,
+      "critical_point": 0.4896296998052254,
+      "invariance_bound": 1.0004714804245936,
+      "invariance_margin": -3.552713678800501e-15,
+      "positivity_margin": 0.001641531523289906,
+      "seed": 0
+    },
+    {
+      "name": "gamma_0.20",
+      "kind": "fitted",
+      "gamma": 0.2,
+      "coeffs": [
+        3.4256621570159447,
+        -6.852270896681301,
+        4.425468107918444
+      ],
+      "n_steps": 5,
+      "scale": 0.8335305467550154,
+      "sigma_min": 0.0015645812909648323,
+      "achieved_half_width": 0.1999514016913838,
+      "critical_point": 0.4664981229108652,
+      "invariance_bound": 1.0001961338299232,
+      "invariance_margin": 8.881784197001252e-15,
+      "positivity_margin": 0.0017123100114402785,
+      "seed": 2
+    },
+    {
+      "name": "gamma_0.30",
+      "kind": "fitted",
+      "gamma": 0.3,
+      "coeffs": [
+        3.6323722564006298,
+        -8.07073392017623,
+        5.431366965546244
+      ],
+      "n_steps": 5,
+      "scale": 0.7695411609298959,
+      "sigma_min": 0.0009043129975317693,
+      "achieved_half_width": 0.2999638729509888,
+      "critical_point": 0.43691561552311564,
+      "invariance_bound": 1.0003759225716795,
+      "invariance_margin": 3.7395880614354837e-07,
+      "positivity_margin": 0.0018159598846474387,
+      "seed": 0
+    },
+    {
+      "name": "gamma_0.45",
+      "kind": "fitted",
+      "gamma": 0.45,
+      "coeffs": [
+        3.84952992019417,
+        -9.497649968882714,
+        6.6409676335805905
+      ],
+      "n_steps": 5,
+      "scale": 0.6903153769808954,
+      "sigma_min": 0.000461907327345109,
+      "achieved_half_width": 0.44956858981213427,
+      "critical_point": 0.4098701277282825,
+      "invariance_bound": 1.0006595105790543,
+      "invariance_margin": -1.0880185641326534e-14,
+      "positivity_margin": 0.0019250706392629831,
+      "seed": 0
+    },
+    {
+      "name": "gamma_0.60",
+      "kind": "fitted",
+      "gamma": 0.6,
+      "coeffs": [
+        4.002333171142354,
+        -10.61156794372075,
+        7.60615790355825
+      ],
+      "n_steps": 5,
+      "scale": 0.6251107860022631,
+      "sigma_min": 0.0002462996650748475,
+      "achieved_half_width": 0.5999052539061924,
+      "critical_point": 0.39253769625692464,
+      "invariance_bound": 1.00011915318772,
+      "invariance_margin": 5.941913627793838e-13,
+      "positivity_margin": 0.0020004035036031674,
+      "seed": 0
+    },
+    {
+      "name": "keller",
+      "kind": "baseline",
+      "gamma": 0.3,
+      "coeffs": [
+        3.4445,
+        -4.775,
+        2.0315
+      ],
+      "n_steps": 5,
+      "scale": 0.9252943614085949,
+      "sigma_min": 0.0014203132155766436,
+      "achieved_half_width": 0.29944240711443215,
+      "critical_point": 0.5545287908544945,
+      "invariance_bound": 1.2023685869756775,
+      "invariance_margin": 2.3317186559346226e-07,
+      "positivity_margin": 0.002069743390740927,
+      "seed": null
+    },
+    {
+      "name": "exact_svd",
+      "kind": "exact_svd",
+      "gamma": 0.0,
+      "coeffs": null,
+      "n_steps": 5,
+      "scale": 1.0,
+      "sigma_min": 0.0,
+      "achieved_half_width": 0.0,
+      "critical_point": Infinity,
+      "invariance_bound": 1.0,
+      "invariance_margin": Infinity,
+      "positivity_margin": Infinity,
+      "seed": null
+    }
+  ]
+}

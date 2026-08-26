@@ -86,14 +86,32 @@ def first_critical_point(coeffs: Coeffs) -> float:
     return float(np.sqrt(min(positive))) if positive else np.inf
 
 
-def invariance_bound(coeffs: Coeffs, gamma: float, n: int = 2001) -> float:
-    """The relaxed forward-invariance bound B = max(1+gamma, sup_[0,1] P).
+def reachable_bound(
+    coeffs: Coeffs,
+    n: int = 4001,
+    max_iter: int = 200,
+    escape: float = 1e4,
+) -> float:
+    """Smallest B >= 1 with [0, B] forward-invariant and reachable from [0, 1].
 
-    The strict bound 1+gamma spuriously excludes Keller-like members, whose band
-    is centered near 0.7 rather than 1.
+    Found as the fixed point of  B <- max(1, sup_[0,B] P),  started at B = 1.
+    Returns inf if the iteration escapes, which is exactly the divergent case.
+
+    This is the correct notion of boundedness, and it is independent of gamma.
+    Naive alternatives fail: `sup_[0,1+gamma] P <= 1+gamma` rejects Keller, whose
+    reachable set is bounded at 1.2024 even though P(1.3) = 1.53 > 1.3. Keller is
+    a working optimizer, so any constraint that excludes it is the wrong one.
     """
-    xs = np.linspace(0.0, 1.0, n)
-    return float(max(1.0 + gamma, evaluate(coeffs, xs).max()))
+    B = 1.0
+    for _ in range(max_iter):
+        xs = np.linspace(0.0, B, n)
+        nxt = max(1.0, float(evaluate(coeffs, xs).max()))
+        if not np.isfinite(nxt) or nxt > escape:
+            return np.inf
+        if abs(nxt - B) < 1e-12:
+            return B
+        B = nxt
+    return B
 
 
 def invariance_violation(coeffs: Coeffs, B: float, n: int = 2001) -> float:

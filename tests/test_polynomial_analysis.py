@@ -6,9 +6,9 @@ from nsshape.polynomial import (
     compose,
     derivative,
     first_critical_point,
-    invariance_bound,
     invariance_violation,
     positivity_violation,
+    reachable_bound,
 )
 
 
@@ -38,14 +38,31 @@ def test_pure_cubic_critical_point():
     assert first_critical_point((3.0, -1.0, 0.0)) == pytest.approx(1.0)
 
 
-def test_invariance_bound_is_relaxed_for_keller():
-    """B must be max(1+gamma, sup_[0,1] P), not 1+gamma."""
-    assert invariance_bound(KELLER, 0.30) == pytest.approx(1.30, abs=1e-3)
+def test_keller_reachable_bound_is_finite():
+    """Keller's iteration is bounded: its reachable set from [0,1] tops out at
+    1.2024. Any constraint that rejects Keller is the wrong constraint."""
+    assert reachable_bound(KELLER) == pytest.approx(1.2024, abs=1e-3)
 
 
-def test_keller_violates_strict_invariance():
-    """Documented design finding: +0.23 at B=1.3."""
+def test_reachable_bound_is_actually_invariant():
+    """The returned B must satisfy sup_[0,B] P <= B, i.e. be a real fixed point."""
+    assert invariance_violation(KELLER, reachable_bound(KELLER)) <= 1e-6
+
+
+def test_naive_bound_would_wrongly_reject_keller():
+    """Documents why the fixed point is needed: P(1.3) = 1.53 > 1.3, so the
+    naive bound max(1+gamma, sup_[0,1] P) = 1.3 self-rejects."""
     assert invariance_violation(KELLER, 1.3) == pytest.approx(0.23, abs=0.01)
+    assert reachable_bound(KELLER) < 1.3
+
+
+def test_reachable_bound_is_infinite_for_divergent_coefficients():
+    """The saturating degenerate optimum must be rejected."""
+    assert reachable_bound((8.0, 0.0, 12.0)) == np.inf
+
+
+def test_reachable_bound_is_one_for_a_contraction():
+    assert reachable_bound((0.5, 0.0, 0.0)) == pytest.approx(1.0)
 
 
 def test_invariance_violation_negative_for_contraction():
@@ -54,9 +71,8 @@ def test_invariance_violation_negative_for_contraction():
 
 
 def test_keller_satisfies_positivity():
-    """Keller passes positivity with a small margin (min P = +0.0022)."""
-    B = invariance_bound(KELLER, 0.30)
-    assert positivity_violation(KELLER, B) < 0
+    """Keller passes positivity with a small margin (min P = +0.0021)."""
+    assert positivity_violation(KELLER, reachable_bound(KELLER)) < 0
 
 
 def test_positivity_violation_detects_negative_lobe():

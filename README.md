@@ -149,6 +149,154 @@ never import scipy. The optimizer takes a coefficient-set *name* and the logger
 takes a *hook*, so neither knows what model it is training — which is what lets
 the same code drive both cifar10-airbench and modded-nanogpt.
 
+### Structure
+
+The stereotype on each module is the heavy dependency it is allowed to import.
+`data/coefficients/v1.json` is the seam: the solver writes it offline, and
+everything on the training side reads it, so no training run ever imports scipy.
+
+```mermaid
+classDiagram
+    direction LR
+
+    class polynomial {
+        <<numpy>>
+        +KELLER Coeffs
+        +DEFAULT_SIGMA_GRID ndarray
+        +evaluate(coeffs, x) ndarray
+        +compose(coeffs, x, n_steps) ndarray
+        +first_critical_point(coeffs) float
+        +reachable_bound(coeffs) float
+        +invariance_violation(coeffs, B) float
+        +positivity_violation(coeffs, B) float
+        +band_extent(coeffs, gamma, n_steps) BandExtent
+    }
+    class BandExtent {
+        <<dataclass>>
+        +sigma_min float
+        +scale float
+        +achieved_half_width float
+    }
+
+    class solve {
+        <<scipy>>
+        +PENALTY float
+        +BOUNDS list
+        +objective(params, gamma, n_steps) float
+        +fit_gamma(gamma, n_steps, seeds) FitResult
+    }
+    class FitResult {
+        <<dataclass>>
+        +gamma float
+        +coeffs Coeffs
+        +sigma_min float
+        +scale float
+        +invariance_bound float
+        +feasible bool
+        +seed int
+        +to_dict() dict
+    }
+
+    class coefficients {
+        <<numpy>>
+        +TABLE_PATH Path
+        +EXACT_SVD_NAME str
+        +load_table(path) dict
+        +get(name, path) CoefficientSet
+    }
+    class CoefficientSet {
+        <<dataclass>>
+        +name str
+        +kind str
+        +gamma float
+        +coeffs Coeffs
+        +n_steps int
+        +scale float
+        +sigma_min float
+        +invariance_bound float
+        +is_exact_svd bool
+    }
+
+    class orthogonalize {
+        <<torch>>
+        +ns_quintic(G, coeffs, n_steps, scale) Tensor
+        +exact_svd_polar(G) Tensor
+        +orthogonalize(G, cs) Tensor
+    }
+    class Optimizer {
+        <<torch>>
+    }
+    class ParameterizedMuon {
+        +coefficient_set CoefficientSet
+        +hook Callable
+        +step_count int
+        +step(closure)
+    }
+
+    class schema {
+        <<torch>>
+        +QUANTILES tuple
+        +spectrum_record(step, index, phase, M, n_bins) SpectrumRecord
+    }
+    class SpectrumRecord {
+        <<dataclass>>
+        +step int
+        +param_index int
+        +phase str
+        +shape list
+        +quantiles dict
+        +band_ratio float
+        +histogram list
+        +to_json() str
+        +from_json(line) SpectrumRecord
+    }
+    class SVDLogger {
+        <<torch>>
+        +path Path
+        +every_k int
+        +max_params int
+        +should_sample(step) bool
+        +close()
+    }
+
+    class CoefficientTable {
+        <<artifact>>
+        +version int
+        +n_steps int
+        +entries list
+    }
+    class generate_coefficients {
+        <<script>>
+        +GAMMA_GRID list
+        +main()
+    }
+    class plot_composed_maps {
+        <<script>>
+        +FEATURED list
+        +main()
+    }
+
+    polynomial *-- BandExtent
+    solve *-- FitResult
+    coefficients *-- CoefficientSet
+    schema *-- SpectrumRecord
+    Optimizer <|-- ParameterizedMuon
+
+    solve ..> polynomial : scores candidates with
+    coefficients ..> polynomial : Coeffs
+    generate_coefficients ..> solve : offline fit
+    generate_coefficients ..> CoefficientTable : writes
+    coefficients ..> CoefficientTable : reads
+    plot_composed_maps ..> coefficients : reads
+    plot_composed_maps ..> polynomial : composes
+
+    ParameterizedMuon --> CoefficientSet : resolved by name
+    ParameterizedMuon ..> orthogonalize : per 2D parameter
+    orthogonalize ..> CoefficientSet : dispatches on kind
+    ParameterizedMuon o-- SVDLogger : optional hook
+    SVDLogger ..> schema : fp32 SVD
+```
+
 ## Design docs
 
 - `docs/superpowers/specs/2026-08-26-ns-polynomial-ablation-design.md`

@@ -1,21 +1,99 @@
-# nsshape — Newton–Schulz polynomial shaping for Muon
+# nsshape: does Muon work because of *how well* it orthogonalizes, or *what shape* it leaves behind?
 
-Does the Muon optimizer work well *because* its Newton–Schulz iteration
-approximates the polar factor, or because of the particular **shape** it imposes
-on the singular-value spectrum?
+Muon replaces each gradient matrix with something close to its polar factor
+(all singular values pushed to 1) using five steps of a Newton–Schulz quintic.
+Except the standard quintic, Keller Jordan's, was tuned for speed, not
+accuracy. It never actually reaches the polar factor. It squashes singular
+values into a band of roughly 0.7 to 1.3 and calls it a day.
 
-Muon's quintic was tuned for speed, not accuracy. It does not converge to the
-polar factor at all — it drives singular values into a wide band. **H1:** that
-band shape is the operative quantity, and shapes other than "as close to exact
-polar as possible" may train better. An unsuccessful comparison would bound
-this tested family and training budget; it would not establish universal
-optimality of geometric alignment.
+So which part matters? **H1:** the band shape is what does the work, and a
+deliberately shaped band could train better than either Keller's quintic or the
+exact polar factor.
 
-This repository contains the coefficient family, instrumented optimizer, and a
-budget-calibrated CIFAR/transformer study launcher. The full GPU study has not
-been run in this checkout. See [the two-3090 protocol](docs/dual3090-study.md) for
-an executable 6–10-hour plan and [local smoke results](reports/local_smoke/results.md)
-for CPU training checks. Smoke results do not answer H1.
+To test that, I built a one-parameter family of quintics where γ sets the band
+width, certified each one (bounded, positive, actually hits its band), dropped
+them into an instrumented Muon, and ran a budget-matched study on two RTX 3090s:
+a CIFAR-10 CNN sweep to pick the best γ and learning rates, then fresh-seed
+confirmation on CIFAR-10 and a ~124M GPT trained on FineWeb.
+
+## Results
+
+**Short version: shape helps a little on CIFAR, does nothing measurable on the
+language model, and exact orthogonalization buys nothing for 12× the cost.**
+H1 is not supported, but it is not ruled out either.
+
+The CIFAR sweep (21 arm/precision pairs × 3 learning rates × 2 seeds, 126 runs)
+picked **γ = 0.20**, a slightly *tighter* band than Keller's (γ ≈ 0.30).
+Confirmed on 3 fresh seeds per arm, paired by seed:
+
+![Paired test-loss difference vs Keller](docs/figures/paired_vs_keller.png)
+
+| | γ = 0.20 vs Keller | Exact SVD vs Keller | Seconds per run (fp32) |
+|---|---|---|---|
+| CIFAR-10, bf16 | **−0.0047** [−0.0081, −0.0013] | — | 14.3 |
+| CIFAR-10, fp32 | −0.0049 [−0.0119, +0.0020] | −0.0005 [−0.0145, +0.0135] | 14.3 vs 28.4 |
+| GPT, bf16 | −0.0021 [−0.0065, +0.0023] | — | 346 |
+| GPT, fp32 | −0.0004 [−0.0041, +0.0033] | +0.0005 [−0.0047, +0.0057] | 657 vs 8,109 |
+
+Test cross-entropy differences, mean and 95% t-interval over 3 paired seeds.
+Negative favors the arm.
+
+- **CIFAR-10:** the γ = 0.20 fit beats Keller in bf16, and its interval stays
+  below zero. That's about 0.1 points of accuracy (79.4% vs 79.3%), so it's real
+  but small. In fp32 the gap is the same size, but the interval crosses zero.
+- **Language:** every arm ends at 5.47 test loss and 20.4% next-token accuracy.
+  Nothing resolves. The budget was 3,082 steps × 2,048 tokens ≈ **6.3M tokens
+  per run**, which is very early training, nowhere near the 2–5B tokens where
+  Muon is usually judged.
+- **Exact SVD** matches Keller everywhere at **12× the wall clock** on the GPT
+  (8,109 s vs 657 s). Accuracy of the polar approximation, past what Keller
+  already gives, didn't buy anything here.
+
+### What the polynomial actually did to the spectrum
+
+The certificates are scalar statements about singular values in [σ_min, 1]. The
+logger records what the *applied update* really looked like during training:
+
+![Realized update spectra](docs/figures/update_spectra.png)
+
+γ = 0.20 does what it was fit to do. Its band is tighter at the top (max 1.20
+vs Keller's 1.30) and its middle 50% is narrower. But in the GPT, about **20%
+of each update's singular values sit below σ_min** for both arms, so the
+polynomial never pulls them into the band (the thin lines reaching toward 0).
+On CIFAR that's about 7%. So the "shape" only governs part of the spectrum
+these models produce, which is one plausible reason the language model can't
+tell the arms apart.
+
+### Things that went wrong, and what they mean for the result
+
+- **The learning-rate grid was too narrow.** Every CIFAR arm picked the largest
+  rate tried (0.08) and every GPT arm picked the smallest (0.005). The true
+  optimum is likely outside the grid, so these comparisons are at a rate that is
+  equally off for every arm, not at each arm's best.
+  ![LR tuning](docs/figures/lr_tuning.png)
+- **Wide bands diverge in bf16.** Three CIFAR tuning runs hit non-finite
+  gradients or loss: γ = 0.45 at two rates and γ = 0.60 at one, all in bf16, and
+  never in fp32. The first time this happened it crashed the whole study an hour
+  in. Now a diverged tuning run is recorded, its learning rate is barred from
+  selection, and the run is listed in the report (`8c10778`, `83d5f73`).
+  Divergence in confirmation still stops the study.
+- **3 seeds is low power.** The intervals are descriptive and not corrected for
+  multiple comparisons.
+
+Everything here traces back to files in the repo:
+[`reports/dual3090/results.md`](reports/dual3090/results.md) is generated by the
+study, [`reports/dual3090/summary.json`](reports/dual3090/summary.json) holds
+the tuning grid, curves, spectra and cost, and
+[`reports/audit.md`](reports/audit.md) is the audit of the stage 1–2 code that
+came before any training. The full run (checkpoints and per-step spectra) is
+17 GB and not committed. 5.8 h of the 8 h budget, peak 3.1 GB per GPU.
+
+### Next
+
+Widen the LR grid (at least 0.0025–0.16), run the GPT 10–50× longer, and add a
+γ sweep on the language model directly rather than inheriting the CIFAR winner.
+The spectra suggest an extra idea too: rescale before iterating so fewer
+singular values fall below σ_min, then check whether shape starts to matter.
 
 ## The γ family
 
@@ -172,6 +250,9 @@ regenerating, a γ hit a bad optimum; rerun with more seeds.
 | `src/nsshape/optim/orthogonalize.py` | `ns_quintic` (bf16) and `exact_svd_polar` (fp32) backends. |
 | `src/nsshape/optim/muon.py` | `ParameterizedMuon` optimizer. |
 | `src/nsshape/diagnostics/` | fp32 SVD spectral logger and record schema. |
+| `src/nsshape/experiments/` | CIFAR-10 CNN and GPT training workers driven by a JSON spec. |
+| `scripts/run_study.py` | Calibrate, budget, tune, select, confirm on two GPUs; resumable. |
+| `scripts/summarize_run.py`, `scripts/plot_study.py` | Compact summary and README figures from a run. |
 | `data/coefficients/v1.json` | Generated, committed artifact. |
 
 `polynomial.py` and `solve.py` never import torch; `optim/` and `diagnostics/`

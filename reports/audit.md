@@ -4,7 +4,7 @@ Audit date: 2026-10-13. Scope: this local checkout, its committed artifacts,
 tests, and fresh CPU numerical probes. No external literature review.
 
 **Historical audit:** The findings below describe the implementation before
-remediation. See [the remediation and run status](completion.md) and
+remediation. See [the results in the README](../README.md#results) and
 [the current two-3090 protocol](../docs/dual3090-study.md) for subsequent changes.
 The original audit metrics are preserved rather than overwritten.
 

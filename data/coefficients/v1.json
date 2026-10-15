@@ -21,13 +21,13 @@
         2.842849568069699
       ],
       "n_steps": 5,
-      "scale": 0.7724977121276522,
+      "scale": 0.7724968936415835,
       "sigma_min": 0.017758916782557203,
-      "achieved_half_width": 0.009974174085850293,
+      "achieved_half_width": 0.009975296380573954,
       "critical_point": 0.5285660108361403,
       "invariance_bound": 1.0,
       "invariance_margin": 0.006014689700459375,
-      "positivity_margin": 0.0013589871357178028,
+      "positivity_margin": 0.8841652784602829,
       "seed": 0
     },
     {
@@ -40,13 +40,13 @@
         1.599195503342509
       ],
       "n_steps": 5,
-      "scale": 0.9572080228113959,
+      "scale": 0.9572073278202665,
       "sigma_min": 0.013002833834886316,
-      "achieved_half_width": 0.019942517224001217,
+      "achieved_half_width": 0.019944825773520622,
       "critical_point": 0.6443590323856604,
       "invariance_bound": 1.0,
       "invariance_margin": 0.004971580266931674,
-      "positivity_margin": 0.0012735656145103184,
+      "positivity_margin": 0.9947002359094854,
       "seed": 0
     },
     {
@@ -59,13 +59,13 @@
         2.1998485340263656
       ],
       "n_steps": 5,
-      "scale": 0.9520045573196068,
+      "scale": 0.9520063324251404,
       "sigma_min": 0.006570612697748331,
-      "achieved_half_width": 0.04991234447834433,
+      "achieved_half_width": 0.04991411600632414,
       "critical_point": 0.5813236592545608,
       "invariance_bound": 1.0,
-      "invariance_margin": 0.00047519724693156906,
-      "positivity_margin": 0.0014144514390306445,
+      "invariance_margin": 0.0004751130594357056,
+      "positivity_margin": 0.9839222642416405,
       "seed": 0
     },
     {
@@ -78,13 +78,13 @@
         3.0788595782418664
       ],
       "n_steps": 5,
-      "scale": 0.9099237600392479,
+      "scale": 0.909925336783622,
       "sigma_min": 0.003447565326296462,
-      "achieved_half_width": 0.09980426268378813,
+      "achieved_half_width": 0.09980583290561225,
       "critical_point": 0.5230654166455223,
-      "invariance_bound": 1.0007411735805916,
-      "invariance_margin": 9.889413310482098e-08,
-      "positivity_margin": 0.0015505257242272041,
+      "invariance_bound": 1.000741192903231,
+      "invariance_margin": -0.0,
+      "positivity_margin": 0.9205703481607235,
       "seed": 0
     },
     {
@@ -97,13 +97,13 @@
         3.7960498633199937
       ],
       "n_steps": 5,
-      "scale": 0.8700005504858928,
+      "scale": 0.8700018672089618,
       "sigma_min": 0.0022187857694216627,
-      "achieved_half_width": 0.1499635168877456,
+      "achieved_half_width": 0.1499648033937742,
       "critical_point": 0.4896296998052254,
-      "invariance_bound": 1.0004714804245936,
-      "invariance_margin": -3.552713678800501e-15,
-      "positivity_margin": 0.001641531523289906,
+      "invariance_bound": 1.0004715261771702,
+      "invariance_margin": -0.0,
+      "positivity_margin": 0.8472680571633115,
       "seed": 0
     },
     {
@@ -116,13 +116,13 @@
         4.425468107918444
       ],
       "n_steps": 5,
-      "scale": 0.8335305467550154,
+      "scale": 0.8335295738881051,
       "sigma_min": 0.0015645812909648323,
-      "achieved_half_width": 0.1999514016913838,
+      "achieved_half_width": 0.19995283862680246,
       "critical_point": 0.4664981229108652,
-      "invariance_bound": 1.0001961338299232,
-      "invariance_margin": 8.881784197001252e-15,
-      "positivity_margin": 0.0017123100114402785,
+      "invariance_bound": 1.0001961782664208,
+      "invariance_margin": -0.0,
+      "positivity_margin": 0.7731960621020568,
       "seed": 2
     },
     {
@@ -135,13 +135,13 @@
         5.431366965546244
       ],
       "n_steps": 5,
-      "scale": 0.7695411609298959,
+      "scale": 0.7695412682432818,
       "sigma_min": 0.0009043129975317693,
-      "achieved_half_width": 0.2999638729509888,
+      "achieved_half_width": 0.29996397057180524,
       "critical_point": 0.43691561552311564,
-      "invariance_bound": 1.0003759225716795,
-      "invariance_margin": 3.7395880614354837e-07,
-      "positivity_margin": 0.0018159598846474387,
+      "invariance_bound": 1.0003759225843993,
+      "invariance_margin": -0.0,
+      "positivity_margin": 0.6341976521308084,
       "seed": 0
     },
     {
@@ -154,13 +154,13 @@
         6.6409676335805905
       ],
       "n_steps": 5,
-      "scale": 0.6903153769808954,
+      "scale": 0.6903154240733522,
       "sigma_min": 0.000461907327345109,
-      "achieved_half_width": 0.44956858981213427,
+      "achieved_half_width": 0.44956862736187814,
       "critical_point": 0.4098701277282825,
-      "invariance_bound": 1.0006595105790543,
-      "invariance_margin": -1.0880185641326534e-14,
-      "positivity_margin": 0.0019250706392629831,
+      "invariance_bound": 1.000659581720742,
+      "invariance_margin": -0.0,
+      "positivity_margin": 0.45373882812171606,
       "seed": 0
     },
     {
@@ -173,13 +173,13 @@
         7.60615790355825
       ],
       "n_steps": 5,
-      "scale": 0.6251107860022631,
+      "scale": 0.6251113475214711,
       "sigma_min": 0.0002462996650748475,
-      "achieved_half_width": 0.5999052539061924,
+      "achieved_half_width": 0.59990561329958,
       "critical_point": 0.39253769625692464,
-      "invariance_bound": 1.00011915318772,
-      "invariance_margin": 5.941913627793838e-13,
-      "positivity_margin": 0.0020004035036031674,
+      "invariance_bound": 1.0001191538368661,
+      "invariance_margin": -0.0,
+      "positivity_margin": 0.30120785754862345,
       "seed": 0
     },
     {
@@ -192,13 +192,13 @@
         2.0315
       ],
       "n_steps": 5,
-      "scale": 0.9252943614085949,
+      "scale": 0.9252952978511033,
       "sigma_min": 0.0014203132155766436,
-      "achieved_half_width": 0.29944240711443215,
+      "achieved_half_width": 0.2994431161117773,
       "critical_point": 0.5545287908544945,
-      "invariance_bound": 1.2023685869756775,
-      "invariance_margin": 2.3317186559346226e-07,
-      "positivity_margin": 0.002069743390740927,
+      "invariance_bound": 1.2023686051632125,
+      "invariance_margin": -0.0,
+      "positivity_margin": 0.6386145705143975,
       "seed": null
     },
     {
@@ -210,11 +210,13 @@
       "scale": 1.0,
       "sigma_min": 0.0,
       "achieved_half_width": 0.0,
-      "critical_point": Infinity,
+      "critical_point": null,
       "invariance_bound": 1.0,
-      "invariance_margin": Infinity,
-      "positivity_margin": Infinity,
+      "invariance_margin": null,
+      "positivity_margin": null,
       "seed": null
     }
-  ]
+  ],
+  "certificate_revision": "analytic-extrema-v2",
+  "positivity_margin_definition": "min P(x)/x on [0,B]"
 }

@@ -40,14 +40,41 @@ class ParameterizedMuon(torch.optim.Optimizer):
         weight_decay: float = 0.0,
         coeff_set: str = "keller",
         hook: Callable[[int, int, torch.Tensor, torch.Tensor], None] | None = None,
+        precision: str = "bf16",
     ):
+        if lr < 0 or not 0 <= momentum < 1 or weight_decay < 0:
+            raise ValueError("invalid learning rate, momentum, or weight decay")
+        if precision not in {"bf16", "fp32"}:
+            raise ValueError("precision must be bf16 or fp32")
         self.coefficient_set = get(coeff_set)
+        self.precision = precision
         self.hook = hook
         self.step_count = 0
         defaults = dict(
             lr=lr, momentum=momentum, nesterov=nesterov, weight_decay=weight_decay
         )
         super().__init__(params, defaults)
+
+    def state_dict(self):
+        result = super().state_dict()
+        from dataclasses import asdict
+        result["nsshape"] = dict(coefficient_set=asdict(self.coefficient_set),
+                                 step_count=self.step_count, precision=self.precision)
+        return result
+
+    def load_state_dict(self, state_dict):
+        from nsshape.coefficients import CoefficientSet
+        data = dict(state_dict)
+        metadata = data.pop("nsshape", None)
+        if metadata is None:
+            raise ValueError("checkpoint lacks nsshape coefficient/precision metadata")
+        cs = dict(metadata["coefficient_set"])
+        if cs["coeffs"] is not None:
+            cs["coeffs"] = tuple(cs["coeffs"])
+        self.coefficient_set = CoefficientSet(**cs)
+        self.precision = metadata["precision"]
+        self.step_count = metadata["step_count"]
+        return super().load_state_dict(data)
 
     @torch.no_grad()
     def step(self, closure=None):
@@ -59,6 +86,8 @@ class ParameterizedMuon(torch.optim.Optimizer):
         index = 0
         for group in self.param_groups:
             for p in group["params"]:
+                param_index = index
+                index += 1
                 if p.grad is None:
                     continue
                 if p.ndim != 2:
@@ -79,10 +108,10 @@ class ParameterizedMuon(torch.optim.Optimizer):
                     else buf
                 )
 
-                update = orthogonalize(M, self.coefficient_set)
+                update = orthogonalize(M, self.coefficient_set, self.precision)
 
                 if self.hook is not None:
-                    self.hook(self.step_count, index, M, update)
+                    self.hook(self.step_count, param_index, M, update)
 
                 if group["weight_decay"] != 0.0:
                     p.mul_(1.0 - group["lr"] * group["weight_decay"])
@@ -91,7 +120,6 @@ class ParameterizedMuon(torch.optim.Optimizer):
                 # ratio so wide and tall matrices take comparable-sized steps.
                 shape_scale = max(1.0, p.shape[0] / p.shape[1]) ** 0.5
                 p.add_(update, alpha=-group["lr"] * shape_scale)
-                index += 1
 
         self.step_count += 1
         return loss

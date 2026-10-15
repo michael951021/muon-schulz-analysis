@@ -91,10 +91,10 @@ def main() -> None:
             "scale": 1.0,
             "sigma_min": 0.0,
             "achieved_half_width": 0.0,
-            "critical_point": float("inf"),
+            "critical_point": None,
             "invariance_bound": 1.0,
-            "invariance_margin": float("inf"),
-            "positivity_margin": float("inf"),
+            "invariance_margin": None,
+            "positivity_margin": None,
             "seed": None,
         }
     )
@@ -104,6 +104,8 @@ def main() -> None:
         json.dumps(
             {
                 "version": 1,
+                "certificate_revision": "analytic-extrema-v2",
+                "positivity_margin_definition": "min P(x)/x on [0,B]",
                 "generated": date.today().isoformat(),
                 "n_steps": 5,
                 "sigma_grid": "logspace(-7, 0, 3000)",
@@ -111,6 +113,7 @@ def main() -> None:
                 "entries": entries,
             },
             indent=2,
+            allow_nan=False,
         )
         + "\n"
     )

@@ -7,12 +7,15 @@ on the singular-value spectrum?
 Muon's quintic was tuned for speed, not accuracy. It does not converge to the
 polar factor at all — it drives singular values into a wide band. **H1:** that
 band shape is the operative quantity, and shapes other than "as close to exact
-polar as possible" may train better. If H1 fails, the result is a rigorous
-defense of geometric alignment instead. Either outcome is publishable.
+polar as possible" may train better. An unsuccessful comparison would bound
+this tested family and training budget; it would not establish universal
+optimality of geometric alignment.
 
-This repository covers stages 1–2: the verified coefficient family and the
-instrumented optimizer. The CIFAR sweep and the transformer confirmation build on
-the committed table.
+This repository contains the coefficient family, instrumented optimizer, and a
+budget-calibrated CIFAR/transformer study launcher. The full GPU study has not
+been run in this checkout. See [the two-3090 protocol](docs/dual3090-study.md) for
+an executable 6–10-hour plan and [local smoke results](reports/local_smoke/results.md)
+for CPU training checks. Smoke results do not answer H1.
 
 ## The γ family
 
@@ -56,7 +59,7 @@ constraint. The fixed point is also γ-independent, which is correct: boundednes
 has nothing to do with band width.
 
 **Positivity, not monotonicity.** Keller's quintic is monotone only up to
-x\* = 0.5545, and every fitted member is similar (x\* ≈ 0.56–0.63). The
+x\* = 0.5545; the committed fitted members have x\* ≈ 0.393–0.644. The
 non-monotonicity is essential — it is how the polynomial squashes large singular
 values back down. Requiring monotonicity on [0,1] excludes the entire useful
 family. `P′ > 0 on [0, x*]` is vacuous, being the definition of x\*. What
@@ -75,7 +78,9 @@ a genuine interior member of the family with roughly 57% headroom in dynamic
 range — which is exactly the slack H1 predicts might be exploitable.
 
 Note that `exact_svd` is not a γ → 0 limit of the polynomials but a separate
-backend; it anchors the comparison at zero band width and unbounded cost.
+backend with a different measured cost. Its canonical partial polar factor
+preserves zero and excludes numerical null-space directions; full-rank spectra
+have zero band width.
 
 ## A caveat when reading spectra
 
@@ -115,9 +120,34 @@ uv run pytest -m "not slow"   # fast suite, ~2s
 uv run pytest                 # includes solver fits, ~2min
 ```
 
-`tests/test_coefficient_table.py` deliberately does not import `nsshape.solve`.
-It recomputes every certified quantity from the raw coefficients, so a solver bug
-cannot certify itself. Those tests are the scientific claim.
+The table tests avoid the solver. `tests/test_research_integrity.py` additionally
+checks continuous image bounds through independently computed polynomial extrema.
+Production certificates use analytic interval extrema in float64; input threshold
+resolution remains grid-limited. These numerical checks do not prove a globally
+optimal frontier or predict training performance.
+
+## Training study on two 3090s
+
+After the installation and dataset-preparation steps in
+[the protocol](docs/dual3090-study.md), run:
+
+```bash
+bash scripts/launch_dual3090.sh 8 runs/dual3090
+```
+
+The launcher calibrates the actual GPUs, runs two independent jobs concurrently,
+selects configurations on validation data, confirms on fresh seeds, and generates
+`reports/dual3090/results.md`. The approximately 124M GPT confirmation uses a
+matched, calibrated token budget and is shorter than the original 2–5B-token
+proposal. Installation, data preparation, preflight, and tests precede the timed
+training budget.
+
+`ParameterizedMuon(..., precision="fp32")` isolates the intended polynomial
+shape; default `precision="bf16"` retains the practical Muon implementation.
+The study tests both, because scalar band certificates do not certify bf16
+matrix arithmetic. Checkpoints include exact coefficients, precision, and step.
+For uniform diagnostic sampling, pass `population_size` and `coefficient_set` to
+`SVDLogger`; without a population size it logs the first parameters explicitly.
 
 ## Regenerating artifacts
 
@@ -148,154 +178,6 @@ regenerating, a γ hit a bad optimum; rerun with more seeds.
 never import scipy. The optimizer takes a coefficient-set *name* and the logger
 takes a *hook*, so neither knows what model it is training — which is what lets
 the same code drive both cifar10-airbench and modded-nanogpt.
-
-### Structure
-
-The stereotype on each module is the heavy dependency it is allowed to import.
-`data/coefficients/v1.json` is the seam: the solver writes it offline, and
-everything on the training side reads it, so no training run ever imports scipy.
-
-```mermaid
-classDiagram
-    direction LR
-
-    class polynomial {
-        <<numpy>>
-        +KELLER Coeffs
-        +DEFAULT_SIGMA_GRID ndarray
-        +evaluate(coeffs, x) ndarray
-        +compose(coeffs, x, n_steps) ndarray
-        +first_critical_point(coeffs) float
-        +reachable_bound(coeffs) float
-        +invariance_violation(coeffs, B) float
-        +positivity_violation(coeffs, B) float
-        +band_extent(coeffs, gamma, n_steps) BandExtent
-    }
-    class BandExtent {
-        <<dataclass>>
-        +sigma_min float
-        +scale float
-        +achieved_half_width float
-    }
-
-    class solve {
-        <<scipy>>
-        +PENALTY float
-        +BOUNDS list
-        +objective(params, gamma, n_steps) float
-        +fit_gamma(gamma, n_steps, seeds) FitResult
-    }
-    class FitResult {
-        <<dataclass>>
-        +gamma float
-        +coeffs Coeffs
-        +sigma_min float
-        +scale float
-        +invariance_bound float
-        +feasible bool
-        +seed int
-        +to_dict() dict
-    }
-
-    class coefficients {
-        <<numpy>>
-        +TABLE_PATH Path
-        +EXACT_SVD_NAME str
-        +load_table(path) dict
-        +get(name, path) CoefficientSet
-    }
-    class CoefficientSet {
-        <<dataclass>>
-        +name str
-        +kind str
-        +gamma float
-        +coeffs Coeffs
-        +n_steps int
-        +scale float
-        +sigma_min float
-        +invariance_bound float
-        +is_exact_svd bool
-    }
-
-    class orthogonalize {
-        <<torch>>
-        +ns_quintic(G, coeffs, n_steps, scale) Tensor
-        +exact_svd_polar(G) Tensor
-        +orthogonalize(G, cs) Tensor
-    }
-    class Optimizer {
-        <<torch>>
-    }
-    class ParameterizedMuon {
-        +coefficient_set CoefficientSet
-        +hook Callable
-        +step_count int
-        +step(closure)
-    }
-
-    class schema {
-        <<torch>>
-        +QUANTILES tuple
-        +spectrum_record(step, index, phase, M, n_bins) SpectrumRecord
-    }
-    class SpectrumRecord {
-        <<dataclass>>
-        +step int
-        +param_index int
-        +phase str
-        +shape list
-        +quantiles dict
-        +band_ratio float
-        +histogram list
-        +to_json() str
-        +from_json(line) SpectrumRecord
-    }
-    class SVDLogger {
-        <<torch>>
-        +path Path
-        +every_k int
-        +max_params int
-        +should_sample(step) bool
-        +close()
-    }
-
-    class CoefficientTable {
-        <<artifact>>
-        +version int
-        +n_steps int
-        +entries list
-    }
-    class generate_coefficients {
-        <<script>>
-        +GAMMA_GRID list
-        +main()
-    }
-    class plot_composed_maps {
-        <<script>>
-        +FEATURED list
-        +main()
-    }
-
-    polynomial *-- BandExtent
-    solve *-- FitResult
-    coefficients *-- CoefficientSet
-    schema *-- SpectrumRecord
-    Optimizer <|-- ParameterizedMuon
-
-    solve ..> polynomial : scores candidates with
-    coefficients ..> polynomial : Coeffs
-    generate_coefficients ..> solve : offline fit
-    generate_coefficients ..> CoefficientTable : writes
-    coefficients ..> CoefficientTable : reads
-    plot_composed_maps ..> coefficients : reads
-    plot_composed_maps ..> polynomial : composes
-
-    ParameterizedMuon --> CoefficientSet : resolved by name
-    ParameterizedMuon ..> orthogonalize : per 2D parameter
-    orthogonalize ..> CoefficientSet : dispatches on kind
-    ParameterizedMuon o-- SVDLogger : optional hook
-    SVDLogger ..> schema : fp32 SVD
-```
 
 ## Design docs
 

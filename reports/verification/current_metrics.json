@@ -1,0 +1,142 @@
+{
+  "python": "3.12.9",
+  "numpy": "2.5.2",
+  "torch": "2.13.0",
+  "table_sha256": "2fe7f6babe73571addfb297c53119d9cfe9cb664eb2a6e69e0a64fc1f3caf171",
+  "dense_grid_points": 1000000,
+  "rows": [
+    {
+      "name": "gamma_0.01",
+      "gamma": 0.01,
+      "sigma_min": 0.017758916782557203,
+      "dense_half_width": 0.009975296380024295,
+      "normalized_min": 0.9900247036198196,
+      "normalized_max": 1.0099752963798652,
+      "analytic_invariance_violation": -0.006014689700459375,
+      "min_positive_factor": 0.8841652784602829,
+      "controlled_input_min": 0.03515564650297165,
+      "bf16_half_width": 0.0159626342356205
+    },
+    {
+      "name": "gamma_0.02",
+      "gamma": 0.02,
+      "sigma_min": 0.013002833834886316,
+      "dense_half_width": 0.019944825773515577,
+      "normalized_min": 0.9800551742264872,
+      "normalized_max": 1.0199448257735186,
+      "analytic_invariance_violation": -0.004971580266931674,
+      "min_positive_factor": 0.9947002359094854,
+      "controlled_input_min": 0.02752789668738842,
+      "bf16_half_width": 0.021569684147834778
+    },
+    {
+      "name": "gamma_0.05",
+      "gamma": 0.05,
+      "sigma_min": 0.006570612697748331,
+      "dense_half_width": 0.04991411600473296,
+      "normalized_min": 0.9500858839936759,
+      "normalized_max": 1.0499141160029746,
+      "analytic_invariance_violation": -0.00047511305943592763,
+      "min_positive_factor": 0.9839222642416405,
+      "controlled_input_min": 0.006749284919351339,
+      "bf16_half_width": 0.055391427129507065
+    },
+    {
+      "name": "gamma_0.10",
+      "gamma": 0.1,
+      "sigma_min": 0.003447565326296462,
+      "dense_half_width": 0.09980583290260459,
+      "normalized_min": 0.9001941670991391,
+      "normalized_max": 1.0998058329047349,
+      "analytic_invariance_violation": 0.0,
+      "min_positive_factor": 0.9205703481607235,
+      "controlled_input_min": 0.003801547223702073,
+      "bf16_half_width": 0.12297821044921875
+    },
+    {
+      "name": "gamma_0.15",
+      "gamma": 0.15,
+      "sigma_min": 0.0022187857694216627,
+      "dense_half_width": 0.14996480339173085,
+      "normalized_min": 0.8500351966062258,
+      "normalized_max": 1.1499648033889665,
+      "analytic_invariance_violation": 0.0,
+      "min_positive_factor": 0.8472680571633115,
+      "controlled_input_min": 0.0025530317798256874,
+      "bf16_half_width": 0.16204367578029633
+    },
+    {
+      "name": "gamma_0.20",
+      "gamma": 0.2,
+      "sigma_min": 0.0015645812909648323,
+      "dense_half_width": 0.1999528386248248,
+      "normalized_min": 0.8000471613736546,
+      "normalized_max": 1.1999528386225442,
+      "analytic_invariance_violation": 0.0,
+      "min_positive_factor": 0.7731960621020568,
+      "controlled_input_min": 0.0018569246167317033,
+      "bf16_half_width": 0.20946979522705078
+    },
+    {
+      "name": "gamma_0.30",
+      "gamma": 0.3,
+      "sigma_min": 0.0009043129975317693,
+      "dense_half_width": 0.2999639705717739,
+      "normalized_min": 0.7000360294281948,
+      "normalized_max": 1.2999639705717154,
+      "analytic_invariance_violation": 0.0,
+      "min_positive_factor": 0.6341976521308084,
+      "controlled_input_min": 0.0011220660526305437,
+      "bf16_half_width": 0.29348742961883545
+    },
+    {
+      "name": "gamma_0.45",
+      "gamma": 0.45,
+      "sigma_min": 0.000461907327345109,
+      "dense_half_width": 0.44956862736184566,
+      "normalized_min": 0.5504313726381218,
+      "normalized_max": 1.44956862736176,
+      "analytic_invariance_violation": 0.0,
+      "min_positive_factor": 0.45373882812171606,
+      "controlled_input_min": 0.0006017200648784637,
+      "bf16_half_width": 0.6950027942657471
+    },
+    {
+      "name": "gamma_0.60",
+      "gamma": 0.6,
+      "sigma_min": 0.0002462996650748475,
+      "dense_half_width": 0.5999056132993532,
+      "normalized_min": 0.40009438670041986,
+      "normalized_max": 1.5999056132984457,
+      "analytic_invariance_violation": 0.0,
+      "min_positive_factor": 0.30120785754862345,
+      "controlled_input_min": 0.0003342176787555218,
+      "bf16_half_width": 0.6065455079078674
+    },
+    {
+      "name": "keller",
+      "gamma": 0.3,
+      "sigma_min": 0.0014203132155766436,
+      "dense_half_width": 0.29944311610752566,
+      "normalized_min": 0.7005568838882227,
+      "normalized_max": 1.2994431160996391,
+      "analytic_invariance_violation": 2.220446049250313e-16,
+      "min_positive_factor": 0.6386145705143975,
+      "controlled_input_min": 0.0016995694022625685,
+      "bf16_half_width": 0.2769971191883087
+    }
+  ],
+  "zero_update_norms": {
+    "gamma_0.01": 0.0,
+    "gamma_0.02": 0.0,
+    "gamma_0.05": 0.0,
+    "gamma_0.10": 0.0,
+    "gamma_0.15": 0.0,
+    "gamma_0.20": 0.0,
+    "gamma_0.30": 0.0,
+    "gamma_0.45": 0.0,
+    "gamma_0.60": 0.0,
+    "keller": 0.0,
+    "exact_svd": 0.0
+  }
+}

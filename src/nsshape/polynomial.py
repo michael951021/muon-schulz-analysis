@@ -104,29 +104,41 @@ def reachable_bound(
     """
     B = 1.0
     for _ in range(max_iter):
-        xs = np.linspace(0.0, B, n)
-        nxt = max(1.0, float(evaluate(coeffs, xs).max()))
+        nxt = max(1.0, _interval_max(coeffs, B))
         if not np.isfinite(nxt) or nxt > escape:
             return np.inf
         if abs(nxt - B) < 1e-12:
-            return B
+            return max(B, nxt)
         B = nxt
-    return B
+    return np.inf
+
+
+def _interval_max(coeffs: Coeffs, B: float) -> float:
+    """Analytic maximum using every real derivative root and both endpoints."""
+    a, b, c = coeffs
+    roots = np.roots([5*c, 3*b, a]) if b != 0 or c != 0 else []
+    xs = [0., B]
+    xs.extend(float(np.sqrt(r.real)) for r in roots
+              if abs(r.imag) < 1e-12 and 0 < r.real < B*B)
+    return float(evaluate(coeffs, xs).max())
 
 
 def invariance_violation(coeffs: Coeffs, B: float, n: int = 2001) -> float:
     """max_[0,B] P - B. Non-positive means [0, B] is forward-invariant."""
-    xs = np.linspace(0.0, B, n)
-    return float(evaluate(coeffs, xs).max() - B)
+    return _interval_max(coeffs, B) - B
 
 
 def positivity_violation(coeffs: Coeffs, B: float, n: int = 2001) -> float:
-    """-min_(0,B] P. Non-positive means P > 0 on (0, B].
+    """Negative minimum of P(x)/x on [0,B]; strict negativity proves positivity.
 
-    This is the binding shape constraint, standing in for monotonicity.
+    Unlike sampling P near zero, this margin has a well-defined positive lower
+    bound. The unused n argument is retained for compatibility.
     """
-    xs = np.linspace(B / n, B, n)
-    return float(-evaluate(coeffs, xs).min())
+    a, b, c = coeffs
+    us = [0., B*B]
+    if c != 0 and 0 < -b/(2*c) < B*B:
+        us.append(-b/(2*c))
+    return -float(min(a+b*u+c*u*u for u in us))
 
 
 @dataclass(frozen=True)
@@ -151,28 +163,46 @@ def band_extent(
     n_steps: int = 5,
     grid: np.ndarray | None = None,
 ) -> BandExtent:
-    """Largest input range [sigma_min, 1] whose image has relhw <= gamma.
+    """Largest grid-aligned range satisfying an analytic image-interval check.
 
-    Walks leftward from x = 1 along the grid, growing the image interval, and
-    stops at the first point that would push relative half-width past gamma.
+    Continuity means the image of an interval is an interval. Propagating its
+    endpoint/critical-point extrema through each composition checks the entire
+    continuous domain, without sampling away narrow oscillations. Threshold
+    resolution remains limited by the input grid; arithmetic is float64.
     """
     if grid is None:
         grid = DEFAULT_SIGMA_GRID
-    image = compose(coeffs, grid, n_steps)
-    if not np.all(np.isfinite(image)) or image[-1] <= 0:
+    grid = np.asarray(grid)
+    if not 0 <= gamma < 1 or n_steps < 1 or len(grid) < 2 or not np.all(np.diff(grid) > 0) or grid[0] <= 0 or grid[-1] != 1:
+        raise ValueError("invalid gamma, steps, or sigma grid")
+    endpoint = compose(coeffs, 1., n_steps)
+    if endpoint <= 0 or endpoint >= DIVERGENCE_BOUND:
         return BandExtent(1.0, float("nan"), float("nan"))
+    left, right = 0, len(grid)-1
+    while left < right:
+        mid = (left+right)//2
+        lo, hi = composed_bounds(coeffs, float(grid[mid]), 1., n_steps)
+        feasible = np.isfinite(lo+hi) and lo > 0 and (hi-lo)/(hi+lo) <= gamma
+        if feasible:
+            right = mid
+        else:
+            left = mid+1
+    lo, hi = composed_bounds(coeffs, float(grid[left]), 1., n_steps)
+    return BandExtent(float(grid[left]), (lo+hi)/2, (hi-lo)/(hi+lo))
 
-    i = len(grid) - 1
-    lo = hi = float(image[-1])
-    best = BandExtent(float(grid[-1]), (lo + hi) / 2.0, 0.0)
-    while i > 0:
-        value = float(image[i - 1])
-        if value <= 0:
-            break
-        new_lo, new_hi = min(lo, value), max(hi, value)
-        if (new_hi - new_lo) / (new_hi + new_lo) > gamma:
-            break
-        lo, hi = new_lo, new_hi
-        i -= 1
-        best = BandExtent(float(grid[i]), (lo + hi) / 2.0, (hi - lo) / (hi + lo))
-    return best
+
+def composed_bounds(coeffs: Coeffs, lower: float, upper: float, n_steps: int = 5) -> tuple[float, float]:
+    """Continuous scalar image bounds from analytic extrema, in float64."""
+    a, b, c = coeffs
+    roots = np.roots([5*c, 3*b, a]) if b != 0 or c != 0 else []
+    critical = [float(np.sqrt(r.real)) for r in roots if abs(r.imag) < 1e-12 and r.real > 0]
+    critical += [-x for x in critical.copy()]
+    def value(x):
+        return x*(a+x*x*(b+c*x*x))
+    for _ in range(n_steps):
+        points = [lower, upper]+[x for x in critical if lower < x < upper]
+        values = [value(x) for x in points]
+        lower, upper = min(values), max(values)
+        if not np.isfinite(lower+upper) or max(abs(lower), abs(upper)) > DIVERGENCE_BOUND:
+            return float('-inf'), float('inf')
+    return lower, upper

@@ -23,13 +23,19 @@ class SpectrumRecord:
     phase: str
     shape: list[int]
     quantiles: dict[str, float]
-    band_ratio: float
+    band_ratio: float | None
     histogram: list[int]
     bin_edges: list[float]
     n_singular_values: int
+    coefficient_set: str | None = None
+    precision: str | None = None
+    input_norm: float | None = None
+    normalized_input_min: float | None = None
+    normalized_input_max: float | None = None
+    below_sigma_min: int | None = None
 
     def to_json(self) -> str:
-        return json.dumps(asdict(self), separators=(",", ":"))
+        return json.dumps(asdict(self), separators=(",", ":"), allow_nan=False)
 
     @classmethod
     def from_json(cls, line: str) -> SpectrumRecord:
@@ -48,10 +54,10 @@ def spectrum_record(
     fp32 is deliberate: the training step may run in bf16, but the diagnostic
     must be trustworthy enough to prove to a reviewer what the polynomial did.
     """
-    s = torch.linalg.svdvals(M.detach().float())
+    s = torch.linalg.svdvals(M.detach().float()).cpu()
     nonzero = s[s > 0]
     band_ratio = (
-        float(nonzero.max() / nonzero.min()) if nonzero.numel() > 0 else float("inf")
+        float(nonzero.max() / nonzero.min()) if nonzero.numel() > 0 else None
     )
     quantile_values = torch.quantile(s, torch.tensor(QUANTILES))
     counts, edges = torch.histogram(s, bins=n_bins)

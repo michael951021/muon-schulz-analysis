@@ -9,3 +9,5 @@ wandb/
 .DS_Store
 .venv/
 figures/
+data/datasets/
+dist/

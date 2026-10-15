@@ -6,6 +6,13 @@
 instrumented optimizer. Stages 3–5 (CIFAR grid, nanogpt confirmation, paper) get
 their own specs.
 
+**2026-10-13 update:** This is the original stages 1–2 design. The executable
+budget-limited training protocol is now [the two-3090 study](../../dual3090-study.md).
+Certificates now propagate analytic scalar interval extrema in float64, and
+positivity margins measure min P(x)/x. The implementation supports fp32 and bf16
+NS modes and a zero-preserving partial-SVD polar factor. Historical preliminary
+measurements below should be read alongside the recertified table and audit.
+
 ## Research question
 
 Muon orthogonalizes momentum matrices with a fixed quintic Newton–Schulz
@@ -18,7 +25,8 @@ close to exact polar as possible" may train better. If H1 fails, the fallback
 result is a rigorous defense of geometric alignment — that among practical NS
 steps, aiming for the exact polar factor is optimal.
 
-Either outcome is publishable; the design must not privilege one.
+The design must not privilege either outcome. A negative result bounds this
+family and experimental regime, rather than proving universal polar optimality.
 
 ## Stage 1: the polynomial family
 
@@ -88,7 +96,8 @@ no feasibility cliff.
 An earlier absolute-band formulation made γ = 0.05 look infeasible, and that
 conclusion was carried across the switch to the relative band before being
 retracted. Exact SVD is therefore *not* a γ → 0 limit of this family — it is a
-separate backend, anchoring the comparison at zero band width and unbounded cost.
+separate backend, anchoring the full-rank comparison at zero band width and a
+different measured computational cost.
 
 ### Validation: standard Muon is a near-optimal interior point
 
@@ -116,7 +125,7 @@ frontier position is the meaningful claim.
 
 **Implementation note — positivity, not monotonicity.** Keller's quintic is
 monotone only up to its first critical point x\* = 0.5545, and every fitted member
-is similar (x\* ≈ 0.56–0.63). The non-monotonicity is essential: it is how the
+turns over early (committed fitted x\* ≈ 0.393–0.644). The non-monotonicity is essential: it is how the
 polynomial squashes large singular values back down. Any constraint requiring
 monotonicity across [0, 1] excludes standard Muon and the entire useful family.
 `P′ > 0 on [0, x*]` is vacuous — it is the definition of x\*. The constraint that
@@ -243,7 +252,7 @@ matmuls and torch suffices.
 1. A committed coefficient table of 6–10 sets whose properties are independently
    re-verified by tests that do not share code with the solver.
 2. The table places Keller inside the fitted frontier at its achieved γ ≈ 0.30
-   (σ_min within ~25% of the fitted optimum), confirming standard Muon is a
+   (Keller/fitted σ_min ratio between 1.2 and 2.5), confirming standard Muon is a
    near-optimal interior family member.
 3. A parameterized Muon that runs any table entry, plus exact SVD, through one
    interface.

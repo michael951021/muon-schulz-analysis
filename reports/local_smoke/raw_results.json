@@ -1,0 +1,4776 @@
+{
+  "status": "complete",
+  "scope": "CPU tinyshakespeare smoke; not CIFAR/FineWeb confirmation",
+  "source_sha256": "8e6331b219e186727387b0d84dd71de2553df3186c66d3a9cb4b99bf0314bf96",
+  "tuning": [
+    {
+      "spec": {
+        "task": "language",
+        "arm": "gamma_0.10",
+        "precision": "fp32",
+        "phase": "tune",
+        "lr": 0.005,
+        "seed": 0,
+        "steps": 300,
+        "data": "/Users/krod/Documents/Coders/muon_schulz_extension/data/datasets/shakespeare",
+        "batch": 8,
+        "model": {
+          "width": 64,
+          "layers": 2,
+          "heads": 4,
+          "context": 64
+        },
+        "adam_lr": 0.001,
+        "weight_decay": 0.01,
+        "eval_tokens": 8192,
+        "eval_every": 150,
+        "log_every": 150,
+        "max_seconds": 300,
+        "threads": 1,
+        "source_sha256": "8e6331b219e186727387b0d84dd71de2553df3186c66d3a9cb4b99bf0314bf96"
+      },
+      "status": "complete",
+      "completed_steps": 300,
+      "validation": {
+        "loss": 2.472430542111397,
+        "accuracy": 0.296142578125,
+        "count": 8192
+      },
+      "test": null,
+      "curve": [
+        {
+          "step": 150,
+          "train_loss": 2.646223783493042,
+          "validation": {
+            "loss": 2.563050553202629,
+            "accuracy": 0.2794189453125,
+            "count": 8192
+          }
+        },
+        {
+          "step": 300,
+          "train_loss": 2.3968260288238525,
+          "validation": {
+            "loss": 2.472430542111397,
+            "accuracy": 0.296142578125,
+            "count": 8192
+          }
+        }
+      ],
+      "seconds": 1.4399536669952795,
+      "final_evaluation_seconds": 0.019001875014510006,
+      "diagnostic_seconds": 0.004322875058278441,
+      "seconds_per_step": 0.004695216577965766,
+      "parameters": 107200,
+      "dataset": {
+        "dataset": "tinyshakespeare",
+        "source_sha256": "86c4e6aa9db7c042ec79f339dcb96d42b0075e16b8fc2e86bf0ca57e2dc565ed",
+        "tokenizer": "characters",
+        "vocab_size": 65,
+        "vocabulary": [
+          "\n",
+          " ",
+          "!",
+          "$",
+          "&",
+          "'",
+          ",",
+          "-",
+          ".",
+          "3",
+          ":",
+          ";",
+          "?",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z",
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "f",
+          "g",
+          "h",
+          "i",
+          "j",
+          "k",
+          "l",
+          "m",
+          "n",
+          "o",
+          "p",
+          "q",
+          "r",
+          "s",
+          "t",
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z"
+        ],
+        "split": "contiguous 85%/7.5%/7.5%; local smoke only",
+        "files": {
+          "train": {
+            "sha256": "06db62f57635cac53577f9cdfe6b036646c78e1e15c9243b4fe79f3261aa73a8",
+            "tokens": 948084
+          },
+          "validation": {
+            "sha256": "a9e95abb74fe936737ac32558b82236a57681a76c0f0ff7389b00dac58a7f41b",
+            "tokens": 83655
+          },
+          "test": {
+            "sha256": "82d21c0cc612ce062edfb72d8bf5969b79e71ed83303b6e1f318822fe4dc9d9a",
+            "tokens": 83655
+          }
+        }
+      },
+      "coefficient_set": {
+        "name": "gamma_0.10",
+        "kind": "fitted",
+        "gamma": 0.1,
+        "coeffs": [
+          3.100305406593715,
+          -5.181157462454122,
+          3.0788595782418664
+        ],
+        "n_steps": 5,
+        "scale": 0.909925336783622,
+        "sigma_min": 0.003447565326296462,
+        "achieved_half_width": 0.09980583290561225,
+        "critical_point": 0.5230654166455223,
+        "invariance_bound": 1.000741192903231,
+        "invariance_margin": -0.0,
+        "positivity_margin": 0.9205703481607235
+      },
+      "coefficient_table_sha256": "2fe7f6babe73571addfb297c53119d9cfe9cb664eb2a6e69e0a64fc1f3caf171",
+      "versions": {
+        "torch": "2.13.0",
+        "numpy": "2.5.2"
+      },
+      "device": "cpu",
+      "cuda_version": null,
+      "artifact_directory": "/Users/krod/Documents/Coders/muon_schulz_extension/runs/local_smoke_release/jobs/6f354620cb70bb72fa78",
+      "peak_gpu_bytes": 0,
+      "tokens_seen": 153600,
+      "cuda_visible_devices": "cpu0",
+      "worker_wall_seconds": 2.873972708999645
+    },
+    {
+      "spec": {
+        "task": "language",
+        "arm": "gamma_0.10",
+        "precision": "fp32",
+        "phase": "tune",
+        "lr": 0.02,
+        "seed": 0,
+        "steps": 300,
+        "data": "/Users/krod/Documents/Coders/muon_schulz_extension/data/datasets/shakespeare",
+        "batch": 8,
+        "model": {
+          "width": 64,
+          "layers": 2,
+          "heads": 4,
+          "context": 64
+        },
+        "adam_lr": 0.001,
+        "weight_decay": 0.01,
+        "eval_tokens": 8192,
+        "eval_every": 150,
+        "log_every": 150,
+        "max_seconds": 300,
+        "threads": 1,
+        "source_sha256": "8e6331b219e186727387b0d84dd71de2553df3186c66d3a9cb4b99bf0314bf96"
+      },
+      "status": "complete",
+      "completed_steps": 300,
+      "validation": {
+        "loss": 2.43558968603611,
+        "accuracy": 0.3050537109375,
+        "count": 8192
+      },
+      "test": null,
+      "curve": [
+        {
+          "step": 150,
+          "train_loss": 2.6327826976776123,
+          "validation": {
+            "loss": 2.557821035385132,
+            "accuracy": 0.2845458984375,
+            "count": 8192
+          }
+        },
+        {
+          "step": 300,
+          "train_loss": 2.347951650619507,
+          "validation": {
+            "loss": 2.43558968603611,
+            "accuracy": 0.3050537109375,
+            "count": 8192
+          }
+        }
+      ],
+      "seconds": 1.429376707994379,
+      "final_evaluation_seconds": 0.021569250035099685,
+      "diagnostic_seconds": 0.004413501068484038,
+      "seconds_per_step": 0.004657624557148665,
+      "parameters": 107200,
+      "dataset": {
+        "dataset": "tinyshakespeare",
+        "source_sha256": "86c4e6aa9db7c042ec79f339dcb96d42b0075e16b8fc2e86bf0ca57e2dc565ed",
+        "tokenizer": "characters",
+        "vocab_size": 65,
+        "vocabulary": [
+          "\n",
+          " ",
+          "!",
+          "$",
+          "&",
+          "'",
+          ",",
+          "-",
+          ".",
+          "3",
+          ":",
+          ";",
+          "?",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z",
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "f",
+          "g",
+          "h",
+          "i",
+          "j",
+          "k",
+          "l",
+          "m",
+          "n",
+          "o",
+          "p",
+          "q",
+          "r",
+          "s",
+          "t",
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z"
+        ],
+        "split": "contiguous 85%/7.5%/7.5%; local smoke only",
+        "files": {
+          "train": {
+            "sha256": "06db62f57635cac53577f9cdfe6b036646c78e1e15c9243b4fe79f3261aa73a8",
+            "tokens": 948084
+          },
+          "validation": {
+            "sha256": "a9e95abb74fe936737ac32558b82236a57681a76c0f0ff7389b00dac58a7f41b",
+            "tokens": 83655
+          },
+          "test": {
+            "sha256": "82d21c0cc612ce062edfb72d8bf5969b79e71ed83303b6e1f318822fe4dc9d9a",
+            "tokens": 83655
+          }
+        }
+      },
+      "coefficient_set": {
+        "name": "gamma_0.10",
+        "kind": "fitted",
+        "gamma": 0.1,
+        "coeffs": [
+          3.100305406593715,
+          -5.181157462454122,
+          3.0788595782418664
+        ],
+        "n_steps": 5,
+        "scale": 0.909925336783622,
+        "sigma_min": 0.003447565326296462,
+        "achieved_half_width": 0.09980583290561225,
+        "critical_point": 0.5230654166455223,
+        "invariance_bound": 1.000741192903231,
+        "invariance_margin": -0.0,
+        "positivity_margin": 0.9205703481607235
+      },
+      "coefficient_table_sha256": "2fe7f6babe73571addfb297c53119d9cfe9cb664eb2a6e69e0a64fc1f3caf171",
+      "versions": {
+        "torch": "2.13.0",
+        "numpy": "2.5.2"
+      },
+      "device": "cpu",
+      "cuda_version": null,
+      "artifact_directory": "/Users/krod/Documents/Coders/muon_schulz_extension/runs/local_smoke_release/jobs/769cc2ad1211a9675238",
+      "peak_gpu_bytes": 0,
+      "tokens_seen": 153600,
+      "cuda_visible_devices": "cpu1",
+      "worker_wall_seconds": 2.871413749991916
+    },
+    {
+      "spec": {
+        "task": "language",
+        "arm": "keller",
+        "precision": "fp32",
+        "phase": "tune",
+        "lr": 0.02,
+        "seed": 0,
+        "steps": 300,
+        "data": "/Users/krod/Documents/Coders/muon_schulz_extension/data/datasets/shakespeare",
+        "batch": 8,
+        "model": {
+          "width": 64,
+          "layers": 2,
+          "heads": 4,
+          "context": 64
+        },
+        "adam_lr": 0.001,
+        "weight_decay": 0.01,
+        "eval_tokens": 8192,
+        "eval_every": 150,
+        "log_every": 150,
+        "max_seconds": 300,
+        "threads": 1,
+        "source_sha256": "8e6331b219e186727387b0d84dd71de2553df3186c66d3a9cb4b99bf0314bf96"
+      },
+      "status": "complete",
+      "completed_steps": 300,
+      "validation": {
+        "loss": 2.43745119869709,
+        "accuracy": 0.306396484375,
+        "count": 8192
+      },
+      "test": null,
+      "curve": [
+        {
+          "step": 150,
+          "train_loss": 2.6320419311523438,
+          "validation": {
+            "loss": 2.571451723575592,
+            "accuracy": 0.281005859375,
+            "count": 8192
+          }
+        },
+        {
+          "step": 300,
+          "train_loss": 2.3497188091278076,
+          "validation": {
+            "loss": 2.43745119869709,
+            "accuracy": 0.306396484375,
+            "count": 8192
+          }
+        }
+      ],
+      "seconds": 1.4555133749963716,
+      "final_evaluation_seconds": 0.02199758298229426,
+      "diagnostic_seconds": 0.003929167054593563,
+      "seconds_per_step": 0.004730466636829078,
+      "parameters": 107200,
+      "dataset": {
+        "dataset": "tinyshakespeare",
+        "source_sha256": "86c4e6aa9db7c042ec79f339dcb96d42b0075e16b8fc2e86bf0ca57e2dc565ed",
+        "tokenizer": "characters",
+        "vocab_size": 65,
+        "vocabulary": [
+          "\n",
+          " ",
+          "!",
+          "$",
+          "&",
+          "'",
+          ",",
+          "-",
+          ".",
+          "3",
+          ":",
+          ";",
+          "?",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z",
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "f",
+          "g",
+          "h",
+          "i",
+          "j",
+          "k",
+          "l",
+          "m",
+          "n",
+          "o",
+          "p",
+          "q",
+          "r",
+          "s",
+          "t",
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z"
+        ],
+        "split": "contiguous 85%/7.5%/7.5%; local smoke only",
+        "files": {
+          "train": {
+            "sha256": "06db62f57635cac53577f9cdfe6b036646c78e1e15c9243b4fe79f3261aa73a8",
+            "tokens": 948084
+          },
+          "validation": {
+            "sha256": "a9e95abb74fe936737ac32558b82236a57681a76c0f0ff7389b00dac58a7f41b",
+            "tokens": 83655
+          },
+          "test": {
+            "sha256": "82d21c0cc612ce062edfb72d8bf5969b79e71ed83303b6e1f318822fe4dc9d9a",
+            "tokens": 83655
+          }
+        }
+      },
+      "coefficient_set": {
+        "name": "keller",
+        "kind": "baseline",
+        "gamma": 0.3,
+        "coeffs": [
+          3.4445,
+          -4.775,
+          2.0315
+        ],
+        "n_steps": 5,
+        "scale": 0.9252952978511033,
+        "sigma_min": 0.0014203132155766436,
+        "achieved_half_width": 0.2994431161117773,
+        "critical_point": 0.5545287908544945,
+        "invariance_bound": 1.2023686051632125,
+        "invariance_margin": -0.0,
+        "positivity_margin": 0.6386145705143975
+      },
+      "coefficient_table_sha256": "2fe7f6babe73571addfb297c53119d9cfe9cb664eb2a6e69e0a64fc1f3caf171",
+      "versions": {
+        "torch": "2.13.0",
+        "numpy": "2.5.2"
+      },
+      "device": "cpu",
+      "cuda_version": null,
+      "artifact_directory": "/Users/krod/Documents/Coders/muon_schulz_extension/runs/local_smoke_release/jobs/7717b544585be68fd8f4",
+      "peak_gpu_bytes": 0,
+      "tokens_seen": 153600,
+      "cuda_visible_devices": "cpu1",
+      "worker_wall_seconds": 2.8688754999893717
+    },
+    {
+      "spec": {
+        "task": "language",
+        "arm": "keller",
+        "precision": "fp32",
+        "phase": "tune",
+        "lr": 0.005,
+        "seed": 0,
+        "steps": 300,
+        "data": "/Users/krod/Documents/Coders/muon_schulz_extension/data/datasets/shakespeare",
+        "batch": 8,
+        "model": {
+          "width": 64,
+          "layers": 2,
+          "heads": 4,
+          "context": 64
+        },
+        "adam_lr": 0.001,
+        "weight_decay": 0.01,
+        "eval_tokens": 8192,
+        "eval_every": 150,
+        "log_every": 150,
+        "max_seconds": 300,
+        "threads": 1,
+        "source_sha256": "8e6331b219e186727387b0d84dd71de2553df3186c66d3a9cb4b99bf0314bf96"
+      },
+      "status": "complete",
+      "completed_steps": 300,
+      "validation": {
+        "loss": 2.4710894376039505,
+        "accuracy": 0.29541015625,
+        "count": 8192
+      },
+      "test": null,
+      "curve": [
+        {
+          "step": 150,
+          "train_loss": 2.6435465812683105,
+          "validation": {
+            "loss": 2.562799423933029,
+            "accuracy": 0.2786865234375,
+            "count": 8192
+          }
+        },
+        {
+          "step": 300,
+          "train_loss": 2.395188093185425,
+          "validation": {
+            "loss": 2.4710894376039505,
+            "accuracy": 0.29541015625,
+            "count": 8192
+          }
+        }
+      ],
+      "seconds": 1.4818104580044746,
+      "final_evaluation_seconds": 0.021668582980055362,
+      "diagnostic_seconds": 0.004022959095891565,
+      "seconds_per_step": 0.004848333226982504,
+      "parameters": 107200,
+      "dataset": {
+        "dataset": "tinyshakespeare",
+        "source_sha256": "86c4e6aa9db7c042ec79f339dcb96d42b0075e16b8fc2e86bf0ca57e2dc565ed",
+        "tokenizer": "characters",
+        "vocab_size": 65,
+        "vocabulary": [
+          "\n",
+          " ",
+          "!",
+          "$",
+          "&",
+          "'",
+          ",",
+          "-",
+          ".",
+          "3",
+          ":",
+          ";",
+          "?",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z",
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "f",
+          "g",
+          "h",
+          "i",
+          "j",
+          "k",
+          "l",
+          "m",
+          "n",
+          "o",
+          "p",
+          "q",
+          "r",
+          "s",
+          "t",
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z"
+        ],
+        "split": "contiguous 85%/7.5%/7.5%; local smoke only",
+        "files": {
+          "train": {
+            "sha256": "06db62f57635cac53577f9cdfe6b036646c78e1e15c9243b4fe79f3261aa73a8",
+            "tokens": 948084
+          },
+          "validation": {
+            "sha256": "a9e95abb74fe936737ac32558b82236a57681a76c0f0ff7389b00dac58a7f41b",
+            "tokens": 83655
+          },
+          "test": {
+            "sha256": "82d21c0cc612ce062edfb72d8bf5969b79e71ed83303b6e1f318822fe4dc9d9a",
+            "tokens": 83655
+          }
+        }
+      },
+      "coefficient_set": {
+        "name": "keller",
+        "kind": "baseline",
+        "gamma": 0.3,
+        "coeffs": [
+          3.4445,
+          -4.775,
+          2.0315
+        ],
+        "n_steps": 5,
+        "scale": 0.9252952978511033,
+        "sigma_min": 0.0014203132155766436,
+        "achieved_half_width": 0.2994431161117773,
+        "critical_point": 0.5545287908544945,
+        "invariance_bound": 1.2023686051632125,
+        "invariance_margin": -0.0,
+        "positivity_margin": 0.6386145705143975
+      },
+      "coefficient_table_sha256": "2fe7f6babe73571addfb297c53119d9cfe9cb664eb2a6e69e0a64fc1f3caf171",
+      "versions": {
+        "torch": "2.13.0",
+        "numpy": "2.5.2"
+      },
+      "device": "cpu",
+      "cuda_version": null,
+      "artifact_directory": "/Users/krod/Documents/Coders/muon_schulz_extension/runs/local_smoke_release/jobs/b17d45f4b2fcc461ad34",
+      "peak_gpu_bytes": 0,
+      "tokens_seen": 153600,
+      "cuda_visible_devices": "cpu0",
+      "worker_wall_seconds": 3.0811773749883287
+    },
+    {
+      "spec": {
+        "task": "language",
+        "arm": "exact_svd",
+        "precision": "fp32",
+        "phase": "tune",
+        "lr": 0.005,
+        "seed": 0,
+        "steps": 300,
+        "data": "/Users/krod/Documents/Coders/muon_schulz_extension/data/datasets/shakespeare",
+        "batch": 8,
+        "model": {
+          "width": 64,
+          "layers": 2,
+          "heads": 4,
+          "context": 64
+        },
+        "adam_lr": 0.001,
+        "weight_decay": 0.01,
+        "eval_tokens": 8192,
+        "eval_every": 150,
+        "log_every": 150,
+        "max_seconds": 300,
+        "threads": 1,
+        "source_sha256": "8e6331b219e186727387b0d84dd71de2553df3186c66d3a9cb4b99bf0314bf96"
+      },
+      "status": "complete",
+      "completed_steps": 300,
+      "validation": {
+        "loss": 2.4693028181791306,
+        "accuracy": 0.297607421875,
+        "count": 8192
+      },
+      "test": null,
+      "curve": [
+        {
+          "step": 150,
+          "train_loss": 2.6441640853881836,
+          "validation": {
+            "loss": 2.561672478914261,
+            "accuracy": 0.2803955078125,
+            "count": 8192
+          }
+        },
+        {
+          "step": 300,
+          "train_loss": 2.392338991165161,
+          "validation": {
+            "loss": 2.4693028181791306,
+            "accuracy": 0.297607421875,
+            "count": 8192
+          }
+        }
+      ],
+      "seconds": 1.9952865830273367,
+      "final_evaluation_seconds": 0.019834833976347,
+      "diagnostic_seconds": 0.0037022948963567615,
+      "seconds_per_step": 0.0066129417973570526,
+      "parameters": 107200,
+      "dataset": {
+        "dataset": "tinyshakespeare",
+        "source_sha256": "86c4e6aa9db7c042ec79f339dcb96d42b0075e16b8fc2e86bf0ca57e2dc565ed",
+        "tokenizer": "characters",
+        "vocab_size": 65,
+        "vocabulary": [
+          "\n",
+          " ",
+          "!",
+          "$",
+          "&",
+          "'",
+          ",",
+          "-",
+          ".",
+          "3",
+          ":",
+          ";",
+          "?",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z",
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "f",
+          "g",
+          "h",
+          "i",
+          "j",
+          "k",
+          "l",
+          "m",
+          "n",
+          "o",
+          "p",
+          "q",
+          "r",
+          "s",
+          "t",
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z"
+        ],
+        "split": "contiguous 85%/7.5%/7.5%; local smoke only",
+        "files": {
+          "train": {
+            "sha256": "06db62f57635cac53577f9cdfe6b036646c78e1e15c9243b4fe79f3261aa73a8",
+            "tokens": 948084
+          },
+          "validation": {
+            "sha256": "a9e95abb74fe936737ac32558b82236a57681a76c0f0ff7389b00dac58a7f41b",
+            "tokens": 83655
+          },
+          "test": {
+            "sha256": "82d21c0cc612ce062edfb72d8bf5969b79e71ed83303b6e1f318822fe4dc9d9a",
+            "tokens": 83655
+          }
+        }
+      },
+      "coefficient_set": {
+        "name": "exact_svd",
+        "kind": "exact_svd",
+        "gamma": 0.0,
+        "coeffs": null,
+        "n_steps": 5,
+        "scale": 1.0,
+        "sigma_min": 0.0,
+        "achieved_half_width": 0.0,
+        "critical_point": null,
+        "invariance_bound": 1.0,
+        "invariance_margin": null,
+        "positivity_margin": null
+      },
+      "coefficient_table_sha256": "2fe7f6babe73571addfb297c53119d9cfe9cb664eb2a6e69e0a64fc1f3caf171",
+      "versions": {
+        "torch": "2.13.0",
+        "numpy": "2.5.2"
+      },
+      "device": "cpu",
+      "cuda_version": null,
+      "artifact_directory": "/Users/krod/Documents/Coders/muon_schulz_extension/runs/local_smoke_release/jobs/e72ea80203ac62fcb3c1",
+      "peak_gpu_bytes": 0,
+      "tokens_seen": 153600,
+      "cuda_visible_devices": "cpu1",
+      "worker_wall_seconds": 3.488174792029895
+    },
+    {
+      "spec": {
+        "task": "language",
+        "arm": "exact_svd",
+        "precision": "fp32",
+        "phase": "tune",
+        "lr": 0.02,
+        "seed": 0,
+        "steps": 300,
+        "data": "/Users/krod/Documents/Coders/muon_schulz_extension/data/datasets/shakespeare",
+        "batch": 8,
+        "model": {
+          "width": 64,
+          "layers": 2,
+          "heads": 4,
+          "context": 64
+        },
+        "adam_lr": 0.001,
+        "weight_decay": 0.01,
+        "eval_tokens": 8192,
+        "eval_every": 150,
+        "log_every": 150,
+        "max_seconds": 300,
+        "threads": 1,
+        "source_sha256": "8e6331b219e186727387b0d84dd71de2553df3186c66d3a9cb4b99bf0314bf96"
+      },
+      "status": "complete",
+      "completed_steps": 300,
+      "validation": {
+        "loss": 2.4388751089572906,
+        "accuracy": 0.305908203125,
+        "count": 8192
+      },
+      "test": null,
+      "curve": [
+        {
+          "step": 150,
+          "train_loss": 2.6361536979675293,
+          "validation": {
+            "loss": 2.566620260477066,
+            "accuracy": 0.281982421875,
+            "count": 8192
+          }
+        },
+        {
+          "step": 300,
+          "train_loss": 2.3329598903656006,
+          "validation": {
+            "loss": 2.4388751089572906,
+            "accuracy": 0.305908203125,
+            "count": 8192
+          }
+        }
+      ],
+      "seconds": 2.0386320830439217,
+      "final_evaluation_seconds": 0.021813291998114437,
+      "diagnostic_seconds": 0.004118246957659721,
+      "seconds_per_step": 0.00675384181085974,
+      "parameters": 107200,
+      "dataset": {
+        "dataset": "tinyshakespeare",
+        "source_sha256": "86c4e6aa9db7c042ec79f339dcb96d42b0075e16b8fc2e86bf0ca57e2dc565ed",
+        "tokenizer": "characters",
+        "vocab_size": 65,
+        "vocabulary": [
+          "\n",
+          " ",
+          "!",
+          "$",
+          "&",
+          "'",
+          ",",
+          "-",
+          ".",
+          "3",
+          ":",
+          ";",
+          "?",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z",
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "f",
+          "g",
+          "h",
+          "i",
+          "j",
+          "k",
+          "l",
+          "m",
+          "n",
+          "o",
+          "p",
+          "q",
+          "r",
+          "s",
+          "t",
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z"
+        ],
+        "split": "contiguous 85%/7.5%/7.5%; local smoke only",
+        "files": {
+          "train": {
+            "sha256": "06db62f57635cac53577f9cdfe6b036646c78e1e15c9243b4fe79f3261aa73a8",
+            "tokens": 948084
+          },
+          "validation": {
+            "sha256": "a9e95abb74fe936737ac32558b82236a57681a76c0f0ff7389b00dac58a7f41b",
+            "tokens": 83655
+          },
+          "test": {
+            "sha256": "82d21c0cc612ce062edfb72d8bf5969b79e71ed83303b6e1f318822fe4dc9d9a",
+            "tokens": 83655
+          }
+        }
+      },
+      "coefficient_set": {
+        "name": "exact_svd",
+        "kind": "exact_svd",
+        "gamma": 0.0,
+        "coeffs": null,
+        "n_steps": 5,
+        "scale": 1.0,
+        "sigma_min": 0.0,
+        "achieved_half_width": 0.0,
+        "critical_point": null,
+        "invariance_bound": 1.0,
+        "invariance_margin": null,
+        "positivity_margin": null
+      },
+      "coefficient_table_sha256": "2fe7f6babe73571addfb297c53119d9cfe9cb664eb2a6e69e0a64fc1f3caf171",
+      "versions": {
+        "torch": "2.13.0",
+        "numpy": "2.5.2"
+      },
+      "device": "cpu",
+      "cuda_version": null,
+      "artifact_directory": "/Users/krod/Documents/Coders/muon_schulz_extension/runs/local_smoke_release/jobs/109b053c32d4d4e25438",
+      "peak_gpu_bytes": 0,
+      "tokens_seen": 153600,
+      "cuda_visible_devices": "cpu0",
+      "worker_wall_seconds": 3.4881717080133967
+    },
+    {
+      "spec": {
+        "task": "language",
+        "arm": "gamma_0.10",
+        "precision": "bf16",
+        "phase": "tune",
+        "lr": 0.005,
+        "seed": 0,
+        "steps": 300,
+        "data": "/Users/krod/Documents/Coders/muon_schulz_extension/data/datasets/shakespeare",
+        "batch": 8,
+        "model": {
+          "width": 64,
+          "layers": 2,
+          "heads": 4,
+          "context": 64
+        },
+        "adam_lr": 0.001,
+        "weight_decay": 0.01,
+        "eval_tokens": 8192,
+        "eval_every": 150,
+        "log_every": 150,
+        "max_seconds": 300,
+        "threads": 1,
+        "source_sha256": "8e6331b219e186727387b0d84dd71de2553df3186c66d3a9cb4b99bf0314bf96"
+      },
+      "status": "complete",
+      "completed_steps": 300,
+      "validation": {
+        "loss": 2.4724951684474945,
+        "accuracy": 0.2960205078125,
+        "count": 8192
+      },
+      "test": null,
+      "curve": [
+        {
+          "step": 150,
+          "train_loss": 2.6463727951049805,
+          "validation": {
+            "loss": 2.563070371747017,
+            "accuracy": 0.2791748046875,
+            "count": 8192
+          }
+        },
+        {
+          "step": 300,
+          "train_loss": 2.396824359893799,
+          "validation": {
+            "loss": 2.4724951684474945,
+            "accuracy": 0.2960205078125,
+            "count": 8192
+          }
+        }
+      ],
+      "seconds": 4.2289433749974705,
+      "final_evaluation_seconds": 0.02201112505281344,
+      "diagnostic_seconds": 0.004719708987977356,
+      "seconds_per_step": 0.014131617185194045,
+      "parameters": 107200,
+      "dataset": {
+        "dataset": "tinyshakespeare",
+        "source_sha256": "86c4e6aa9db7c042ec79f339dcb96d42b0075e16b8fc2e86bf0ca57e2dc565ed",
+        "tokenizer": "characters",
+        "vocab_size": 65,
+        "vocabulary": [
+          "\n",
+          " ",
+          "!",
+          "$",
+          "&",
+          "'",
+          ",",
+          "-",
+          ".",
+          "3",
+          ":",
+          ";",
+          "?",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z",
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "f",
+          "g",
+          "h",
+          "i",
+          "j",
+          "k",
+          "l",
+          "m",
+          "n",
+          "o",
+          "p",
+          "q",
+          "r",
+          "s",
+          "t",
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z"
+        ],
+        "split": "contiguous 85%/7.5%/7.5%; local smoke only",
+        "files": {
+          "train": {
+            "sha256": "06db62f57635cac53577f9cdfe6b036646c78e1e15c9243b4fe79f3261aa73a8",
+            "tokens": 948084
+          },
+          "validation": {
+            "sha256": "a9e95abb74fe936737ac32558b82236a57681a76c0f0ff7389b00dac58a7f41b",
+            "tokens": 83655
+          },
+          "test": {
+            "sha256": "82d21c0cc612ce062edfb72d8bf5969b79e71ed83303b6e1f318822fe4dc9d9a",
+            "tokens": 83655
+          }
+        }
+      },
+      "coefficient_set": {
+        "name": "gamma_0.10",
+        "kind": "fitted",
+        "gamma": 0.1,
+        "coeffs": [
+          3.100305406593715,
+          -5.181157462454122,
+          3.0788595782418664
+        ],
+        "n_steps": 5,
+        "scale": 0.909925336783622,
+        "sigma_min": 0.003447565326296462,
+        "achieved_half_width": 0.09980583290561225,
+        "critical_point": 0.5230654166455223,
+        "invariance_bound": 1.000741192903231,
+        "invariance_margin": -0.0,
+        "positivity_margin": 0.9205703481607235
+      },
+      "coefficient_table_sha256": "2fe7f6babe73571addfb297c53119d9cfe9cb664eb2a6e69e0a64fc1f3caf171",
+      "versions": {
+        "torch": "2.13.0",
+        "numpy": "2.5.2"
+      },
+      "device": "cpu",
+      "cuda_version": null,
+      "artifact_directory": "/Users/krod/Documents/Coders/muon_schulz_extension/runs/local_smoke_release/jobs/e0817d0ab7b1ffffcdbd",
+      "peak_gpu_bytes": 0,
+      "tokens_seen": 153600,
+      "cuda_visible_devices": "cpu1",
+      "worker_wall_seconds": 5.531804999976885
+    },
+    {
+      "spec": {
+        "task": "language",
+        "arm": "gamma_0.10",
+        "precision": "bf16",
+        "phase": "tune",
+        "lr": 0.02,
+        "seed": 0,
+        "steps": 300,
+        "data": "/Users/krod/Documents/Coders/muon_schulz_extension/data/datasets/shakespeare",
+        "batch": 8,
+        "model": {
+          "width": 64,
+          "layers": 2,
+          "heads": 4,
+          "context": 64
+        },
+        "adam_lr": 0.001,
+        "weight_decay": 0.01,
+        "eval_tokens": 8192,
+        "eval_every": 150,
+        "log_every": 150,
+        "max_seconds": 300,
+        "threads": 1,
+        "source_sha256": "8e6331b219e186727387b0d84dd71de2553df3186c66d3a9cb4b99bf0314bf96"
+      },
+      "status": "complete",
+      "completed_steps": 300,
+      "validation": {
+        "loss": 2.4359572380781174,
+        "accuracy": 0.3040771484375,
+        "count": 8192
+      },
+      "test": null,
+      "curve": [
+        {
+          "step": 150,
+          "train_loss": 2.631901502609253,
+          "validation": {
+            "loss": 2.5571956485509872,
+            "accuracy": 0.284912109375,
+            "count": 8192
+          }
+        },
+        {
+          "step": 300,
+          "train_loss": 2.3484044075012207,
+          "validation": {
+            "loss": 2.4359572380781174,
+            "accuracy": 0.3040771484375,
+            "count": 8192
+          }
+        }
+      ],
+      "seconds": 4.235668124980293,
+      "final_evaluation_seconds": 0.02169179101474583,
+      "diagnostic_seconds": 0.004563291906379163,
+      "seconds_per_step": 0.01406109140953049,
+      "parameters": 107200,
+      "dataset": {
+        "dataset": "tinyshakespeare",
+        "source_sha256": "86c4e6aa9db7c042ec79f339dcb96d42b0075e16b8fc2e86bf0ca57e2dc565ed",
+        "tokenizer": "characters",
+        "vocab_size": 65,
+        "vocabulary": [
+          "\n",
+          " ",
+          "!",
+          "$",
+          "&",
+          "'",
+          ",",
+          "-",
+          ".",
+          "3",
+          ":",
+          ";",
+          "?",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z",
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "f",
+          "g",
+          "h",
+          "i",
+          "j",
+          "k",
+          "l",
+          "m",
+          "n",
+          "o",
+          "p",
+          "q",
+          "r",
+          "s",
+          "t",
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z"
+        ],
+        "split": "contiguous 85%/7.5%/7.5%; local smoke only",
+        "files": {
+          "train": {
+            "sha256": "06db62f57635cac53577f9cdfe6b036646c78e1e15c9243b4fe79f3261aa73a8",
+            "tokens": 948084
+          },
+          "validation": {
+            "sha256": "a9e95abb74fe936737ac32558b82236a57681a76c0f0ff7389b00dac58a7f41b",
+            "tokens": 83655
+          },
+          "test": {
+            "sha256": "82d21c0cc612ce062edfb72d8bf5969b79e71ed83303b6e1f318822fe4dc9d9a",
+            "tokens": 83655
+          }
+        }
+      },
+      "coefficient_set": {
+        "name": "gamma_0.10",
+        "kind": "fitted",
+        "gamma": 0.1,
+        "coeffs": [
+          3.100305406593715,
+          -5.181157462454122,
+          3.0788595782418664
+        ],
+        "n_steps": 5,
+        "scale": 0.909925336783622,
+        "sigma_min": 0.003447565326296462,
+        "achieved_half_width": 0.09980583290561225,
+        "critical_point": 0.5230654166455223,
+        "invariance_bound": 1.000741192903231,
+        "invariance_margin": -0.0,
+        "positivity_margin": 0.9205703481607235
+      },
+      "coefficient_table_sha256": "2fe7f6babe73571addfb297c53119d9cfe9cb664eb2a6e69e0a64fc1f3caf171",
+      "versions": {
+        "torch": "2.13.0",
+        "numpy": "2.5.2"
+      },
+      "device": "cpu",
+      "cuda_version": null,
+      "artifact_directory": "/Users/krod/Documents/Coders/muon_schulz_extension/runs/local_smoke_release/jobs/9ea55103d65abe1bc708",
+      "peak_gpu_bytes": 0,
+      "tokens_seen": 153600,
+      "cuda_visible_devices": "cpu0",
+      "worker_wall_seconds": 5.532328541972674
+    },
+    {
+      "spec": {
+        "task": "language",
+        "arm": "keller",
+        "precision": "bf16",
+        "phase": "tune",
+        "lr": 0.005,
+        "seed": 0,
+        "steps": 300,
+        "data": "/Users/krod/Documents/Coders/muon_schulz_extension/data/datasets/shakespeare",
+        "batch": 8,
+        "model": {
+          "width": 64,
+          "layers": 2,
+          "heads": 4,
+          "context": 64
+        },
+        "adam_lr": 0.001,
+        "weight_decay": 0.01,
+        "eval_tokens": 8192,
+        "eval_every": 150,
+        "log_every": 150,
+        "max_seconds": 300,
+        "threads": 1,
+        "source_sha256": "8e6331b219e186727387b0d84dd71de2553df3186c66d3a9cb4b99bf0314bf96"
+      },
+      "status": "complete",
+      "completed_steps": 300,
+      "validation": {
+        "loss": 2.4711578637361526,
+        "accuracy": 0.29541015625,
+        "count": 8192
+      },
+      "test": null,
+      "curve": [
+        {
+          "step": 150,
+          "train_loss": 2.643409490585327,
+          "validation": {
+            "loss": 2.562828302383423,
+            "accuracy": 0.2786865234375,
+            "count": 8192
+          }
+        },
+        {
+          "step": 300,
+          "train_loss": 2.395387887954712,
+          "validation": {
+            "loss": 2.4711578637361526,
+            "accuracy": 0.29541015625,
+            "count": 8192
+          }
+        }
+      ],
+      "seconds": 4.317697042017244,
+      "final_evaluation_seconds": 0.019008625007700175,
+      "diagnostic_seconds": 0.004316542006563395,
+      "seconds_per_step": 0.014424824982415884,
+      "parameters": 107200,
+      "dataset": {
+        "dataset": "tinyshakespeare",
+        "source_sha256": "86c4e6aa9db7c042ec79f339dcb96d42b0075e16b8fc2e86bf0ca57e2dc565ed",
+        "tokenizer": "characters",
+        "vocab_size": 65,
+        "vocabulary": [
+          "\n",
+          " ",
+          "!",
+          "$",
+          "&",
+          "'",
+          ",",
+          "-",
+          ".",
+          "3",
+          ":",
+          ";",
+          "?",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z",
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "f",
+          "g",
+          "h",
+          "i",
+          "j",
+          "k",
+          "l",
+          "m",
+          "n",
+          "o",
+          "p",
+          "q",
+          "r",
+          "s",
+          "t",
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z"
+        ],
+        "split": "contiguous 85%/7.5%/7.5%; local smoke only",
+        "files": {
+          "train": {
+            "sha256": "06db62f57635cac53577f9cdfe6b036646c78e1e15c9243b4fe79f3261aa73a8",
+            "tokens": 948084
+          },
+          "validation": {
+            "sha256": "a9e95abb74fe936737ac32558b82236a57681a76c0f0ff7389b00dac58a7f41b",
+            "tokens": 83655
+          },
+          "test": {
+            "sha256": "82d21c0cc612ce062edfb72d8bf5969b79e71ed83303b6e1f318822fe4dc9d9a",
+            "tokens": 83655
+          }
+        }
+      },
+      "coefficient_set": {
+        "name": "keller",
+        "kind": "baseline",
+        "gamma": 0.3,
+        "coeffs": [
+          3.4445,
+          -4.775,
+          2.0315
+        ],
+        "n_steps": 5,
+        "scale": 0.9252952978511033,
+        "sigma_min": 0.0014203132155766436,
+        "achieved_half_width": 0.2994431161117773,
+        "critical_point": 0.5545287908544945,
+        "invariance_bound": 1.2023686051632125,
+        "invariance_margin": -0.0,
+        "positivity_margin": 0.6386145705143975
+      },
+      "coefficient_table_sha256": "2fe7f6babe73571addfb297c53119d9cfe9cb664eb2a6e69e0a64fc1f3caf171",
+      "versions": {
+        "torch": "2.13.0",
+        "numpy": "2.5.2"
+      },
+      "device": "cpu",
+      "cuda_version": null,
+      "artifact_directory": "/Users/krod/Documents/Coders/muon_schulz_extension/runs/local_smoke_release/jobs/80ad4c8042df4fd360f2",
+      "peak_gpu_bytes": 0,
+      "tokens_seen": 153600,
+      "cuda_visible_devices": "cpu1",
+      "worker_wall_seconds": 5.94745287502883
+    },
+    {
+      "spec": {
+        "task": "language",
+        "arm": "keller",
+        "precision": "bf16",
+        "phase": "tune",
+        "lr": 0.02,
+        "seed": 0,
+        "steps": 300,
+        "data": "/Users/krod/Documents/Coders/muon_schulz_extension/data/datasets/shakespeare",
+        "batch": 8,
+        "model": {
+          "width": 64,
+          "layers": 2,
+          "heads": 4,
+          "context": 64
+        },
+        "adam_lr": 0.001,
+        "weight_decay": 0.01,
+        "eval_tokens": 8192,
+        "eval_every": 150,
+        "log_every": 150,
+        "max_seconds": 300,
+        "threads": 1,
+        "source_sha256": "8e6331b219e186727387b0d84dd71de2553df3186c66d3a9cb4b99bf0314bf96"
+      },
+      "status": "complete",
+      "completed_steps": 300,
+      "validation": {
+        "loss": 2.4363314509391785,
+        "accuracy": 0.30712890625,
+        "count": 8192
+      },
+      "test": null,
+      "curve": [
+        {
+          "step": 150,
+          "train_loss": 2.632411241531372,
+          "validation": {
+            "loss": 2.570795863866806,
+            "accuracy": 0.2799072265625,
+            "count": 8192
+          }
+        },
+        {
+          "step": 300,
+          "train_loss": 2.351846218109131,
+          "validation": {
+            "loss": 2.4363314509391785,
+            "accuracy": 0.30712890625,
+            "count": 8192
+          }
+        }
+      ],
+      "seconds": 4.296556624991354,
+      "final_evaluation_seconds": 0.01863324997248128,
+      "diagnostic_seconds": 0.0041622918215580285,
+      "seconds_per_step": 0.014362366613931954,
+      "parameters": 107200,
+      "dataset": {
+        "dataset": "tinyshakespeare",
+        "source_sha256": "86c4e6aa9db7c042ec79f339dcb96d42b0075e16b8fc2e86bf0ca57e2dc565ed",
+        "tokenizer": "characters",
+        "vocab_size": 65,
+        "vocabulary": [
+          "\n",
+          " ",
+          "!",
+          "$",
+          "&",
+          "'",
+          ",",
+          "-",
+          ".",
+          "3",
+          ":",
+          ";",
+          "?",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z",
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "f",
+          "g",
+          "h",
+          "i",
+          "j",
+          "k",
+          "l",
+          "m",
+          "n",
+          "o",
+          "p",
+          "q",
+          "r",
+          "s",
+          "t",
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z"
+        ],
+        "split": "contiguous 85%/7.5%/7.5%; local smoke only",
+        "files": {
+          "train": {
+            "sha256": "06db62f57635cac53577f9cdfe6b036646c78e1e15c9243b4fe79f3261aa73a8",
+            "tokens": 948084
+          },
+          "validation": {
+            "sha256": "a9e95abb74fe936737ac32558b82236a57681a76c0f0ff7389b00dac58a7f41b",
+            "tokens": 83655
+          },
+          "test": {
+            "sha256": "82d21c0cc612ce062edfb72d8bf5969b79e71ed83303b6e1f318822fe4dc9d9a",
+            "tokens": 83655
+          }
+        }
+      },
+      "coefficient_set": {
+        "name": "keller",
+        "kind": "baseline",
+        "gamma": 0.3,
+        "coeffs": [
+          3.4445,
+          -4.775,
+          2.0315
+        ],
+        "n_steps": 5,
+        "scale": 0.9252952978511033,
+        "sigma_min": 0.0014203132155766436,
+        "achieved_half_width": 0.2994431161117773,
+        "critical_point": 0.5545287908544945,
+        "invariance_bound": 1.2023686051632125,
+        "invariance_margin": -0.0,
+        "positivity_margin": 0.6386145705143975
+      },
+      "coefficient_table_sha256": "2fe7f6babe73571addfb297c53119d9cfe9cb664eb2a6e69e0a64fc1f3caf171",
+      "versions": {
+        "torch": "2.13.0",
+        "numpy": "2.5.2"
+      },
+      "device": "cpu",
+      "cuda_version": null,
+      "artifact_directory": "/Users/krod/Documents/Coders/muon_schulz_extension/runs/local_smoke_release/jobs/8c925474fa60e6889394",
+      "peak_gpu_bytes": 0,
+      "tokens_seen": 153600,
+      "cuda_visible_devices": "cpu0",
+      "worker_wall_seconds": 5.738553625007626
+    }
+  ],
+  "confirmation": [
+    {
+      "spec": {
+        "task": "language",
+        "arm": "gamma_0.10",
+        "precision": "fp32",
+        "phase": "confirm",
+        "lr": 0.02,
+        "seed": 10,
+        "steps": 600,
+        "data": "/Users/krod/Documents/Coders/muon_schulz_extension/data/datasets/shakespeare",
+        "batch": 8,
+        "model": {
+          "width": 64,
+          "layers": 2,
+          "heads": 4,
+          "context": 64
+        },
+        "adam_lr": 0.001,
+        "weight_decay": 0.01,
+        "eval_tokens": 8192,
+        "eval_every": 150,
+        "log_every": 150,
+        "max_seconds": 300,
+        "threads": 1,
+        "source_sha256": "8e6331b219e186727387b0d84dd71de2553df3186c66d3a9cb4b99bf0314bf96"
+      },
+      "status": "complete",
+      "completed_steps": 600,
+      "validation": {
+        "loss": 2.1595731675624847,
+        "accuracy": 0.36962890625,
+        "count": 8192
+      },
+      "test": {
+        "loss": 2.1915417164564133,
+        "accuracy": 0.3646240234375,
+        "count": 8192
+      },
+      "curve": [
+        {
+          "step": 150,
+          "train_loss": 2.59747576713562,
+          "validation": {
+            "loss": 2.5672375708818436,
+            "accuracy": 0.275390625,
+            "count": 8192
+          }
+        },
+        {
+          "step": 300,
+          "train_loss": 2.3818929195404053,
+          "validation": {
+            "loss": 2.400886043906212,
+            "accuracy": 0.3016357421875,
+            "count": 8192
+          }
+        },
+        {
+          "step": 450,
+          "train_loss": 2.287537097930908,
+          "validation": {
+            "loss": 2.225808307528496,
+            "accuracy": 0.359130859375,
+            "count": 8192
+          }
+        },
+        {
+          "step": 600,
+          "train_loss": 2.2069289684295654,
+          "validation": {
+            "loss": 2.1595731675624847,
+            "accuracy": 0.36962890625,
+            "count": 8192
+          }
+        }
+      ],
+      "seconds": 2.9488717499771155,
+      "final_evaluation_seconds": 0.038723249977920204,
+      "diagnostic_seconds": 0.007412833860144019,
+      "seconds_per_step": 0.004854041594080627,
+      "parameters": 107200,
+      "dataset": {
+        "dataset": "tinyshakespeare",
+        "source_sha256": "86c4e6aa9db7c042ec79f339dcb96d42b0075e16b8fc2e86bf0ca57e2dc565ed",
+        "tokenizer": "characters",
+        "vocab_size": 65,
+        "vocabulary": [
+          "\n",
+          " ",
+          "!",
+          "$",
+          "&",
+          "'",
+          ",",
+          "-",
+          ".",
+          "3",
+          ":",
+          ";",
+          "?",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z",
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "f",
+          "g",
+          "h",
+          "i",
+          "j",
+          "k",
+          "l",
+          "m",
+          "n",
+          "o",
+          "p",
+          "q",
+          "r",
+          "s",
+          "t",
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z"
+        ],
+        "split": "contiguous 85%/7.5%/7.5%; local smoke only",
+        "files": {
+          "train": {
+            "sha256": "06db62f57635cac53577f9cdfe6b036646c78e1e15c9243b4fe79f3261aa73a8",
+            "tokens": 948084
+          },
+          "validation": {
+            "sha256": "a9e95abb74fe936737ac32558b82236a57681a76c0f0ff7389b00dac58a7f41b",
+            "tokens": 83655
+          },
+          "test": {
+            "sha256": "82d21c0cc612ce062edfb72d8bf5969b79e71ed83303b6e1f318822fe4dc9d9a",
+            "tokens": 83655
+          }
+        }
+      },
+      "coefficient_set": {
+        "name": "gamma_0.10",
+        "kind": "fitted",
+        "gamma": 0.1,
+        "coeffs": [
+          3.100305406593715,
+          -5.181157462454122,
+          3.0788595782418664
+        ],
+        "n_steps": 5,
+        "scale": 0.909925336783622,
+        "sigma_min": 0.003447565326296462,
+        "achieved_half_width": 0.09980583290561225,
+        "critical_point": 0.5230654166455223,
+        "invariance_bound": 1.000741192903231,
+        "invariance_margin": -0.0,
+        "positivity_margin": 0.9205703481607235
+      },
+      "coefficient_table_sha256": "2fe7f6babe73571addfb297c53119d9cfe9cb664eb2a6e69e0a64fc1f3caf171",
+      "versions": {
+        "torch": "2.13.0",
+        "numpy": "2.5.2"
+      },
+      "device": "cpu",
+      "cuda_version": null,
+      "artifact_directory": "/Users/krod/Documents/Coders/muon_schulz_extension/runs/local_smoke_release/jobs/7ab9527138966d157440",
+      "peak_gpu_bytes": 0,
+      "tokens_seen": 307200,
+      "cuda_visible_devices": "cpu0",
+      "worker_wall_seconds": 4.509959874965716
+    },
+    {
+      "spec": {
+        "task": "language",
+        "arm": "gamma_0.10",
+        "precision": "fp32",
+        "phase": "confirm",
+        "lr": 0.02,
+        "seed": 11,
+        "steps": 600,
+        "data": "/Users/krod/Documents/Coders/muon_schulz_extension/data/datasets/shakespeare",
+        "batch": 8,
+        "model": {
+          "width": 64,
+          "layers": 2,
+          "heads": 4,
+          "context": 64
+        },
+        "adam_lr": 0.001,
+        "weight_decay": 0.01,
+        "eval_tokens": 8192,
+        "eval_every": 150,
+        "log_every": 150,
+        "max_seconds": 300,
+        "threads": 1,
+        "source_sha256": "8e6331b219e186727387b0d84dd71de2553df3186c66d3a9cb4b99bf0314bf96"
+      },
+      "status": "complete",
+      "completed_steps": 600,
+      "validation": {
+        "loss": 2.17245189845562,
+        "accuracy": 0.3714599609375,
+        "count": 8192
+      },
+      "test": {
+        "loss": 2.196499466896057,
+        "accuracy": 0.363037109375,
+        "count": 8192
+      },
+      "curve": [
+        {
+          "step": 150,
+          "train_loss": 2.4804883003234863,
+          "validation": {
+            "loss": 2.569318503141403,
+            "accuracy": 0.27685546875,
+            "count": 8192
+          }
+        },
+        {
+          "step": 300,
+          "train_loss": 2.4460861682891846,
+          "validation": {
+            "loss": 2.385278820991516,
+            "accuracy": 0.3150634765625,
+            "count": 8192
+          }
+        },
+        {
+          "step": 450,
+          "train_loss": 2.272128105163574,
+          "validation": {
+            "loss": 2.2421104162931442,
+            "accuracy": 0.352294921875,
+            "count": 8192
+          }
+        },
+        {
+          "step": 600,
+          "train_loss": 2.1709227561950684,
+          "validation": {
+            "loss": 2.17245189845562,
+            "accuracy": 0.3714599609375,
+            "count": 8192
+          }
+        }
+      ],
+      "seconds": 2.9499462920357473,
+      "final_evaluation_seconds": 0.04478733299765736,
+      "diagnostic_seconds": 0.007756832928862423,
+      "seconds_per_step": 0.004831391572952271,
+      "parameters": 107200,
+      "dataset": {
+        "dataset": "tinyshakespeare",
+        "source_sha256": "86c4e6aa9db7c042ec79f339dcb96d42b0075e16b8fc2e86bf0ca57e2dc565ed",
+        "tokenizer": "characters",
+        "vocab_size": 65,
+        "vocabulary": [
+          "\n",
+          " ",
+          "!",
+          "$",
+          "&",
+          "'",
+          ",",
+          "-",
+          ".",
+          "3",
+          ":",
+          ";",
+          "?",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z",
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "f",
+          "g",
+          "h",
+          "i",
+          "j",
+          "k",
+          "l",
+          "m",
+          "n",
+          "o",
+          "p",
+          "q",
+          "r",
+          "s",
+          "t",
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z"
+        ],
+        "split": "contiguous 85%/7.5%/7.5%; local smoke only",
+        "files": {
+          "train": {
+            "sha256": "06db62f57635cac53577f9cdfe6b036646c78e1e15c9243b4fe79f3261aa73a8",
+            "tokens": 948084
+          },
+          "validation": {
+            "sha256": "a9e95abb74fe936737ac32558b82236a57681a76c0f0ff7389b00dac58a7f41b",
+            "tokens": 83655
+          },
+          "test": {
+            "sha256": "82d21c0cc612ce062edfb72d8bf5969b79e71ed83303b6e1f318822fe4dc9d9a",
+            "tokens": 83655
+          }
+        }
+      },
+      "coefficient_set": {
+        "name": "gamma_0.10",
+        "kind": "fitted",
+        "gamma": 0.1,
+        "coeffs": [
+          3.100305406593715,
+          -5.181157462454122,
+          3.0788595782418664
+        ],
+        "n_steps": 5,
+        "scale": 0.909925336783622,
+        "sigma_min": 0.003447565326296462,
+        "achieved_half_width": 0.09980583290561225,
+        "critical_point": 0.5230654166455223,
+        "invariance_bound": 1.000741192903231,
+        "invariance_margin": -0.0,
+        "positivity_margin": 0.9205703481607235
+      },
+      "coefficient_table_sha256": "2fe7f6babe73571addfb297c53119d9cfe9cb664eb2a6e69e0a64fc1f3caf171",
+      "versions": {
+        "torch": "2.13.0",
+        "numpy": "2.5.2"
+      },
+      "device": "cpu",
+      "cuda_version": null,
+      "artifact_directory": "/Users/krod/Documents/Coders/muon_schulz_extension/runs/local_smoke_release/jobs/91ac437f12831fd29686",
+      "peak_gpu_bytes": 0,
+      "tokens_seen": 307200,
+      "cuda_visible_devices": "cpu1",
+      "worker_wall_seconds": 4.508015500032343
+    },
+    {
+      "spec": {
+        "task": "language",
+        "arm": "gamma_0.10",
+        "precision": "fp32",
+        "phase": "confirm",
+        "lr": 0.02,
+        "seed": 12,
+        "steps": 600,
+        "data": "/Users/krod/Documents/Coders/muon_schulz_extension/data/datasets/shakespeare",
+        "batch": 8,
+        "model": {
+          "width": 64,
+          "layers": 2,
+          "heads": 4,
+          "context": 64
+        },
+        "adam_lr": 0.001,
+        "weight_decay": 0.01,
+        "eval_tokens": 8192,
+        "eval_every": 150,
+        "log_every": 150,
+        "max_seconds": 300,
+        "threads": 1,
+        "source_sha256": "8e6331b219e186727387b0d84dd71de2553df3186c66d3a9cb4b99bf0314bf96"
+      },
+      "status": "complete",
+      "completed_steps": 600,
+      "validation": {
+        "loss": 2.1891196072101593,
+        "accuracy": 0.3634033203125,
+        "count": 8192
+      },
+      "test": {
+        "loss": 2.229226902127266,
+        "accuracy": 0.351806640625,
+        "count": 8192
+      },
+      "curve": [
+        {
+          "step": 150,
+          "train_loss": 2.6528160572052,
+          "validation": {
+            "loss": 2.568665474653244,
+            "accuracy": 0.275634765625,
+            "count": 8192
+          }
+        },
+        {
+          "step": 300,
+          "train_loss": 2.481372833251953,
+          "validation": {
+            "loss": 2.38820780813694,
+            "accuracy": 0.315673828125,
+            "count": 8192
+          }
+        },
+        {
+          "step": 450,
+          "train_loss": 2.3067467212677,
+          "validation": {
+            "loss": 2.252699166536331,
+            "accuracy": 0.348876953125,
+            "count": 8192
+          }
+        },
+        {
+          "step": 600,
+          "train_loss": 2.262409210205078,
+          "validation": {
+            "loss": 2.1891196072101593,
+            "accuracy": 0.3634033203125,
+            "count": 8192
+          }
+        }
+      ],
+      "seconds": 2.9429891249747016,
+      "final_evaluation_seconds": 0.03942545800236985,
+      "diagnostic_seconds": 0.00721729313954711,
+      "seconds_per_step": 0.0048443335690535605,
+      "parameters": 107200,
+      "dataset": {
+        "dataset": "tinyshakespeare",
+        "source_sha256": "86c4e6aa9db7c042ec79f339dcb96d42b0075e16b8fc2e86bf0ca57e2dc565ed",
+        "tokenizer": "characters",
+        "vocab_size": 65,
+        "vocabulary": [
+          "\n",
+          " ",
+          "!",
+          "$",
+          "&",
+          "'",
+          ",",
+          "-",
+          ".",
+          "3",
+          ":",
+          ";",
+          "?",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z",
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "f",
+          "g",
+          "h",
+          "i",
+          "j",
+          "k",
+          "l",
+          "m",
+          "n",
+          "o",
+          "p",
+          "q",
+          "r",
+          "s",
+          "t",
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z"
+        ],
+        "split": "contiguous 85%/7.5%/7.5%; local smoke only",
+        "files": {
+          "train": {
+            "sha256": "06db62f57635cac53577f9cdfe6b036646c78e1e15c9243b4fe79f3261aa73a8",
+            "tokens": 948084
+          },
+          "validation": {
+            "sha256": "a9e95abb74fe936737ac32558b82236a57681a76c0f0ff7389b00dac58a7f41b",
+            "tokens": 83655
+          },
+          "test": {
+            "sha256": "82d21c0cc612ce062edfb72d8bf5969b79e71ed83303b6e1f318822fe4dc9d9a",
+            "tokens": 83655
+          }
+        }
+      },
+      "coefficient_set": {
+        "name": "gamma_0.10",
+        "kind": "fitted",
+        "gamma": 0.1,
+        "coeffs": [
+          3.100305406593715,
+          -5.181157462454122,
+          3.0788595782418664
+        ],
+        "n_steps": 5,
+        "scale": 0.909925336783622,
+        "sigma_min": 0.003447565326296462,
+        "achieved_half_width": 0.09980583290561225,
+        "critical_point": 0.5230654166455223,
+        "invariance_bound": 1.000741192903231,
+        "invariance_margin": -0.0,
+        "positivity_margin": 0.9205703481607235
+      },
+      "coefficient_table_sha256": "2fe7f6babe73571addfb297c53119d9cfe9cb664eb2a6e69e0a64fc1f3caf171",
+      "versions": {
+        "torch": "2.13.0",
+        "numpy": "2.5.2"
+      },
+      "device": "cpu",
+      "cuda_version": null,
+      "artifact_directory": "/Users/krod/Documents/Coders/muon_schulz_extension/runs/local_smoke_release/jobs/5dce965c955e6781debf",
+      "peak_gpu_bytes": 0,
+      "tokens_seen": 307200,
+      "cuda_visible_devices": "cpu0",
+      "worker_wall_seconds": 4.505628417013213
+    },
+    {
+      "spec": {
+        "task": "language",
+        "arm": "keller",
+        "precision": "fp32",
+        "phase": "confirm",
+        "lr": 0.02,
+        "seed": 10,
+        "steps": 600,
+        "data": "/Users/krod/Documents/Coders/muon_schulz_extension/data/datasets/shakespeare",
+        "batch": 8,
+        "model": {
+          "width": 64,
+          "layers": 2,
+          "heads": 4,
+          "context": 64
+        },
+        "adam_lr": 0.001,
+        "weight_decay": 0.01,
+        "eval_tokens": 8192,
+        "eval_every": 150,
+        "log_every": 150,
+        "max_seconds": 300,
+        "threads": 1,
+        "source_sha256": "8e6331b219e186727387b0d84dd71de2553df3186c66d3a9cb4b99bf0314bf96"
+      },
+      "status": "complete",
+      "completed_steps": 600,
+      "validation": {
+        "loss": 2.1487113535404205,
+        "accuracy": 0.378173828125,
+        "count": 8192
+      },
+      "test": {
+        "loss": 2.1754920333623886,
+        "accuracy": 0.3721923828125,
+        "count": 8192
+      },
+      "curve": [
+        {
+          "step": 150,
+          "train_loss": 2.598363161087036,
+          "validation": {
+            "loss": 2.5662363469600677,
+            "accuracy": 0.2760009765625,
+            "count": 8192
+          }
+        },
+        {
+          "step": 300,
+          "train_loss": 2.3643386363983154,
+          "validation": {
+            "loss": 2.390855833888054,
+            "accuracy": 0.308349609375,
+            "count": 8192
+          }
+        },
+        {
+          "step": 450,
+          "train_loss": 2.269399404525757,
+          "validation": {
+            "loss": 2.2131364792585373,
+            "accuracy": 0.35888671875,
+            "count": 8192
+          }
+        },
+        {
+          "step": 600,
+          "train_loss": 2.1900317668914795,
+          "validation": {
+            "loss": 2.1487113535404205,
+            "accuracy": 0.378173828125,
+            "count": 8192
+          }
+        }
+      ],
+      "seconds": 2.935310666973237,
+      "final_evaluation_seconds": 0.04117666702950373,
+      "diagnostic_seconds": 0.007457168831024319,
+      "seconds_per_step": 0.004833057837095112,
+      "parameters": 107200,
+      "dataset": {
+        "dataset": "tinyshakespeare",
+        "source_sha256": "86c4e6aa9db7c042ec79f339dcb96d42b0075e16b8fc2e86bf0ca57e2dc565ed",
+        "tokenizer": "characters",
+        "vocab_size": 65,
+        "vocabulary": [
+          "\n",
+          " ",
+          "!",
+          "$",
+          "&",
+          "'",
+          ",",
+          "-",
+          ".",
+          "3",
+          ":",
+          ";",
+          "?",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z",
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "f",
+          "g",
+          "h",
+          "i",
+          "j",
+          "k",
+          "l",
+          "m",
+          "n",
+          "o",
+          "p",
+          "q",
+          "r",
+          "s",
+          "t",
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z"
+        ],
+        "split": "contiguous 85%/7.5%/7.5%; local smoke only",
+        "files": {
+          "train": {
+            "sha256": "06db62f57635cac53577f9cdfe6b036646c78e1e15c9243b4fe79f3261aa73a8",
+            "tokens": 948084
+          },
+          "validation": {
+            "sha256": "a9e95abb74fe936737ac32558b82236a57681a76c0f0ff7389b00dac58a7f41b",
+            "tokens": 83655
+          },
+          "test": {
+            "sha256": "82d21c0cc612ce062edfb72d8bf5969b79e71ed83303b6e1f318822fe4dc9d9a",
+            "tokens": 83655
+          }
+        }
+      },
+      "coefficient_set": {
+        "name": "keller",
+        "kind": "baseline",
+        "gamma": 0.3,
+        "coeffs": [
+          3.4445,
+          -4.775,
+          2.0315
+        ],
+        "n_steps": 5,
+        "scale": 0.9252952978511033,
+        "sigma_min": 0.0014203132155766436,
+        "achieved_half_width": 0.2994431161117773,
+        "critical_point": 0.5545287908544945,
+        "invariance_bound": 1.2023686051632125,
+        "invariance_margin": -0.0,
+        "positivity_margin": 0.6386145705143975
+      },
+      "coefficient_table_sha256": "2fe7f6babe73571addfb297c53119d9cfe9cb664eb2a6e69e0a64fc1f3caf171",
+      "versions": {
+        "torch": "2.13.0",
+        "numpy": "2.5.2"
+      },
+      "device": "cpu",
+      "cuda_version": null,
+      "artifact_directory": "/Users/krod/Documents/Coders/muon_schulz_extension/runs/local_smoke_release/jobs/1d2eb5de514a782a51e4",
+      "peak_gpu_bytes": 0,
+      "tokens_seen": 307200,
+      "cuda_visible_devices": "cpu1",
+      "worker_wall_seconds": 4.503819083969574
+    },
+    {
+      "spec": {
+        "task": "language",
+        "arm": "keller",
+        "precision": "fp32",
+        "phase": "confirm",
+        "lr": 0.02,
+        "seed": 11,
+        "steps": 600,
+        "data": "/Users/krod/Documents/Coders/muon_schulz_extension/data/datasets/shakespeare",
+        "batch": 8,
+        "model": {
+          "width": 64,
+          "layers": 2,
+          "heads": 4,
+          "context": 64
+        },
+        "adam_lr": 0.001,
+        "weight_decay": 0.01,
+        "eval_tokens": 8192,
+        "eval_every": 150,
+        "log_every": 150,
+        "max_seconds": 300,
+        "threads": 1,
+        "source_sha256": "8e6331b219e186727387b0d84dd71de2553df3186c66d3a9cb4b99bf0314bf96"
+      },
+      "status": "complete",
+      "completed_steps": 600,
+      "validation": {
+        "loss": 2.1499321311712265,
+        "accuracy": 0.374755859375,
+        "count": 8192
+      },
+      "test": {
+        "loss": 2.179549530148506,
+        "accuracy": 0.363037109375,
+        "count": 8192
+      },
+      "curve": [
+        {
+          "step": 150,
+          "train_loss": 2.470109462738037,
+          "validation": {
+            "loss": 2.571248084306717,
+            "accuracy": 0.2779541015625,
+            "count": 8192
+          }
+        },
+        {
+          "step": 300,
+          "train_loss": 2.454521894454956,
+          "validation": {
+            "loss": 2.3940217047929764,
+            "accuracy": 0.3087158203125,
+            "count": 8192
+          }
+        },
+        {
+          "step": 450,
+          "train_loss": 2.278398036956787,
+          "validation": {
+            "loss": 2.2286120653152466,
+            "accuracy": 0.355224609375,
+            "count": 8192
+          }
+        },
+        {
+          "step": 600,
+          "train_loss": 2.140040874481201,
+          "validation": {
+            "loss": 2.1499321311712265,
+            "accuracy": 0.374755859375,
+            "count": 8192
+          }
+        }
+      ],
+      "seconds": 2.969803249987308,
+      "final_evaluation_seconds": 0.04058466700371355,
+      "diagnostic_seconds": 0.007986871933098882,
+      "seconds_per_step": 0.004884041624609381,
+      "parameters": 107200,
+      "dataset": {
+        "dataset": "tinyshakespeare",
+        "source_sha256": "86c4e6aa9db7c042ec79f339dcb96d42b0075e16b8fc2e86bf0ca57e2dc565ed",
+        "tokenizer": "characters",
+        "vocab_size": 65,
+        "vocabulary": [
+          "\n",
+          " ",
+          "!",
+          "$",
+          "&",
+          "'",
+          ",",
+          "-",
+          ".",
+          "3",
+          ":",
+          ";",
+          "?",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z",
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "f",
+          "g",
+          "h",
+          "i",
+          "j",
+          "k",
+          "l",
+          "m",
+          "n",
+          "o",
+          "p",
+          "q",
+          "r",
+          "s",
+          "t",
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z"
+        ],
+        "split": "contiguous 85%/7.5%/7.5%; local smoke only",
+        "files": {
+          "train": {
+            "sha256": "06db62f57635cac53577f9cdfe6b036646c78e1e15c9243b4fe79f3261aa73a8",
+            "tokens": 948084
+          },
+          "validation": {
+            "sha256": "a9e95abb74fe936737ac32558b82236a57681a76c0f0ff7389b00dac58a7f41b",
+            "tokens": 83655
+          },
+          "test": {
+            "sha256": "82d21c0cc612ce062edfb72d8bf5969b79e71ed83303b6e1f318822fe4dc9d9a",
+            "tokens": 83655
+          }
+        }
+      },
+      "coefficient_set": {
+        "name": "keller",
+        "kind": "baseline",
+        "gamma": 0.3,
+        "coeffs": [
+          3.4445,
+          -4.775,
+          2.0315
+        ],
+        "n_steps": 5,
+        "scale": 0.9252952978511033,
+        "sigma_min": 0.0014203132155766436,
+        "achieved_half_width": 0.2994431161117773,
+        "critical_point": 0.5545287908544945,
+        "invariance_bound": 1.2023686051632125,
+        "invariance_margin": -0.0,
+        "positivity_margin": 0.6386145705143975
+      },
+      "coefficient_table_sha256": "2fe7f6babe73571addfb297c53119d9cfe9cb664eb2a6e69e0a64fc1f3caf171",
+      "versions": {
+        "torch": "2.13.0",
+        "numpy": "2.5.2"
+      },
+      "device": "cpu",
+      "cuda_version": null,
+      "artifact_directory": "/Users/krod/Documents/Coders/muon_schulz_extension/runs/local_smoke_release/jobs/dedc78703748e0647cc6",
+      "peak_gpu_bytes": 0,
+      "tokens_seen": 307200,
+      "cuda_visible_devices": "cpu0",
+      "worker_wall_seconds": 4.505815040960442
+    },
+    {
+      "spec": {
+        "task": "language",
+        "arm": "keller",
+        "precision": "fp32",
+        "phase": "confirm",
+        "lr": 0.02,
+        "seed": 12,
+        "steps": 600,
+        "data": "/Users/krod/Documents/Coders/muon_schulz_extension/data/datasets/shakespeare",
+        "batch": 8,
+        "model": {
+          "width": 64,
+          "layers": 2,
+          "heads": 4,
+          "context": 64
+        },
+        "adam_lr": 0.001,
+        "weight_decay": 0.01,
+        "eval_tokens": 8192,
+        "eval_every": 150,
+        "log_every": 150,
+        "max_seconds": 300,
+        "threads": 1,
+        "source_sha256": "8e6331b219e186727387b0d84dd71de2553df3186c66d3a9cb4b99bf0314bf96"
+      },
+      "status": "complete",
+      "completed_steps": 600,
+      "validation": {
+        "loss": 2.1894623786211014,
+        "accuracy": 0.361572265625,
+        "count": 8192
+      },
+      "test": {
+        "loss": 2.22682923078537,
+        "accuracy": 0.3536376953125,
+        "count": 8192
+      },
+      "curve": [
+        {
+          "step": 150,
+          "train_loss": 2.6394474506378174,
+          "validation": {
+            "loss": 2.5696162581443787,
+            "accuracy": 0.2772216796875,
+            "count": 8192
+          }
+        },
+        {
+          "step": 300,
+          "train_loss": 2.463843584060669,
+          "validation": {
+            "loss": 2.389141634106636,
+            "accuracy": 0.3145751953125,
+            "count": 8192
+          }
+        },
+        {
+          "step": 450,
+          "train_loss": 2.2825448513031006,
+          "validation": {
+            "loss": 2.259914383292198,
+            "accuracy": 0.3482666015625,
+            "count": 8192
+          }
+        },
+        {
+          "step": 600,
+          "train_loss": 2.2601370811462402,
+          "validation": {
+            "loss": 2.1894623786211014,
+            "accuracy": 0.361572265625,
+            "count": 8192
+          }
+        }
+      ],
+      "seconds": 2.9663326669833623,
+      "final_evaluation_seconds": 0.039069041959010065,
+      "diagnostic_seconds": 0.008007624826859683,
+      "seconds_per_step": 0.004895124980248511,
+      "parameters": 107200,
+      "dataset": {
+        "dataset": "tinyshakespeare",
+        "source_sha256": "86c4e6aa9db7c042ec79f339dcb96d42b0075e16b8fc2e86bf0ca57e2dc565ed",
+        "tokenizer": "characters",
+        "vocab_size": 65,
+        "vocabulary": [
+          "\n",
+          " ",
+          "!",
+          "$",
+          "&",
+          "'",
+          ",",
+          "-",
+          ".",
+          "3",
+          ":",
+          ";",
+          "?",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z",
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "f",
+          "g",
+          "h",
+          "i",
+          "j",
+          "k",
+          "l",
+          "m",
+          "n",
+          "o",
+          "p",
+          "q",
+          "r",
+          "s",
+          "t",
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z"
+        ],
+        "split": "contiguous 85%/7.5%/7.5%; local smoke only",
+        "files": {
+          "train": {
+            "sha256": "06db62f57635cac53577f9cdfe6b036646c78e1e15c9243b4fe79f3261aa73a8",
+            "tokens": 948084
+          },
+          "validation": {
+            "sha256": "a9e95abb74fe936737ac32558b82236a57681a76c0f0ff7389b00dac58a7f41b",
+            "tokens": 83655
+          },
+          "test": {
+            "sha256": "82d21c0cc612ce062edfb72d8bf5969b79e71ed83303b6e1f318822fe4dc9d9a",
+            "tokens": 83655
+          }
+        }
+      },
+      "coefficient_set": {
+        "name": "keller",
+        "kind": "baseline",
+        "gamma": 0.3,
+        "coeffs": [
+          3.4445,
+          -4.775,
+          2.0315
+        ],
+        "n_steps": 5,
+        "scale": 0.9252952978511033,
+        "sigma_min": 0.0014203132155766436,
+        "achieved_half_width": 0.2994431161117773,
+        "critical_point": 0.5545287908544945,
+        "invariance_bound": 1.2023686051632125,
+        "invariance_margin": -0.0,
+        "positivity_margin": 0.6386145705143975
+      },
+      "coefficient_table_sha256": "2fe7f6babe73571addfb297c53119d9cfe9cb664eb2a6e69e0a64fc1f3caf171",
+      "versions": {
+        "torch": "2.13.0",
+        "numpy": "2.5.2"
+      },
+      "device": "cpu",
+      "cuda_version": null,
+      "artifact_directory": "/Users/krod/Documents/Coders/muon_schulz_extension/runs/local_smoke_release/jobs/48b3736d996c71b30dc2",
+      "peak_gpu_bytes": 0,
+      "tokens_seen": 307200,
+      "cuda_visible_devices": "cpu1",
+      "worker_wall_seconds": 4.50334879203001
+    },
+    {
+      "spec": {
+        "task": "language",
+        "arm": "exact_svd",
+        "precision": "fp32",
+        "phase": "confirm",
+        "lr": 0.02,
+        "seed": 10,
+        "steps": 600,
+        "data": "/Users/krod/Documents/Coders/muon_schulz_extension/data/datasets/shakespeare",
+        "batch": 8,
+        "model": {
+          "width": 64,
+          "layers": 2,
+          "heads": 4,
+          "context": 64
+        },
+        "adam_lr": 0.001,
+        "weight_decay": 0.01,
+        "eval_tokens": 8192,
+        "eval_every": 150,
+        "log_every": 150,
+        "max_seconds": 300,
+        "threads": 1,
+        "source_sha256": "8e6331b219e186727387b0d84dd71de2553df3186c66d3a9cb4b99bf0314bf96"
+      },
+      "status": "complete",
+      "completed_steps": 600,
+      "validation": {
+        "loss": 2.1291142255067825,
+        "accuracy": 0.3839111328125,
+        "count": 8192
+      },
+      "test": {
+        "loss": 2.1606753021478653,
+        "accuracy": 0.3807373046875,
+        "count": 8192
+      },
+      "curve": [
+        {
+          "step": 150,
+          "train_loss": 2.604081153869629,
+          "validation": {
+            "loss": 2.566337376832962,
+            "accuracy": 0.272216796875,
+            "count": 8192
+          }
+        },
+        {
+          "step": 300,
+          "train_loss": 2.372946262359619,
+          "validation": {
+            "loss": 2.3809267729520798,
+            "accuracy": 0.314208984375,
+            "count": 8192
+          }
+        },
+        {
+          "step": 450,
+          "train_loss": 2.270134925842285,
+          "validation": {
+            "loss": 2.194952756166458,
+            "accuracy": 0.3681640625,
+            "count": 8192
+          }
+        },
+        {
+          "step": 600,
+          "train_loss": 2.1824216842651367,
+          "validation": {
+            "loss": 2.1291142255067825,
+            "accuracy": 0.3839111328125,
+            "count": 8192
+          }
+        }
+      ],
+      "seconds": 4.117202708031982,
+      "final_evaluation_seconds": 0.03937341697746888,
+      "diagnostic_seconds": 0.0068540439824573696,
+      "seconds_per_step": 0.006830375385470688,
+      "parameters": 107200,
+      "dataset": {
+        "dataset": "tinyshakespeare",
+        "source_sha256": "86c4e6aa9db7c042ec79f339dcb96d42b0075e16b8fc2e86bf0ca57e2dc565ed",
+        "tokenizer": "characters",
+        "vocab_size": 65,
+        "vocabulary": [
+          "\n",
+          " ",
+          "!",
+          "$",
+          "&",
+          "'",
+          ",",
+          "-",
+          ".",
+          "3",
+          ":",
+          ";",
+          "?",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z",
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "f",
+          "g",
+          "h",
+          "i",
+          "j",
+          "k",
+          "l",
+          "m",
+          "n",
+          "o",
+          "p",
+          "q",
+          "r",
+          "s",
+          "t",
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z"
+        ],
+        "split": "contiguous 85%/7.5%/7.5%; local smoke only",
+        "files": {
+          "train": {
+            "sha256": "06db62f57635cac53577f9cdfe6b036646c78e1e15c9243b4fe79f3261aa73a8",
+            "tokens": 948084
+          },
+          "validation": {
+            "sha256": "a9e95abb74fe936737ac32558b82236a57681a76c0f0ff7389b00dac58a7f41b",
+            "tokens": 83655
+          },
+          "test": {
+            "sha256": "82d21c0cc612ce062edfb72d8bf5969b79e71ed83303b6e1f318822fe4dc9d9a",
+            "tokens": 83655
+          }
+        }
+      },
+      "coefficient_set": {
+        "name": "exact_svd",
+        "kind": "exact_svd",
+        "gamma": 0.0,
+        "coeffs": null,
+        "n_steps": 5,
+        "scale": 1.0,
+        "sigma_min": 0.0,
+        "achieved_half_width": 0.0,
+        "critical_point": null,
+        "invariance_bound": 1.0,
+        "invariance_margin": null,
+        "positivity_margin": null
+      },
+      "coefficient_table_sha256": "2fe7f6babe73571addfb297c53119d9cfe9cb664eb2a6e69e0a64fc1f3caf171",
+      "versions": {
+        "torch": "2.13.0",
+        "numpy": "2.5.2"
+      },
+      "device": "cpu",
+      "cuda_version": null,
+      "artifact_directory": "/Users/krod/Documents/Coders/muon_schulz_extension/runs/local_smoke_release/jobs/a4ac87e9b6d080593b39",
+      "peak_gpu_bytes": 0,
+      "tokens_seen": 307200,
+      "cuda_visible_devices": "cpu0",
+      "worker_wall_seconds": 5.735248834011145
+    },
+    {
+      "spec": {
+        "task": "language",
+        "arm": "exact_svd",
+        "precision": "fp32",
+        "phase": "confirm",
+        "lr": 0.02,
+        "seed": 11,
+        "steps": 600,
+        "data": "/Users/krod/Documents/Coders/muon_schulz_extension/data/datasets/shakespeare",
+        "batch": 8,
+        "model": {
+          "width": 64,
+          "layers": 2,
+          "heads": 4,
+          "context": 64
+        },
+        "adam_lr": 0.001,
+        "weight_decay": 0.01,
+        "eval_tokens": 8192,
+        "eval_every": 150,
+        "log_every": 150,
+        "max_seconds": 300,
+        "threads": 1,
+        "source_sha256": "8e6331b219e186727387b0d84dd71de2553df3186c66d3a9cb4b99bf0314bf96"
+      },
+      "status": "complete",
+      "completed_steps": 600,
+      "validation": {
+        "loss": 2.172543168067932,
+        "accuracy": 0.3681640625,
+        "count": 8192
+      },
+      "test": {
+        "loss": 2.196700543165207,
+        "accuracy": 0.36083984375,
+        "count": 8192
+      },
+      "curve": [
+        {
+          "step": 150,
+          "train_loss": 2.4874119758605957,
+          "validation": {
+            "loss": 2.582218736410141,
+            "accuracy": 0.2718505859375,
+            "count": 8192
+          }
+        },
+        {
+          "step": 300,
+          "train_loss": 2.42954421043396,
+          "validation": {
+            "loss": 2.401893302798271,
+            "accuracy": 0.306396484375,
+            "count": 8192
+          }
+        },
+        {
+          "step": 450,
+          "train_loss": 2.30057692527771,
+          "validation": {
+            "loss": 2.2486837059259415,
+            "accuracy": 0.348876953125,
+            "count": 8192
+          }
+        },
+        {
+          "step": 600,
+          "train_loss": 2.1727054119110107,
+          "validation": {
+            "loss": 2.172543168067932,
+            "accuracy": 0.3681640625,
+            "count": 8192
+          }
+        }
+      ],
+      "seconds": 4.1284361250000075,
+      "final_evaluation_seconds": 0.04550216603092849,
+      "diagnostic_seconds": 0.006981416838243604,
+      "seconds_per_step": 0.006833291589282453,
+      "parameters": 107200,
+      "dataset": {
+        "dataset": "tinyshakespeare",
+        "source_sha256": "86c4e6aa9db7c042ec79f339dcb96d42b0075e16b8fc2e86bf0ca57e2dc565ed",
+        "tokenizer": "characters",
+        "vocab_size": 65,
+        "vocabulary": [
+          "\n",
+          " ",
+          "!",
+          "$",
+          "&",
+          "'",
+          ",",
+          "-",
+          ".",
+          "3",
+          ":",
+          ";",
+          "?",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z",
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "f",
+          "g",
+          "h",
+          "i",
+          "j",
+          "k",
+          "l",
+          "m",
+          "n",
+          "o",
+          "p",
+          "q",
+          "r",
+          "s",
+          "t",
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z"
+        ],
+        "split": "contiguous 85%/7.5%/7.5%; local smoke only",
+        "files": {
+          "train": {
+            "sha256": "06db62f57635cac53577f9cdfe6b036646c78e1e15c9243b4fe79f3261aa73a8",
+            "tokens": 948084
+          },
+          "validation": {
+            "sha256": "a9e95abb74fe936737ac32558b82236a57681a76c0f0ff7389b00dac58a7f41b",
+            "tokens": 83655
+          },
+          "test": {
+            "sha256": "82d21c0cc612ce062edfb72d8bf5969b79e71ed83303b6e1f318822fe4dc9d9a",
+            "tokens": 83655
+          }
+        }
+      },
+      "coefficient_set": {
+        "name": "exact_svd",
+        "kind": "exact_svd",
+        "gamma": 0.0,
+        "coeffs": null,
+        "n_steps": 5,
+        "scale": 1.0,
+        "sigma_min": 0.0,
+        "achieved_half_width": 0.0,
+        "critical_point": null,
+        "invariance_bound": 1.0,
+        "invariance_margin": null,
+        "positivity_margin": null
+      },
+      "coefficient_table_sha256": "2fe7f6babe73571addfb297c53119d9cfe9cb664eb2a6e69e0a64fc1f3caf171",
+      "versions": {
+        "torch": "2.13.0",
+        "numpy": "2.5.2"
+      },
+      "device": "cpu",
+      "cuda_version": null,
+      "artifact_directory": "/Users/krod/Documents/Coders/muon_schulz_extension/runs/local_smoke_release/jobs/1db1a99b50d02fe68f1f",
+      "peak_gpu_bytes": 0,
+      "tokens_seen": 307200,
+      "cuda_visible_devices": "cpu1",
+      "worker_wall_seconds": 5.732257166004274
+    },
+    {
+      "spec": {
+        "task": "language",
+        "arm": "exact_svd",
+        "precision": "fp32",
+        "phase": "confirm",
+        "lr": 0.02,
+        "seed": 12,
+        "steps": 600,
+        "data": "/Users/krod/Documents/Coders/muon_schulz_extension/data/datasets/shakespeare",
+        "batch": 8,
+        "model": {
+          "width": 64,
+          "layers": 2,
+          "heads": 4,
+          "context": 64
+        },
+        "adam_lr": 0.001,
+        "weight_decay": 0.01,
+        "eval_tokens": 8192,
+        "eval_every": 150,
+        "log_every": 150,
+        "max_seconds": 300,
+        "threads": 1,
+        "source_sha256": "8e6331b219e186727387b0d84dd71de2553df3186c66d3a9cb4b99bf0314bf96"
+      },
+      "status": "complete",
+      "completed_steps": 600,
+      "validation": {
+        "loss": 2.1875739842653275,
+        "accuracy": 0.35888671875,
+        "count": 8192
+      },
+      "test": {
+        "loss": 2.2263371646404266,
+        "accuracy": 0.3541259765625,
+        "count": 8192
+      },
+      "curve": [
+        {
+          "step": 150,
+          "train_loss": 2.6550989151000977,
+          "validation": {
+            "loss": 2.5774025470018387,
+            "accuracy": 0.2777099609375,
+            "count": 8192
+          }
+        },
+        {
+          "step": 300,
+          "train_loss": 2.44244122505188,
+          "validation": {
+            "loss": 2.3868040442466736,
+            "accuracy": 0.3173828125,
+            "count": 8192
+          }
+        },
+        {
+          "step": 450,
+          "train_loss": 2.282099723815918,
+          "validation": {
+            "loss": 2.2507925033569336,
+            "accuracy": 0.347412109375,
+            "count": 8192
+          }
+        },
+        {
+          "step": 600,
+          "train_loss": 2.2491836547851562,
+          "validation": {
+            "loss": 2.1875739842653275,
+            "accuracy": 0.35888671875,
+            "count": 8192
+          }
+        }
+      ],
+      "seconds": 4.068291875009891,
+      "final_evaluation_seconds": 0.04381225001998246,
+      "diagnostic_seconds": 0.006383000058121979,
+      "seconds_per_step": 0.006766333023551852,
+      "parameters": 107200,
+      "dataset": {
+        "dataset": "tinyshakespeare",
+        "source_sha256": "86c4e6aa9db7c042ec79f339dcb96d42b0075e16b8fc2e86bf0ca57e2dc565ed",
+        "tokenizer": "characters",
+        "vocab_size": 65,
+        "vocabulary": [
+          "\n",
+          " ",
+          "!",
+          "$",
+          "&",
+          "'",
+          ",",
+          "-",
+          ".",
+          "3",
+          ":",
+          ";",
+          "?",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z",
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "f",
+          "g",
+          "h",
+          "i",
+          "j",
+          "k",
+          "l",
+          "m",
+          "n",
+          "o",
+          "p",
+          "q",
+          "r",
+          "s",
+          "t",
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z"
+        ],
+        "split": "contiguous 85%/7.5%/7.5%; local smoke only",
+        "files": {
+          "train": {
+            "sha256": "06db62f57635cac53577f9cdfe6b036646c78e1e15c9243b4fe79f3261aa73a8",
+            "tokens": 948084
+          },
+          "validation": {
+            "sha256": "a9e95abb74fe936737ac32558b82236a57681a76c0f0ff7389b00dac58a7f41b",
+            "tokens": 83655
+          },
+          "test": {
+            "sha256": "82d21c0cc612ce062edfb72d8bf5969b79e71ed83303b6e1f318822fe4dc9d9a",
+            "tokens": 83655
+          }
+        }
+      },
+      "coefficient_set": {
+        "name": "exact_svd",
+        "kind": "exact_svd",
+        "gamma": 0.0,
+        "coeffs": null,
+        "n_steps": 5,
+        "scale": 1.0,
+        "sigma_min": 0.0,
+        "achieved_half_width": 0.0,
+        "critical_point": null,
+        "invariance_bound": 1.0,
+        "invariance_margin": null,
+        "positivity_margin": null
+      },
+      "coefficient_table_sha256": "2fe7f6babe73571addfb297c53119d9cfe9cb664eb2a6e69e0a64fc1f3caf171",
+      "versions": {
+        "torch": "2.13.0",
+        "numpy": "2.5.2"
+      },
+      "device": "cpu",
+      "cuda_version": null,
+      "artifact_directory": "/Users/krod/Documents/Coders/muon_schulz_extension/runs/local_smoke_release/jobs/c6a338a82431243a3f23",
+      "peak_gpu_bytes": 0,
+      "tokens_seen": 307200,
+      "cuda_visible_devices": "cpu0",
+      "worker_wall_seconds": 5.74002924998058
+    },
+    {
+      "spec": {
+        "task": "language",
+        "arm": "gamma_0.10",
+        "precision": "bf16",
+        "phase": "confirm",
+        "lr": 0.02,
+        "seed": 10,
+        "steps": 600,
+        "data": "/Users/krod/Documents/Coders/muon_schulz_extension/data/datasets/shakespeare",
+        "batch": 8,
+        "model": {
+          "width": 64,
+          "layers": 2,
+          "heads": 4,
+          "context": 64
+        },
+        "adam_lr": 0.001,
+        "weight_decay": 0.01,
+        "eval_tokens": 8192,
+        "eval_every": 150,
+        "log_every": 150,
+        "max_seconds": 300,
+        "threads": 1,
+        "source_sha256": "8e6331b219e186727387b0d84dd71de2553df3186c66d3a9cb4b99bf0314bf96"
+      },
+      "status": "complete",
+      "completed_steps": 600,
+      "validation": {
+        "loss": 2.1546156257390976,
+        "accuracy": 0.37109375,
+        "count": 8192
+      },
+      "test": {
+        "loss": 2.1776141822338104,
+        "accuracy": 0.3702392578125,
+        "count": 8192
+      },
+      "curve": [
+        {
+          "step": 150,
+          "train_loss": 2.596996784210205,
+          "validation": {
+            "loss": 2.566180631518364,
+            "accuracy": 0.2750244140625,
+            "count": 8192
+          }
+        },
+        {
+          "step": 300,
+          "train_loss": 2.4021811485290527,
+          "validation": {
+            "loss": 2.397307589650154,
+            "accuracy": 0.3031005859375,
+            "count": 8192
+          }
+        },
+        {
+          "step": 450,
+          "train_loss": 2.264688014984131,
+          "validation": {
+            "loss": 2.2223136723041534,
+            "accuracy": 0.357666015625,
+            "count": 8192
+          }
+        },
+        {
+          "step": 600,
+          "train_loss": 2.187476396560669,
+          "validation": {
+            "loss": 2.1546156257390976,
+            "accuracy": 0.37109375,
+            "count": 8192
+          }
+        }
+      ],
+      "seconds": 9.146820458001457,
+      "final_evaluation_seconds": 0.041298334021121264,
+      "diagnostic_seconds": 0.008001500100363046,
+      "seconds_per_step": 0.015377691574394703,
+      "parameters": 107200,
+      "dataset": {
+        "dataset": "tinyshakespeare",
+        "source_sha256": "86c4e6aa9db7c042ec79f339dcb96d42b0075e16b8fc2e86bf0ca57e2dc565ed",
+        "tokenizer": "characters",
+        "vocab_size": 65,
+        "vocabulary": [
+          "\n",
+          " ",
+          "!",
+          "$",
+          "&",
+          "'",
+          ",",
+          "-",
+          ".",
+          "3",
+          ":",
+          ";",
+          "?",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z",
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "f",
+          "g",
+          "h",
+          "i",
+          "j",
+          "k",
+          "l",
+          "m",
+          "n",
+          "o",
+          "p",
+          "q",
+          "r",
+          "s",
+          "t",
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z"
+        ],
+        "split": "contiguous 85%/7.5%/7.5%; local smoke only",
+        "files": {
+          "train": {
+            "sha256": "06db62f57635cac53577f9cdfe6b036646c78e1e15c9243b4fe79f3261aa73a8",
+            "tokens": 948084
+          },
+          "validation": {
+            "sha256": "a9e95abb74fe936737ac32558b82236a57681a76c0f0ff7389b00dac58a7f41b",
+            "tokens": 83655
+          },
+          "test": {
+            "sha256": "82d21c0cc612ce062edfb72d8bf5969b79e71ed83303b6e1f318822fe4dc9d9a",
+            "tokens": 83655
+          }
+        }
+      },
+      "coefficient_set": {
+        "name": "gamma_0.10",
+        "kind": "fitted",
+        "gamma": 0.1,
+        "coeffs": [
+          3.100305406593715,
+          -5.181157462454122,
+          3.0788595782418664
+        ],
+        "n_steps": 5,
+        "scale": 0.909925336783622,
+        "sigma_min": 0.003447565326296462,
+        "achieved_half_width": 0.09980583290561225,
+        "critical_point": 0.5230654166455223,
+        "invariance_bound": 1.000741192903231,
+        "invariance_margin": -0.0,
+        "positivity_margin": 0.9205703481607235
+      },
+      "coefficient_table_sha256": "2fe7f6babe73571addfb297c53119d9cfe9cb664eb2a6e69e0a64fc1f3caf171",
+      "versions": {
+        "torch": "2.13.0",
+        "numpy": "2.5.2"
+      },
+      "device": "cpu",
+      "cuda_version": null,
+      "artifact_directory": "/Users/krod/Documents/Coders/muon_schulz_extension/runs/local_smoke_release/jobs/4d207fb17b8037e9c63e",
+      "peak_gpu_bytes": 0,
+      "tokens_seen": 307200,
+      "cuda_visible_devices": "cpu1",
+      "worker_wall_seconds": 10.657889458001591
+    },
+    {
+      "spec": {
+        "task": "language",
+        "arm": "gamma_0.10",
+        "precision": "bf16",
+        "phase": "confirm",
+        "lr": 0.02,
+        "seed": 11,
+        "steps": 600,
+        "data": "/Users/krod/Documents/Coders/muon_schulz_extension/data/datasets/shakespeare",
+        "batch": 8,
+        "model": {
+          "width": 64,
+          "layers": 2,
+          "heads": 4,
+          "context": 64
+        },
+        "adam_lr": 0.001,
+        "weight_decay": 0.01,
+        "eval_tokens": 8192,
+        "eval_every": 150,
+        "log_every": 150,
+        "max_seconds": 300,
+        "threads": 1,
+        "source_sha256": "8e6331b219e186727387b0d84dd71de2553df3186c66d3a9cb4b99bf0314bf96"
+      },
+      "status": "complete",
+      "completed_steps": 600,
+      "validation": {
+        "loss": 2.1708772480487823,
+        "accuracy": 0.3685302734375,
+        "count": 8192
+      },
+      "test": {
+        "loss": 2.1991509795188904,
+        "accuracy": 0.36328125,
+        "count": 8192
+      },
+      "curve": [
+        {
+          "step": 150,
+          "train_loss": 2.481491804122925,
+          "validation": {
+            "loss": 2.568278655409813,
+            "accuracy": 0.27734375,
+            "count": 8192
+          }
+        },
+        {
+          "step": 300,
+          "train_loss": 2.4407646656036377,
+          "validation": {
+            "loss": 2.3841570764780045,
+            "accuracy": 0.31640625,
+            "count": 8192
+          }
+        },
+        {
+          "step": 450,
+          "train_loss": 2.2826335430145264,
+          "validation": {
+            "loss": 2.244566038250923,
+            "accuracy": 0.351318359375,
+            "count": 8192
+          }
+        },
+        {
+          "step": 600,
+          "train_loss": 2.173602342605591,
+          "validation": {
+            "loss": 2.1708772480487823,
+            "accuracy": 0.3685302734375,
+            "count": 8192
+          }
+        }
+      ],
+      "seconds": 9.145222042046953,
+      "final_evaluation_seconds": 0.04048270802013576,
+      "diagnostic_seconds": 0.0086945811053738,
+      "seconds_per_step": 0.015440099616535008,
+      "parameters": 107200,
+      "dataset": {
+        "dataset": "tinyshakespeare",
+        "source_sha256": "86c4e6aa9db7c042ec79f339dcb96d42b0075e16b8fc2e86bf0ca57e2dc565ed",
+        "tokenizer": "characters",
+        "vocab_size": 65,
+        "vocabulary": [
+          "\n",
+          " ",
+          "!",
+          "$",
+          "&",
+          "'",
+          ",",
+          "-",
+          ".",
+          "3",
+          ":",
+          ";",
+          "?",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z",
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "f",
+          "g",
+          "h",
+          "i",
+          "j",
+          "k",
+          "l",
+          "m",
+          "n",
+          "o",
+          "p",
+          "q",
+          "r",
+          "s",
+          "t",
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z"
+        ],
+        "split": "contiguous 85%/7.5%/7.5%; local smoke only",
+        "files": {
+          "train": {
+            "sha256": "06db62f57635cac53577f9cdfe6b036646c78e1e15c9243b4fe79f3261aa73a8",
+            "tokens": 948084
+          },
+          "validation": {
+            "sha256": "a9e95abb74fe936737ac32558b82236a57681a76c0f0ff7389b00dac58a7f41b",
+            "tokens": 83655
+          },
+          "test": {
+            "sha256": "82d21c0cc612ce062edfb72d8bf5969b79e71ed83303b6e1f318822fe4dc9d9a",
+            "tokens": 83655
+          }
+        }
+      },
+      "coefficient_set": {
+        "name": "gamma_0.10",
+        "kind": "fitted",
+        "gamma": 0.1,
+        "coeffs": [
+          3.100305406593715,
+          -5.181157462454122,
+          3.0788595782418664
+        ],
+        "n_steps": 5,
+        "scale": 0.909925336783622,
+        "sigma_min": 0.003447565326296462,
+        "achieved_half_width": 0.09980583290561225,
+        "critical_point": 0.5230654166455223,
+        "invariance_bound": 1.000741192903231,
+        "invariance_margin": -0.0,
+        "positivity_margin": 0.9205703481607235
+      },
+      "coefficient_table_sha256": "2fe7f6babe73571addfb297c53119d9cfe9cb664eb2a6e69e0a64fc1f3caf171",
+      "versions": {
+        "torch": "2.13.0",
+        "numpy": "2.5.2"
+      },
+      "device": "cpu",
+      "cuda_version": null,
+      "artifact_directory": "/Users/krod/Documents/Coders/muon_schulz_extension/runs/local_smoke_release/jobs/315224c1680fa183ff9b",
+      "peak_gpu_bytes": 0,
+      "tokens_seen": 307200,
+      "cuda_visible_devices": "cpu0",
+      "worker_wall_seconds": 10.654818292008713
+    },
+    {
+      "spec": {
+        "task": "language",
+        "arm": "gamma_0.10",
+        "precision": "bf16",
+        "phase": "confirm",
+        "lr": 0.02,
+        "seed": 12,
+        "steps": 600,
+        "data": "/Users/krod/Documents/Coders/muon_schulz_extension/data/datasets/shakespeare",
+        "batch": 8,
+        "model": {
+          "width": 64,
+          "layers": 2,
+          "heads": 4,
+          "context": 64
+        },
+        "adam_lr": 0.001,
+        "weight_decay": 0.01,
+        "eval_tokens": 8192,
+        "eval_every": 150,
+        "log_every": 150,
+        "max_seconds": 300,
+        "threads": 1,
+        "source_sha256": "8e6331b219e186727387b0d84dd71de2553df3186c66d3a9cb4b99bf0314bf96"
+      },
+      "status": "complete",
+      "completed_steps": 600,
+      "validation": {
+        "loss": 2.190206602215767,
+        "accuracy": 0.364501953125,
+        "count": 8192
+      },
+      "test": {
+        "loss": 2.230599120259285,
+        "accuracy": 0.3514404296875,
+        "count": 8192
+      },
+      "curve": [
+        {
+          "step": 150,
+          "train_loss": 2.6543374061584473,
+          "validation": {
+            "loss": 2.5680815875530243,
+            "accuracy": 0.27490234375,
+            "count": 8192
+          }
+        },
+        {
+          "step": 300,
+          "train_loss": 2.457534074783325,
+          "validation": {
+            "loss": 2.386444553732872,
+            "accuracy": 0.31396484375,
+            "count": 8192
+          }
+        },
+        {
+          "step": 450,
+          "train_loss": 2.2958762645721436,
+          "validation": {
+            "loss": 2.25630022585392,
+            "accuracy": 0.350341796875,
+            "count": 8192
+          }
+        },
+        {
+          "step": 600,
+          "train_loss": 2.2706596851348877,
+          "validation": {
+            "loss": 2.190206602215767,
+            "accuracy": 0.364501953125,
+            "count": 8192
+          }
+        }
+      ],
+      "seconds": 9.223396125016734,
+      "final_evaluation_seconds": 0.04153570800554007,
+      "diagnostic_seconds": 0.009339870768599212,
+      "seconds_per_step": 0.015515224798582495,
+      "parameters": 107200,
+      "dataset": {
+        "dataset": "tinyshakespeare",
+        "source_sha256": "86c4e6aa9db7c042ec79f339dcb96d42b0075e16b8fc2e86bf0ca57e2dc565ed",
+        "tokenizer": "characters",
+        "vocab_size": 65,
+        "vocabulary": [
+          "\n",
+          " ",
+          "!",
+          "$",
+          "&",
+          "'",
+          ",",
+          "-",
+          ".",
+          "3",
+          ":",
+          ";",
+          "?",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z",
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "f",
+          "g",
+          "h",
+          "i",
+          "j",
+          "k",
+          "l",
+          "m",
+          "n",
+          "o",
+          "p",
+          "q",
+          "r",
+          "s",
+          "t",
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z"
+        ],
+        "split": "contiguous 85%/7.5%/7.5%; local smoke only",
+        "files": {
+          "train": {
+            "sha256": "06db62f57635cac53577f9cdfe6b036646c78e1e15c9243b4fe79f3261aa73a8",
+            "tokens": 948084
+          },
+          "validation": {
+            "sha256": "a9e95abb74fe936737ac32558b82236a57681a76c0f0ff7389b00dac58a7f41b",
+            "tokens": 83655
+          },
+          "test": {
+            "sha256": "82d21c0cc612ce062edfb72d8bf5969b79e71ed83303b6e1f318822fe4dc9d9a",
+            "tokens": 83655
+          }
+        }
+      },
+      "coefficient_set": {
+        "name": "gamma_0.10",
+        "kind": "fitted",
+        "gamma": 0.1,
+        "coeffs": [
+          3.100305406593715,
+          -5.181157462454122,
+          3.0788595782418664
+        ],
+        "n_steps": 5,
+        "scale": 0.909925336783622,
+        "sigma_min": 0.003447565326296462,
+        "achieved_half_width": 0.09980583290561225,
+        "critical_point": 0.5230654166455223,
+        "invariance_bound": 1.000741192903231,
+        "invariance_margin": -0.0,
+        "positivity_margin": 0.9205703481607235
+      },
+      "coefficient_table_sha256": "2fe7f6babe73571addfb297c53119d9cfe9cb664eb2a6e69e0a64fc1f3caf171",
+      "versions": {
+        "torch": "2.13.0",
+        "numpy": "2.5.2"
+      },
+      "device": "cpu",
+      "cuda_version": null,
+      "artifact_directory": "/Users/krod/Documents/Coders/muon_schulz_extension/runs/local_smoke_release/jobs/5535103f0fdee0408502",
+      "peak_gpu_bytes": 0,
+      "tokens_seen": 307200,
+      "cuda_visible_devices": "cpu1",
+      "worker_wall_seconds": 10.856490375008434
+    },
+    {
+      "spec": {
+        "task": "language",
+        "arm": "keller",
+        "precision": "bf16",
+        "phase": "confirm",
+        "lr": 0.02,
+        "seed": 10,
+        "steps": 600,
+        "data": "/Users/krod/Documents/Coders/muon_schulz_extension/data/datasets/shakespeare",
+        "batch": 8,
+        "model": {
+          "width": 64,
+          "layers": 2,
+          "heads": 4,
+          "context": 64
+        },
+        "adam_lr": 0.001,
+        "weight_decay": 0.01,
+        "eval_tokens": 8192,
+        "eval_every": 150,
+        "log_every": 150,
+        "max_seconds": 300,
+        "threads": 1,
+        "source_sha256": "8e6331b219e186727387b0d84dd71de2553df3186c66d3a9cb4b99bf0314bf96"
+      },
+      "status": "complete",
+      "completed_steps": 600,
+      "validation": {
+        "loss": 2.144290581345558,
+        "accuracy": 0.3790283203125,
+        "count": 8192
+      },
+      "test": {
+        "loss": 2.1793849915266037,
+        "accuracy": 0.3714599609375,
+        "count": 8192
+      },
+      "curve": [
+        {
+          "step": 150,
+          "train_loss": 2.6009137630462646,
+          "validation": {
+            "loss": 2.5666943341493607,
+            "accuracy": 0.2762451171875,
+            "count": 8192
+          }
+        },
+        {
+          "step": 300,
+          "train_loss": 2.3709523677825928,
+          "validation": {
+            "loss": 2.3938260972499847,
+            "accuracy": 0.3065185546875,
+            "count": 8192
+          }
+        },
+        {
+          "step": 450,
+          "train_loss": 2.2753889560699463,
+          "validation": {
+            "loss": 2.2096369564533234,
+            "accuracy": 0.3602294921875,
+            "count": 8192
+          }
+        },
+        {
+          "step": 600,
+          "train_loss": 2.2020492553710938,
+          "validation": {
+            "loss": 2.144290581345558,
+            "accuracy": 0.3790283203125,
+            "count": 8192
+          }
+        }
+      ],
+      "seconds": 9.128039499977604,
+      "final_evaluation_seconds": 0.04532400000607595,
+      "diagnostic_seconds": 0.007767627015709877,
+      "seconds_per_step": 0.015342941414564848,
+      "parameters": 107200,
+      "dataset": {
+        "dataset": "tinyshakespeare",
+        "source_sha256": "86c4e6aa9db7c042ec79f339dcb96d42b0075e16b8fc2e86bf0ca57e2dc565ed",
+        "tokenizer": "characters",
+        "vocab_size": 65,
+        "vocabulary": [
+          "\n",
+          " ",
+          "!",
+          "$",
+          "&",
+          "'",
+          ",",
+          "-",
+          ".",
+          "3",
+          ":",
+          ";",
+          "?",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z",
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "f",
+          "g",
+          "h",
+          "i",
+          "j",
+          "k",
+          "l",
+          "m",
+          "n",
+          "o",
+          "p",
+          "q",
+          "r",
+          "s",
+          "t",
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z"
+        ],
+        "split": "contiguous 85%/7.5%/7.5%; local smoke only",
+        "files": {
+          "train": {
+            "sha256": "06db62f57635cac53577f9cdfe6b036646c78e1e15c9243b4fe79f3261aa73a8",
+            "tokens": 948084
+          },
+          "validation": {
+            "sha256": "a9e95abb74fe936737ac32558b82236a57681a76c0f0ff7389b00dac58a7f41b",
+            "tokens": 83655
+          },
+          "test": {
+            "sha256": "82d21c0cc612ce062edfb72d8bf5969b79e71ed83303b6e1f318822fe4dc9d9a",
+            "tokens": 83655
+          }
+        }
+      },
+      "coefficient_set": {
+        "name": "keller",
+        "kind": "baseline",
+        "gamma": 0.3,
+        "coeffs": [
+          3.4445,
+          -4.775,
+          2.0315
+        ],
+        "n_steps": 5,
+        "scale": 0.9252952978511033,
+        "sigma_min": 0.0014203132155766436,
+        "achieved_half_width": 0.2994431161117773,
+        "critical_point": 0.5545287908544945,
+        "invariance_bound": 1.2023686051632125,
+        "invariance_margin": -0.0,
+        "positivity_margin": 0.6386145705143975
+      },
+      "coefficient_table_sha256": "2fe7f6babe73571addfb297c53119d9cfe9cb664eb2a6e69e0a64fc1f3caf171",
+      "versions": {
+        "torch": "2.13.0",
+        "numpy": "2.5.2"
+      },
+      "device": "cpu",
+      "cuda_version": null,
+      "artifact_directory": "/Users/krod/Documents/Coders/muon_schulz_extension/runs/local_smoke_release/jobs/248e27532415a28eee9f",
+      "peak_gpu_bytes": 0,
+      "tokens_seen": 307200,
+      "cuda_visible_devices": "cpu0",
+      "worker_wall_seconds": 10.839584040979389
+    },
+    {
+      "spec": {
+        "task": "language",
+        "arm": "keller",
+        "precision": "bf16",
+        "phase": "confirm",
+        "lr": 0.02,
+        "seed": 11,
+        "steps": 600,
+        "data": "/Users/krod/Documents/Coders/muon_schulz_extension/data/datasets/shakespeare",
+        "batch": 8,
+        "model": {
+          "width": 64,
+          "layers": 2,
+          "heads": 4,
+          "context": 64
+        },
+        "adam_lr": 0.001,
+        "weight_decay": 0.01,
+        "eval_tokens": 8192,
+        "eval_every": 150,
+        "log_every": 150,
+        "max_seconds": 300,
+        "threads": 1,
+        "source_sha256": "8e6331b219e186727387b0d84dd71de2553df3186c66d3a9cb4b99bf0314bf96"
+      },
+      "status": "complete",
+      "completed_steps": 600,
+      "validation": {
+        "loss": 2.1555454581975937,
+        "accuracy": 0.37158203125,
+        "count": 8192
+      },
+      "test": {
+        "loss": 2.181834116578102,
+        "accuracy": 0.3651123046875,
+        "count": 8192
+      },
+      "curve": [
+        {
+          "step": 150,
+          "train_loss": 2.4653067588806152,
+          "validation": {
+            "loss": 2.5738660395145416,
+            "accuracy": 0.278076171875,
+            "count": 8192
+          }
+        },
+        {
+          "step": 300,
+          "train_loss": 2.45247483253479,
+          "validation": {
+            "loss": 2.3952605724334717,
+            "accuracy": 0.3089599609375,
+            "count": 8192
+          }
+        },
+        {
+          "step": 450,
+          "train_loss": 2.2657055854797363,
+          "validation": {
+            "loss": 2.230305999517441,
+            "accuracy": 0.357177734375,
+            "count": 8192
+          }
+        },
+        {
+          "step": 600,
+          "train_loss": 2.1515772342681885,
+          "validation": {
+            "loss": 2.1555454581975937,
+            "accuracy": 0.37158203125,
+            "count": 8192
+          }
+        }
+      ],
+      "seconds": 9.092528042034246,
+      "final_evaluation_seconds": 0.03963083401322365,
+      "diagnostic_seconds": 0.007946747820824385,
+      "seconds_per_step": 0.015290824801195414,
+      "parameters": 107200,
+      "dataset": {
+        "dataset": "tinyshakespeare",
+        "source_sha256": "86c4e6aa9db7c042ec79f339dcb96d42b0075e16b8fc2e86bf0ca57e2dc565ed",
+        "tokenizer": "characters",
+        "vocab_size": 65,
+        "vocabulary": [
+          "\n",
+          " ",
+          "!",
+          "$",
+          "&",
+          "'",
+          ",",
+          "-",
+          ".",
+          "3",
+          ":",
+          ";",
+          "?",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z",
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "f",
+          "g",
+          "h",
+          "i",
+          "j",
+          "k",
+          "l",
+          "m",
+          "n",
+          "o",
+          "p",
+          "q",
+          "r",
+          "s",
+          "t",
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z"
+        ],
+        "split": "contiguous 85%/7.5%/7.5%; local smoke only",
+        "files": {
+          "train": {
+            "sha256": "06db62f57635cac53577f9cdfe6b036646c78e1e15c9243b4fe79f3261aa73a8",
+            "tokens": 948084
+          },
+          "validation": {
+            "sha256": "a9e95abb74fe936737ac32558b82236a57681a76c0f0ff7389b00dac58a7f41b",
+            "tokens": 83655
+          },
+          "test": {
+            "sha256": "82d21c0cc612ce062edfb72d8bf5969b79e71ed83303b6e1f318822fe4dc9d9a",
+            "tokens": 83655
+          }
+        }
+      },
+      "coefficient_set": {
+        "name": "keller",
+        "kind": "baseline",
+        "gamma": 0.3,
+        "coeffs": [
+          3.4445,
+          -4.775,
+          2.0315
+        ],
+        "n_steps": 5,
+        "scale": 0.9252952978511033,
+        "sigma_min": 0.0014203132155766436,
+        "achieved_half_width": 0.2994431161117773,
+        "critical_point": 0.5545287908544945,
+        "invariance_bound": 1.2023686051632125,
+        "invariance_margin": -0.0,
+        "positivity_margin": 0.6386145705143975
+      },
+      "coefficient_table_sha256": "2fe7f6babe73571addfb297c53119d9cfe9cb664eb2a6e69e0a64fc1f3caf171",
+      "versions": {
+        "torch": "2.13.0",
+        "numpy": "2.5.2"
+      },
+      "device": "cpu",
+      "cuda_version": null,
+      "artifact_directory": "/Users/krod/Documents/Coders/muon_schulz_extension/runs/local_smoke_release/jobs/9559ea39fe01db46fa03",
+      "peak_gpu_bytes": 0,
+      "tokens_seen": 307200,
+      "cuda_visible_devices": "cpu1",
+      "worker_wall_seconds": 10.644358958990779
+    },
+    {
+      "spec": {
+        "task": "language",
+        "arm": "keller",
+        "precision": "bf16",
+        "phase": "confirm",
+        "lr": 0.02,
+        "seed": 12,
+        "steps": 600,
+        "data": "/Users/krod/Documents/Coders/muon_schulz_extension/data/datasets/shakespeare",
+        "batch": 8,
+        "model": {
+          "width": 64,
+          "layers": 2,
+          "heads": 4,
+          "context": 64
+        },
+        "adam_lr": 0.001,
+        "weight_decay": 0.01,
+        "eval_tokens": 8192,
+        "eval_every": 150,
+        "log_every": 150,
+        "max_seconds": 300,
+        "threads": 1,
+        "source_sha256": "8e6331b219e186727387b0d84dd71de2553df3186c66d3a9cb4b99bf0314bf96"
+      },
+      "status": "complete",
+      "completed_steps": 600,
+      "validation": {
+        "loss": 2.1876017451286316,
+        "accuracy": 0.367431640625,
+        "count": 8192
+      },
+      "test": {
+        "loss": 2.224002093076706,
+        "accuracy": 0.3577880859375,
+        "count": 8192
+      },
+      "curve": [
+        {
+          "step": 150,
+          "train_loss": 2.641263246536255,
+          "validation": {
+            "loss": 2.575700744986534,
+            "accuracy": 0.2784423828125,
+            "count": 8192
+          }
+        },
+        {
+          "step": 300,
+          "train_loss": 2.4756155014038086,
+          "validation": {
+            "loss": 2.3872871696949005,
+            "accuracy": 0.3160400390625,
+            "count": 8192
+          }
+        },
+        {
+          "step": 450,
+          "train_loss": 2.2857961654663086,
+          "validation": {
+            "loss": 2.258805423974991,
+            "accuracy": 0.3485107421875,
+            "count": 8192
+          }
+        },
+        {
+          "step": 600,
+          "train_loss": 2.2581117153167725,
+          "validation": {
+            "loss": 2.1876017451286316,
+            "accuracy": 0.367431640625,
+            "count": 8192
+          }
+        }
+      ],
+      "seconds": 8.660054665990174,
+      "final_evaluation_seconds": 0.0396435409784317,
+      "diagnostic_seconds": 0.007420670939609408,
+      "seconds_per_step": 0.015099849819671362,
+      "parameters": 107200,
+      "dataset": {
+        "dataset": "tinyshakespeare",
+        "source_sha256": "86c4e6aa9db7c042ec79f339dcb96d42b0075e16b8fc2e86bf0ca57e2dc565ed",
+        "tokenizer": "characters",
+        "vocab_size": 65,
+        "vocabulary": [
+          "\n",
+          " ",
+          "!",
+          "$",
+          "&",
+          "'",
+          ",",
+          "-",
+          ".",
+          "3",
+          ":",
+          ";",
+          "?",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z",
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "f",
+          "g",
+          "h",
+          "i",
+          "j",
+          "k",
+          "l",
+          "m",
+          "n",
+          "o",
+          "p",
+          "q",
+          "r",
+          "s",
+          "t",
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z"
+        ],
+        "split": "contiguous 85%/7.5%/7.5%; local smoke only",
+        "files": {
+          "train": {
+            "sha256": "06db62f57635cac53577f9cdfe6b036646c78e1e15c9243b4fe79f3261aa73a8",
+            "tokens": 948084
+          },
+          "validation": {
+            "sha256": "a9e95abb74fe936737ac32558b82236a57681a76c0f0ff7389b00dac58a7f41b",
+            "tokens": 83655
+          },
+          "test": {
+            "sha256": "82d21c0cc612ce062edfb72d8bf5969b79e71ed83303b6e1f318822fe4dc9d9a",
+            "tokens": 83655
+          }
+        }
+      },
+      "coefficient_set": {
+        "name": "keller",
+        "kind": "baseline",
+        "gamma": 0.3,
+        "coeffs": [
+          3.4445,
+          -4.775,
+          2.0315
+        ],
+        "n_steps": 5,
+        "scale": 0.9252952978511033,
+        "sigma_min": 0.0014203132155766436,
+        "achieved_half_width": 0.2994431161117773,
+        "critical_point": 0.5545287908544945,
+        "invariance_bound": 1.2023686051632125,
+        "invariance_margin": -0.0,
+        "positivity_margin": 0.6386145705143975
+      },
+      "coefficient_table_sha256": "2fe7f6babe73571addfb297c53119d9cfe9cb664eb2a6e69e0a64fc1f3caf171",
+      "versions": {
+        "torch": "2.13.0",
+        "numpy": "2.5.2"
+      },
+      "device": "cpu",
+      "cuda_version": null,
+      "artifact_directory": "/Users/krod/Documents/Coders/muon_schulz_extension/runs/local_smoke_release/jobs/6997f985a771cfd25d61",
+      "peak_gpu_bytes": 0,
+      "tokens_seen": 307200,
+      "cuda_visible_devices": "cpu0",
+      "worker_wall_seconds": 10.247125916997902
+    }
+  ],
+  "selections": {
+    "gamma_0.10/fp32": 0.02,
+    "keller/fp32": 0.02,
+    "exact_svd/fp32": 0.02,
+    "gamma_0.10/bf16": 0.02,
+    "keller/bf16": 0.02
+  }
+}

@@ -65,7 +65,7 @@ def objective(params, gamma: float, n_steps: int = 5) -> float:
         return PENALTY + 1.0
 
     pos = positivity_violation(coeffs, B)
-    if pos > 0:
+    if pos >= 0 or invariance_violation(coeffs, B) > 1e-10:
         return PENALTY + pos
 
     extent = band_extent(coeffs, gamma, n_steps)
@@ -84,7 +84,9 @@ def _certify(coeffs: Coeffs, gamma: float, n_steps: int, seed: int) -> FitResult
     feasible = bool(
         bounded
         and extent.sigma_min < 1.0
-        and pos_margin >= 0
+        and pos_margin > 0
+        and inv_margin >= -1e-10
+        and extent.achieved_half_width <= gamma
         and np.isfinite(extent.scale)
     )
     return FitResult(

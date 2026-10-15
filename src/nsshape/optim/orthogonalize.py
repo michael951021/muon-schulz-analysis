@@ -24,6 +24,7 @@ def ns_quintic(
     n_steps: int = 5,
     scale: float = 1.0,
     eps: float = 1e-7,
+    precision: str = "bf16",
 ) -> torch.Tensor:
     """Newton-Schulz quintic iteration, Muon-style.
 
@@ -35,8 +36,12 @@ def ns_quintic(
     1, which decouples the band shape from the learning rate.
     """
     _require_2d(G)
+    if precision not in {"bf16", "fp32"}:
+        raise ValueError("precision must be bf16 or fp32")
+    if n_steps < 1 or scale <= 0:
+        raise ValueError("n_steps and scale must be positive")
     a, b, c = coeffs
-    X = G.bfloat16()
+    X = G.to(torch.bfloat16 if precision == "bf16" else torch.float32)
     transposed = X.shape[0] > X.shape[1]
     if transposed:
         X = X.T
@@ -51,17 +56,23 @@ def ns_quintic(
 
 
 def exact_svd_polar(G: torch.Tensor) -> torch.Tensor:
-    """Exact polar factor U @ Vh in fp32 -- the gamma = 0 anchor."""
+    """Canonical partial polar factor; discard numerical null-space directions.
+
+    The rank tolerance is the conventional fp32 matrix-rank tolerance. Zero
+    input returns zero, matching polynomial backends rather than an arbitrary
+    orthogonal completion of the null space.
+    """
     _require_2d(G)
-    U, _, Vh = torch.linalg.svd(G.float(), full_matrices=False)
-    return (U @ Vh).to(G.dtype)
+    U, s, Vh = torch.linalg.svd(G.float(), full_matrices=False)
+    tolerance = max(G.shape) * torch.finfo(torch.float32).eps * s.max()
+    return ((U * (s > tolerance).to(U.dtype)) @ Vh).to(G.dtype)
 
 
-def orthogonalize(G: torch.Tensor, cs: CoefficientSet) -> torch.Tensor:
+def orthogonalize(G: torch.Tensor, cs: CoefficientSet, precision: str = "bf16") -> torch.Tensor:
     """Dispatch to the backend named by a coefficient set.
 
     Shape validation lives in the backends, so both arms reject the same inputs.
     """
     if cs.is_exact_svd:
         return exact_svd_polar(G)
-    return ns_quintic(G, cs.coeffs, cs.n_steps, cs.scale)
+    return ns_quintic(G, cs.coeffs, cs.n_steps, cs.scale, precision=precision)

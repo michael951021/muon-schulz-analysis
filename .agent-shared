@@ -1,0 +1,4 @@
+# Gitignored runtime data every job shares with this checkout (see ../../agent).
+.venv
+data/datasets
+runs

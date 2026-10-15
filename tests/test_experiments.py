@@ -168,3 +168,14 @@ def test_report_rejects_mismatched_work_and_partial_results():
     rows[1]['status'] = 'budget_exhausted'
     with pytest.raises(ValueError, match='complete'):
         reporter.summarize(rows)
+
+
+def test_selection_skips_learning_rates_that_diverged_on_any_seed():
+    rows = [dict(status='complete', spec=dict(arm='a', precision='bf16', lr=lr, seed=seed),
+                 validation=dict(loss=loss))
+            for lr, seed, loss in ((.005, 1, 1), (.02, 0, 3), (.02, 1, 3))]
+    diverged = [dict(status='nonfinite_grad', spec=dict(arm='a', precision='bf16', lr=.005, seed=0))]
+    assert study.select(rows)[('a', 'bf16')] == (1, .005)
+    assert study.select(rows, diverged)[('a', 'bf16')] == (3, .02)
+    everything = [dict(status='nonfinite_loss', spec=dict(arm='a', precision='bf16', lr=.02, seed=0))]
+    assert ('a', 'bf16') not in study.select(rows, diverged+everything)

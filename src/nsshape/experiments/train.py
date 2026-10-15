@@ -163,7 +163,11 @@ def run(spec, out, device):
                 status = 'nonfinite_loss'
                 break
             loss.backward()
-            torch.nn.utils.clip_grad_norm_(model.parameters(), 1., error_if_nonfinite=True)
+            # A finite loss can still backpropagate to an inf/nan gradient (bf16 overflow).
+            # That is divergence, recorded like a nonfinite loss rather than crashing the worker.
+            if not torch.isfinite(torch.nn.utils.clip_grad_norm_(model.parameters(), 1.)):
+                status = 'nonfinite_grad'
+                break
             opt.step()
             if adam:
                 adam.step()

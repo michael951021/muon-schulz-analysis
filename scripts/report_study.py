@@ -98,6 +98,16 @@ def report(input_path, out):
                 lo, hi = paired['ci95']
                 lines.append(f"| {row['arm']} | {row['precision']} | {paired['mean']:+.4f} [{lo:+.4f}, {hi:+.4f}] |")
         lines += ['']
+    diverged = [(task, row['spec'], row['status'], row['completed_steps'])
+                for task, section in sections.items() for row in section.get('diverged', [])]
+    if diverged:
+        lines += ['## Diverged tuning runs', '',
+                  'These tuning runs hit a non-finite loss or gradient. Their learning rate was '
+                  'ineligible for selection for that arm and precision; nothing was dropped silently.', '',
+                  '| Task | Arm | Precision | LR | Seed | Status | Step reached |', '|---|---|---|---:|---:|---|---:|']
+        lines += [f"| {task} | {spec['arm']} | {spec['precision']} | {spec['lr']} | {spec['seed']} | {status} | "
+                  f"{steps}/{spec['steps']} |" for task, spec, status, steps in diverged]
+        lines += ['']
     lines += ['## Interpretation', '',
               'Intervals are Student-t intervals over paired seed differences, not uncertainty over '
               'individual examples. Three confirmation seeds give low statistical power. '

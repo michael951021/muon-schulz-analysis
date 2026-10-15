@@ -66,12 +66,20 @@ def matched_steps(jobs, timings, seconds, minimum, maximum, workers, safety=1.5,
     return left, duration(left)
 
 
-def select(rows):
+DIVERGED = ('nonfinite_loss', 'nonfinite_grad')
+
+
+def select(rows, diverged=()):
+    """Best mean validation LR per arm. A learning rate that diverged on any tuning
+    seed is ineligible; an arm whose every learning rate diverged is absent."""
+    excluded = {(row['spec']['arm'], row['spec']['precision'], row['spec']['lr']) for row in diverged}
     groups = defaultdict(list)
     for row in rows:
         if row['status'] != 'complete':
             raise ValueError('incomplete run cannot select hyperparameters')
         spec = row['spec']
+        if (spec['arm'], spec['precision'], spec['lr']) in excluded:
+            continue
         groups[(spec['arm'], spec['precision'], spec['lr'])].append(row['validation']['loss'])
     by_arm = defaultdict(list)
     for (arm, precision, lr), values in groups.items():
@@ -83,6 +91,9 @@ class Scheduler:
     def __init__(self, out, devices, deadline, source_hash, cpu=False):
         self.out, self.devices, self.deadline = out, devices, deadline
         self.source_hash, self.cpu = source_hash, cpu
+        # Tuning runs that diverged: a result about that (arm, precision, lr), kept
+        # out of selection and reported, not a failed study.
+        self.diverged = []
 
     def job_path(self, spec):
         encoded = json.dumps(spec, sort_keys=True).encode()
@@ -111,6 +122,10 @@ class Scheduler:
                             completed.append(result)
                             print(f"reuse {spec['task']} {spec['phase']} {spec['arm']} {spec['precision']} seed={spec['seed']}", flush=True)
                             continue
+                        if result['status'] in DIVERGED and spec['phase'] == 'tune' and result['spec'] == spec:
+                            self.diverged.append(result)
+                            print(f"reuse diverged {spec['task']} {spec['arm']} {spec['precision']} lr={spec['lr']} seed={spec['seed']}", flush=True)
+                            continue
                     atomic_json(directory/'spec.json', spec)
                     environment = dict(os.environ, CUDA_VISIBLE_DEVICES=str(device), OMP_NUM_THREADS='2')
                     log = (directory/'worker.log').open('w')
@@ -129,6 +144,13 @@ class Scheduler:
                     if process.returncode != 0:
                         raise RuntimeError(f'worker failed ({process.returncode}); inspect {directory}/worker.log')
                     result = json.loads((directory/'result.json').read_text())
+                    if result['status'] in DIVERGED and spec['phase'] == 'tune':
+                        result['worker_wall_seconds'] = time.monotonic()-start
+                        atomic_json(directory/'result.json', result)
+                        self.diverged.append(result)
+                        print(f"diverged GPU {device}: {result['status']} at step {result['completed_steps']}/{spec['steps']} "
+                              f"({spec['arm']} {spec['precision']} lr={spec['lr']} seed={spec['seed']})", flush=True)
+                        continue
                     if result['status'] != 'complete' or result['completed_steps'] != spec['steps']:
                         raise RuntimeError(f'incomplete job: {directory}')
                     result['worker_wall_seconds'] = time.monotonic()-start
@@ -231,12 +253,16 @@ def study(config, out, cpu=False):
     for job in jobs:
         job['steps'] = steps
     tuning = scheduler.run(jobs, timings)
-    selected = select(tuning)
+    cifar_diverged = list(getattr(scheduler, 'diverged', []))
+    selected = select(tuning, cifar_diverged)
     fitted = [(value[0], arm) for (arm, precision), value in selected.items()
-              if precision == 'fp32' and table[arm].kind == 'fitted']
+              if precision == 'fp32' and table[arm].kind == 'fitted' and (arm, 'bf16') in selected]
     _, winner = min(fitted)
     followup = [(winner, 'fp32'), ('keller', 'fp32'), ('exact_svd', 'fp32'),
                 (winner, 'bf16'), ('keller', 'bf16')]
+    missing = [key for key in followup if key not in selected]
+    if missing:
+        raise RuntimeError(f'every tuning learning rate diverged for {missing}; revise protocol')
     confirmation = [base('cifar', arm, precision, 'confirm', selected[(arm, precision)][1], seed, steps)
                     for arm, precision in followup for seed in config['confirm_seeds']]
     estimated_confirm = schedule_duration([
@@ -253,7 +279,8 @@ def study(config, out, cpu=False):
     budgets['cifar'] = dict(steps=steps, estimated_seconds=estimated_tune+estimated_confirm)
     selections = dict(fitted_winner=winner,
                       cifar_lrs={f'{arm}/{precision}': lr for (arm, precision), (_, lr) in selected.items()})
-    atomic_json(out/'cifar_stage.json', dict(tuning=tuning, confirmation=cifar_confirm, selections=selections))
+    atomic_json(out/'cifar_stage.json', dict(tuning=tuning, diverged=cifar_diverged,
+                                             confirmation=cifar_confirm, selections=selections))
 
     timings = calibrate('language', followup)
     jobs = [base('language', arm, precision, 'tune', lr, seed)
@@ -272,7 +299,11 @@ def study(config, out, cpu=False):
     for job in jobs:
         job['steps'] = tune_steps
     language_tune = scheduler.run(jobs, timings)
-    chosen = select(language_tune)
+    language_diverged = list(getattr(scheduler, 'diverged', []))[len(cifar_diverged):]
+    chosen = select(language_tune, language_diverged)
+    missing = [key for key in followup if key not in chosen]
+    if missing:
+        raise RuntimeError(f'every language tuning learning rate diverged for {missing}; revise protocol')
     jobs = [base('language', arm, precision, 'confirm', chosen[(arm, precision)][1], seed)
             for arm, precision in followup for seed in config['language_confirm_seeds']]
     # Spend unused capped CIFAR/tuning allocation on confirmation, preserving
@@ -296,8 +327,8 @@ def study(config, out, cpu=False):
     selections['language_lrs'] = {f'{arm}/{precision}': lr for (arm, precision), (_, lr) in chosen.items()}
     result = dict(status='complete', manifest=manifest, calibrations=calibrations,
                   budgets=budgets, selections=selections,
-                  cifar=dict(tuning=tuning, confirmation=cifar_confirm),
-                  language=dict(tuning=language_tune, confirmation=language_confirm),
+                  cifar=dict(tuning=tuning, diverged=cifar_diverged, confirmation=cifar_confirm),
+                  language=dict(tuning=language_tune, diverged=language_diverged, confirmation=language_confirm),
                   total_wall_seconds=consumed+time.monotonic()-started)
     atomic_json(out/'study.json', result)
     print(f'Complete: {out}/study.json', flush=True)

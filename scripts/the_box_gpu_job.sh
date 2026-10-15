@@ -14,7 +14,7 @@ nvidia-smi --query-gpu=index,memory.used,memory.total --format=csv
 # study prints nothing, so the watchdog still catches it.
 mkdir -p runs
 ( last=""; while sleep 300; do
-    f=$(ls -t runs/dual3090/jobs/*/worker.log 2>/dev/null | head -1) || true
+    f=$(ls -t runs/dual3090-r2/jobs/*/worker.log 2>/dev/null | head -1) || true
     [ -n "$f" ] || continue
     line="$(basename "$(dirname "$f")"): $(tail -n 1 "$f")"
     [ "$line" != "$last" ] && { echo "[progress] $line"; last="$line"; }
@@ -22,4 +22,4 @@ mkdir -p runs
 hb=$!
 trap 'kill $hb 2>/dev/null || true' EXIT
 
-bash scripts/launch_dual3090.sh 8 runs/dual3090 2>&1 | tee -a runs/dual3090-launch.log
+bash scripts/launch_dual3090.sh 8 runs/dual3090-r2 2>&1 | tee -a runs/dual3090-r2-launch.log

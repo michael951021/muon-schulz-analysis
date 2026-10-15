@@ -8,6 +8,6 @@ wandb/
 *.egg-info/
 .DS_Store
 .venv/
-figures/
+/figures/
 data/datasets/
 dist/

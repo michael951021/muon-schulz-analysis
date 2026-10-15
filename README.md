@@ -57,10 +57,10 @@ logger records what the *applied update* really looked like during training:
 ![Realized update spectra](docs/figures/update_spectra.png)
 
 γ = 0.20 does what it was fit to do. Its band is tighter at the top (max 1.20
-vs Keller's 1.30) and its middle 50% is narrower. But in the GPT, about **20%
-of each update's singular values sit below σ_min** for both arms, so the
-polynomial never pulls them into the band (the thin lines reaching toward 0).
-On CIFAR that's about 7%. So the "shape" only governs part of the spectrum
+vs Keller's 1.30) and its middle 50% is narrower. But in the GPT, about **a quarter
+of each update's singular values (23–25%) sit below σ_min** for both arms, so
+the polynomial never pulls them into the band (the thin lines reaching toward
+0). On CIFAR that's 6–7%. So the "shape" only governs part of the spectrum
 these models produce, which is one plausible reason the language model can't
 tell the arms apart.
 

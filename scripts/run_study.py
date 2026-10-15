@@ -141,7 +141,9 @@ class Scheduler:
                         continue
                     log.close()
                     del active[device]
-                    if process.returncode != 0:
+                    # The worker exits 2 after writing result.json for any non-complete status.
+                    written = process.returncode == 2 and (directory/'result.json').exists()
+                    if process.returncode != 0 and not written:
                         raise RuntimeError(f'worker failed ({process.returncode}); inspect {directory}/worker.log')
                     result = json.loads((directory/'result.json').read_text())
                     if result['status'] in DIVERGED and spec['phase'] == 'tune':

@@ -179,3 +179,31 @@ def test_selection_skips_learning_rates_that_diverged_on_any_seed():
     assert study.select(rows, diverged)[('a', 'bf16')] == (3, .02)
     everything = [dict(status='nonfinite_loss', spec=dict(arm='a', precision='bf16', lr=.02, seed=0))]
     assert ('a', 'bf16') not in study.select(rows, diverged+everything)
+
+
+def test_scheduler_records_tuning_divergence_from_real_worker_exit(tmp_path, monkeypatch):
+    """The worker writes result.json and exits 2 on divergence; tuning must record it,
+    while a divergence outside tuning still stops the study."""
+    import json, subprocess, sys, time
+    fake = tmp_path/'fake_worker.py'
+    fake.write_text(
+        'import json, sys\n'
+        'spec = json.loads(open(sys.argv[sys.argv.index("--spec")+1]).read())\n'
+        'out = sys.argv[sys.argv.index("--out")+1]\n'
+        'diverge = spec["lr"] > .05\n'
+        'result = dict(spec=spec, status="nonfinite_grad" if diverge else "complete",\n'
+        '              completed_steps=3 if diverge else spec["steps"], validation=dict(loss=None if diverge else 1.))\n'
+        'open(out+"/result.json", "w").write(json.dumps(result))\n'
+        'sys.exit(2 if diverge else 0)\n')
+    real = subprocess.Popen
+    monkeypatch.setattr(study.subprocess, 'Popen',
+                        lambda command, **kw: real([sys.executable, str(fake)]+command[3:], **kw))
+    def spec(phase, lr):
+        return dict(task='cifar', arm='a', precision='bf16', phase=phase, lr=lr, seed=0, steps=10)
+    scheduler = study.Scheduler(tmp_path/'out', ['cpu0'], time.monotonic()+60, 'hash', cpu=True)
+    rows = scheduler.run([spec('tune', .02), spec('tune', .08)])
+    assert [row['spec']['lr'] for row in rows] == [.02]
+    assert [row['status'] for row in scheduler.diverged] == ['nonfinite_grad']
+    assert study.select(rows, scheduler.diverged)[('a', 'bf16')] == (1., .02)
+    with pytest.raises(RuntimeError):
+        study.Scheduler(tmp_path/'confirm', ['cpu0'], time.monotonic()+60, 'hash', cpu=True).run([spec('confirm', .08)])

@@ -1,0 +1,336 @@
+{
+  "cifar": [
+    {
+      "arm": "exact_svd",
+      "precision": "fp32",
+      "seeds": [
+        10,
+        11,
+        12
+      ],
+      "mean_test_loss": 0.5892092018286387,
+      "sd_test_loss": 0.00300306384381349,
+      "mean_test_accuracy": 0.7980666666666666,
+      "mean_seconds": 28.407703950302675,
+      "lr": 0.08,
+      "steps": 2160,
+      "mean_diagnostic_seconds": 0.15536465247472128,
+      "tokens_per_run": null,
+      "paired_vs_keller": {
+        "mean": -0.0005067709287007727,
+        "ci95": [
+          -0.014497371360904765,
+          0.01348382950350322
+        ],
+        "n": 3,
+        "negative_favors_arm": true
+      },
+      "paired_vs_exact_svd": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "arm": "gamma_0.20",
+      "precision": "bf16",
+      "seeds": [
+        10,
+        11,
+        12
+      ],
+      "mean_test_loss": 0.5843610861301421,
+      "sd_test_loss": 0.0057572588963227,
+      "mean_test_accuracy": 0.7942999999999999,
+      "mean_seconds": 14.349100224673748,
+      "lr": 0.08,
+      "steps": 2160,
+      "mean_diagnostic_seconds": 0.20736649803196391,
+      "tokens_per_run": null,
+      "paired_vs_keller": {
+        "mean": -0.004710008207956973,
+        "ci95": [
+          -0.008074640234761817,
+          -0.0013453761811521286
+        ],
+        "n": 3,
+        "negative_favors_arm": true
+      },
+      "paired_vs_exact_svd": {
+        "mean": -0.004848115698496487,
+        "ci95": [
+          -0.011833507541994531,
+          0.0021372761450015564
+        ]
+      }
+    },
+    {
+      "arm": "gamma_0.20",
+      "precision": "fp32",
+      "seeds": [
+        10,
+        11,
+        12
+      ],
+      "mean_test_loss": 0.5847728991031647,
+      "sd_test_loss": 0.0051859152658055435,
+      "mean_test_accuracy": 0.7976333333333333,
+      "mean_seconds": 14.303820468252525,
+      "lr": 0.08,
+      "steps": 2160,
+      "mean_diagnostic_seconds": 0.18289293317745128,
+      "tokens_per_run": null,
+      "paired_vs_keller": {
+        "mean": -0.00494307365417479,
+        "ci95": [
+          -0.011860431978095332,
+          0.0019742846697457517
+        ],
+        "n": 3,
+        "negative_favors_arm": true
+      },
+      "paired_vs_exact_svd": {
+        "mean": -0.004436302725474017,
+        "ci95": [
+          -0.012391656872587819,
+          0.0035190514216397843
+        ]
+      }
+    },
+    {
+      "arm": "keller",
+      "precision": "bf16",
+      "seeds": [
+        10,
+        11,
+        12
+      ],
+      "mean_test_loss": 0.5890710943380991,
+      "sd_test_loss": 0.007053704800244226,
+      "mean_test_accuracy": 0.793,
+      "mean_seconds": 14.383602799692502,
+      "lr": 0.08,
+      "steps": 2160,
+      "mean_diagnostic_seconds": 0.1960293616478642,
+      "tokens_per_run": null,
+      "paired_vs_keller": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "n": 3,
+        "negative_favors_arm": true
+      },
+      "paired_vs_exact_svd": {
+        "mean": -0.00013810749053951485,
+        "ci95": [
+          -0.010236892580989036,
+          0.009960677599910005
+        ]
+      }
+    },
+    {
+      "arm": "keller",
+      "precision": "fp32",
+      "seeds": [
+        10,
+        11,
+        12
+      ],
+      "mean_test_loss": 0.5897159727573394,
+      "sd_test_loss": 0.00660507614332776,
+      "mean_test_accuracy": 0.7920333333333334,
+      "mean_seconds": 14.289202175724009,
+      "lr": 0.08,
+      "steps": 2160,
+      "mean_diagnostic_seconds": 0.16937255975790322,
+      "tokens_per_run": null,
+      "paired_vs_keller": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "n": 3,
+        "negative_favors_arm": true
+      },
+      "paired_vs_exact_svd": {
+        "mean": 0.0005067709287007727,
+        "ci95": [
+          -0.01348382950350322,
+          0.014497371360904765
+        ]
+      }
+    }
+  ],
+  "language": [
+    {
+      "arm": "exact_svd",
+      "precision": "fp32",
+      "seeds": [
+        11,
+        10,
+        12
+      ],
+      "mean_test_loss": 5.4738082240025205,
+      "sd_test_loss": 0.035362117567092906,
+      "mean_test_accuracy": 0.20452372233072916,
+      "mean_seconds": 8108.5467676867265,
+      "lr": 0.005,
+      "steps": 3082,
+      "mean_diagnostic_seconds": 4.6407903709914535,
+      "tokens_per_run": 6311936,
+      "paired_vs_keller": {
+        "mean": 0.0004985978205998739,
+        "ci95": [
+          -0.00470896691548796,
+          0.005706162556687707
+        ],
+        "n": 3,
+        "negative_favors_arm": true
+      },
+      "paired_vs_exact_svd": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "arm": "gamma_0.20",
+      "precision": "bf16",
+      "seeds": [
+        10,
+        11,
+        12
+      ],
+      "mean_test_loss": 5.473130822181702,
+      "sd_test_loss": 0.03437198992781864,
+      "mean_test_accuracy": 0.20466105143229166,
+      "mean_seconds": 345.5439747949131,
+      "lr": 0.005,
+      "steps": 3082,
+      "mean_diagnostic_seconds": 4.415937424559767,
+      "tokens_per_run": 6311936,
+      "paired_vs_keller": {
+        "mean": -0.0020755728085835776,
+        "ci95": [
+          -0.006477862402996949,
+          0.0023267167858297944
+        ],
+        "n": 3,
+        "negative_favors_arm": true
+      },
+      "paired_vs_exact_svd": {
+        "mean": -0.0006774018208185831,
+        "ci95": [
+          -0.008822690732329766,
+          0.0074678870906926
+        ]
+      }
+    },
+    {
+      "arm": "gamma_0.20",
+      "precision": "fp32",
+      "seeds": [
+        10,
+        11,
+        12
+      ],
+      "mean_test_loss": 5.472896774609883,
+      "sd_test_loss": 0.033426374294045304,
+      "mean_test_accuracy": 0.204071044921875,
+      "mean_seconds": 657.1820140056467,
+      "lr": 0.005,
+      "steps": 3082,
+      "mean_diagnostic_seconds": 5.237702000342931,
+      "tokens_per_run": 6311936,
+      "paired_vs_keller": {
+        "mean": -0.00041285157203674316,
+        "ci95": [
+          -0.00413228522949796,
+          0.0033065820854244732
+        ],
+        "n": 3,
+        "negative_favors_arm": true
+      },
+      "paired_vs_exact_svd": {
+        "mean": -0.0009114493926366171,
+        "ci95": [
+          -0.006768049197099544,
+          0.004945150411826311
+        ]
+      }
+    },
+    {
+      "arm": "keller",
+      "precision": "bf16",
+      "seeds": [
+        10,
+        11,
+        12
+      ],
+      "mean_test_loss": 5.475206394990285,
+      "sd_test_loss": 0.03349393588228644,
+      "mean_test_accuracy": 0.20390828450520834,
+      "mean_seconds": 345.2809138287169,
+      "lr": 0.005,
+      "steps": 3082,
+      "mean_diagnostic_seconds": 4.3914688600537675,
+      "tokens_per_run": 6311936,
+      "paired_vs_keller": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "n": 3,
+        "negative_favors_arm": true
+      },
+      "paired_vs_exact_svd": {
+        "mean": 0.0013981709877649944,
+        "ci95": [
+          -0.004592672480859105,
+          0.007389014456389094
+        ]
+      }
+    },
+    {
+      "arm": "keller",
+      "precision": "fp32",
+      "seeds": [
+        10,
+        11,
+        12
+      ],
+      "mean_test_loss": 5.47330962618192,
+      "sd_test_loss": 0.034786840522960494,
+      "mean_test_accuracy": 0.20415751139322916,
+      "mean_seconds": 657.3113964353688,
+      "lr": 0.005,
+      "steps": 3082,
+      "mean_diagnostic_seconds": 5.192739090882242,
+      "tokens_per_run": 6311936,
+      "paired_vs_keller": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "n": 3,
+        "negative_favors_arm": true
+      },
+      "paired_vs_exact_svd": {
+        "mean": -0.0004985978205998739,
+        "ci95": [
+          -0.005706162556687707,
+          0.00470896691548796
+        ]
+      }
+    }
+  ]
+}

@@ -2,3 +2,7 @@
 
 <!-- One entry per completed TODO task, appended by the agent. Never edited or condensed — for
      a rolling handoff of current state see NOTES.md instead. -->
+## Muon prep: venv, CIFAR, FineWeb, fast tests
+- Goal: Muon prep: venv, CIFAR, FineWeb, fast tests
+- Approach: compute job muonprep ran bash scripts/the_box_prep.sh (exit 0)
+- Blockers: none
